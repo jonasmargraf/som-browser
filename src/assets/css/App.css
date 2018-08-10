@@ -1,4 +1,150 @@
-h1 {
+* {
+  margin: 0;
+  padding: 0;
   font-family: helvetica;
+  font-size: 10pt;
   font-weight: 200;
+  /* font-size: 1em; */
+}
+
+html {
+  background-color: rgb(250, 250, 250);
+}
+
+h3 {
+  font-weight:  800 !important;
+  /* font-size: 1.0em; */
+}
+
+ul {
+  list-style: none;
+}
+
+.Map {
+  /* border-style: solid;
+  border-width: 3px;
+  border-color: lightgrey; */
+  /* border: 1px solid grey; */
+  background-color: white;
+  box-shadow: 0px 1px 5px rgb(220, 220, 220);
+  border-radius: 8px;
+  margin: 10px;
+  width: calc(50vw - 20px);
+  height: calc(80vh - 20px);
+  float: left;
+}
+
+.Map > * {
+  padding: 10px;
+}
+
+.FileList {
+  /* border: 1px solid grey; */
+  background-color: white;
+  box-shadow: 0px 1px 5px rgb(220, 220, 220);
+  border-radius: 8px;
+  margin: 10px;
+  width: calc(25vw - 20px);
+  height: calc(80vh - 20px);
+  float: left;
+  white-space: nowrap;
+}
+
+.FileList > * {
+}
+
+.FileList > h3 {
+  /* margin: 10px; */
+  padding: 10px;
+}
+
+.ActionButtons {
+  padding: 10px;
+  /* padding-bottom: 0px; */
+}
+
+.FileList ul {
+  overflow: scroll;
+  height: 80%;
+  /* border: 1px solid black; */
+}
+
+.FileList > ul > li {
+  /* margin: 15px; */
+  padding-top: 5px;
+  padding-bottom: 5px;
+  transition: padding-left 0.2s;
+  /* border-top: 1px solid lightgray; */
+  border-bottom: 1px solid lightgray;
+  /* display: flex; */
+  /* align-items: center; */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 200;
+}
+
+.FileList > ul > li:hover {
+  padding-left: 5px;
+  transition: padding-left 0.25s;
+}
+
+.OpenFile {
+  float: right;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.FileInfo {
+  /* border: 1px solid grey; */
+  background-color: white;
+  box-shadow: 0px 1px 5px rgb(220, 220, 220);
+  border-radius: 8px;
+  margin: 10px;
+  width: calc(25vw - 20px);
+  height: calc(80vh - 20px);
+  float: left;
+  /* white-space: nowrap; */
+}
+
+.FileInfo h3, ul {
+  padding: 10px;
+}
+
+.FileInfo > h3 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.FileInfo > ul {
+  overflow-wrap: break-word;
+  overflow: scroll;
+  /* border: 1px solid black; */
+}
+
+.FileInfo li {
+  border-bottom: 1px solid lightgray;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.UserSelection {
+  /* border: 1px solid grey; */
+  background-color: white;
+  box-shadow: 0px 1px 5px rgb(220, 220, 220);
+  border-radius: 8px;
+  margin: 10px;
+  width: calc(100vw - 20px);
+  height: calc(20vh - 20px);
+  /* height: 4vw; */
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  /* float: left; */
+}
+
+.UserSelection > * {
+  padding: 10px;
 }

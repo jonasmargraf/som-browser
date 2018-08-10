@@ -1,13 +1,14 @@
 'use strict';
 
 // Import parts of electron to use
-const {app, BrowserWindow} = require('electron');
+const {app, BrowserWindow, ipcMain} = require('electron');
 const path = require('path')
 const url = require('url')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
+let backgroundWindow;
 
 // Keep a reference for dev mode
 let dev = false;
@@ -15,10 +16,14 @@ if ( process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) 
   dev = true;
 }
 
-function createWindow() {
+function createMainWindow() {
   // Create the browser window.
-  mainWindow = new BrowserWindow({
-    width: 1024, height: 768, show: false
+  const win = new BrowserWindow({
+    width: 1200,
+    height: 722,
+    minWidth: 1200,
+    minHeight: 722,
+    show: false
   });
 
   // and load the index.html of the app.
@@ -37,30 +42,67 @@ function createWindow() {
       slashes: true
     });
   }
-  mainWindow.loadURL( indexPath );
+  win.loadURL( indexPath );
 
   // Don't show until we are ready and loaded
-  mainWindow.once('ready-to-show', () => {
-    mainWindow.show();
+  win.once('ready-to-show', () => {
+    win.show();
     // Open the DevTools automatically if developing
     if ( dev ) {
-      mainWindow.webContents.openDevTools();
+      win.webContents.openDevTools();
     }
   });
 
   // Emitted when the window is closed.
-  mainWindow.on('closed', function() {
+  win.on('closed', function() {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
+    backgroundWindow = null;
     mainWindow = null;
+    // win = null;
   });
+
+  return win;
+}
+
+// Invisible background Window for async background processing
+function createBackgroundWindow() {
+  const win = new BrowserWindow({
+    show: false
+  });
+
+  let indexPath;
+  if ( dev && process.argv.indexOf('--noDevServer') === -1 ) {
+    indexPath = url.format({
+      protocol: 'http:',
+      host: 'localhost:8080',
+      pathname: 'src/background/background.html',
+      slashes: true
+    });
+  } else {
+    indexPath = url.format({
+      protocol: 'file:',
+      // TODO: Check if this is correct?
+      pathname: path.join(__dirname, 'dist', 'background', 'index.html'),
+      slashes: true
+    });
+  }
+  win.loadURL( indexPath );
+
+  // win.on('closed', () => win = null);
+
+  return win;
+
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+app.on('ready', () => {
+  mainWindow = createMainWindow();
+  backgroundWindow = createBackgroundWindow();
+});
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
@@ -75,6 +117,15 @@ app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
-    createWindow();
+    createMainWindow();
   }
 });
+
+// ipc routing to background process
+ipcMain.on('from-ui', (event, arg) => {
+  event.sender.send('to-background', arg)
+})
+
+ipcMain.on('from-background', (event, arg) => {
+  event.sender.send('to-ui', arg)
+})
