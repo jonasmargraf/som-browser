@@ -1,5 +1,6 @@
 import '../assets/css/App.css';
 import React, { Component } from 'react';
+import { hot } from 'react-hot-loader'
 import Map from './Map';
 import FileList from './FileList';
 import FileInfo from './FileInfo';
@@ -74,7 +75,7 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default hot(module)(App)
 
 /*
 <div>
