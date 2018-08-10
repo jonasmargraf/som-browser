@@ -27,7 +27,7 @@ class FileInfo extends React.Component {
             <div>
               <li>Selected file: {file.name}</li>
               <li>File path: {file.path}</li>
-              <li>{file.features.energy}</li>
+              {file.features && <li>{file.features.energy}</li>}
             </div>
 
             :

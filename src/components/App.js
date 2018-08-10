@@ -5,7 +5,10 @@ import Map from './Map';
 import FileList from './FileList';
 import FileInfo from './FileInfo';
 import UserSelection from './UserSelection';
-const { ipcRenderer } = require('electron');
+const { ipcRenderer, remote } = require('electron');
+const { BrowserWindow } = remote;
+const path = remote.require('path')
+
 
 // window.onload = () => {
 //   ipcRenderer.send('async', 'ping')
@@ -18,6 +21,37 @@ const { ipcRenderer } = require('electron');
 //           CardFooter,
 //           CardBody
 //         } from 'reactstrap';
+
+
+
+// Invisible background Window for async background processing
+function createBackgroundWindow(files) {
+  return new Promise(function(resolve, reject) {
+    const win = new BrowserWindow({
+      show: false
+    });
+
+    // console.log("hi"+ path.join(__dirname, 'background', 'background.html'))
+    win.loadURL("file:///Users/jm/Dropbox/AKT/Masterarbeit/dev/basic-electron-react-boilerplate/src/background/background.html")
+
+    win.once('ready-to-show', () => {
+      // win.show();
+      // Open the DevTools automatically if developing
+      // if ( dev ) {
+      win.webContents.openDevTools();
+      // }
+      ipcRenderer.once('to-ui', (event, arg) => {
+        win.destroy()
+        console.log(arg)
+        resolve(arg)
+      })
+      win.webContents.send("to-background", files)
+    })
+  })
+}
+//
+// const processFiles = (files) =>
+//   Promise.all(files.map((f)=>createBackgroundWindow(f)))
 
 class App extends React.Component {
   constructor(props) {
@@ -43,17 +77,13 @@ class App extends React.Component {
   }
 
   handleAnalyzeClick() {
-    // console.log('Hello from handleAnalyzeClick()')
-    ipcRenderer.send('from-ui', this.state.files)
+
+    // createBackgroundWindow()
+    createBackgroundWindow(this.state.files).then((files)=>this.setState({files:files}))
   }
 
   componentDidMount() {
-    ipcRenderer.on('to-ui', (event, arg) => {
-      // console.log(arg.map(file => file.name))
-      // console.log(arg.map(file => file.path))
-      console.log(arg)
-      this.setState({files: arg})
-    })
+
   }
 
   render() {

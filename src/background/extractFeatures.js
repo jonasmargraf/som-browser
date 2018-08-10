@@ -32,7 +32,7 @@ function nearestPowerOf2(value) {
   return Math.pow(2, Math.round(Math.log(value) / Math.log(2)))
 }
 
-export const extractFeatures = (file) => {
+window.extractFeatures = (file) => {
 
   let features = '';
 

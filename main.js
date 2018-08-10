@@ -8,7 +8,6 @@ const url = require('url')
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
-let backgroundWindow;
 
 // Keep a reference for dev mode
 let dev = false;
@@ -58,7 +57,7 @@ function createMainWindow() {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    backgroundWindow = null;
+    // backgroundWindow = null;
     mainWindow = null;
     // win = null;
   });
@@ -66,42 +65,14 @@ function createMainWindow() {
   return win;
 }
 
-// Invisible background Window for async background processing
-function createBackgroundWindow() {
-  const win = new BrowserWindow({
-    show: false
-  });
 
-  let indexPath;
-  if ( dev && process.argv.indexOf('--noDevServer') === -1 ) {
-    indexPath = url.format({
-      protocol: 'http:',
-      host: 'localhost:8080',
-      pathname: 'src/background/background.html',
-      slashes: true
-    });
-  } else {
-    indexPath = url.format({
-      protocol: 'file:',
-      // TODO: Check if this is correct?
-      pathname: path.join(__dirname, 'dist', 'background', 'index.html'),
-      slashes: true
-    });
-  }
-  win.loadURL( indexPath );
-
-  // win.on('closed', () => win = null);
-
-  return win;
-
-}
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
   mainWindow = createMainWindow();
-  backgroundWindow = createBackgroundWindow();
+  // backgroundWindow = createBackgroundWindow();
 });
 
 // Quit when all windows are closed.
@@ -121,11 +92,6 @@ app.on('activate', () => {
   }
 });
 
-// ipc routing to background process
-ipcMain.on('from-ui', (event, arg) => {
-  event.sender.send('to-background', arg)
-})
-
 ipcMain.on('from-background', (event, arg) => {
-  event.sender.send('to-ui', arg)
+  mainWindow.webContents.send('to-ui', arg)
 })
