@@ -7,27 +7,11 @@ import FileInfo from './FileInfo';
 import UserSelection from './UserSelection';
 const { ipcRenderer, remote } = require('electron');
 const { BrowserWindow } = remote;
-const path = remote.require('path')
-
-
-// window.onload = () => {
-//   ipcRenderer.send('async', 'ping')
-
-// import {  Container,
-//           Row,
-//           Col,
-//           Card,
-//           CardHeader,
-//           CardFooter,
-//           CardBody
-//         } from 'reactstrap';
-
-
 
 // Invisible background Window for async background processing
-function createBackgroundWindow(files) {
+function createBackgroundWindow(file) {
   return new Promise(function(resolve, reject) {
-    const win = new BrowserWindow({
+    let win = new BrowserWindow({
       show: false
     });
 
@@ -35,23 +19,23 @@ function createBackgroundWindow(files) {
     win.loadURL("file:///Users/jm/Dropbox/AKT/Masterarbeit/dev/basic-electron-react-boilerplate/src/background/background.html")
 
     win.once('ready-to-show', () => {
-      // win.show();
-      // Open the DevTools automatically if developing
-      // if ( dev ) {
       win.webContents.openDevTools();
-      // }
-      ipcRenderer.once('to-ui', (event, arg) => {
+
+      ipcRenderer.once(file.path, (event, arg) => {
         win.destroy()
-        console.log(arg)
         resolve(arg)
       })
-      win.webContents.send("to-background", files)
+
+      win.webContents.send("to-background", file)
     })
   })
 }
-//
-// const processFiles = (files) =>
-//   Promise.all(files.map((f)=>createBackgroundWindow(f)))
+
+const processFiles = (files) =>
+  Promise.all(files.map((f)=>createBackgroundWindow(f)))
+
+const getFileByPath = (files, path) =>
+  (path == null) ? null : files.filter((f)=>f.path==path)[0]
 
 class App extends React.Component {
   constructor(props) {
@@ -73,13 +57,14 @@ class App extends React.Component {
   }
 
   handleFileClick(file) {
-    this.setState({selectedFile: file})
+    this.setState({selectedFile: file.path})
   }
 
   handleAnalyzeClick() {
 
     // createBackgroundWindow()
-    createBackgroundWindow(this.state.files).then((files)=>this.setState({files:files}))
+    processFiles(this.state.files).then((files)=>
+      this.setState({files:files}))
   }
 
   componentDidMount() {
@@ -88,7 +73,7 @@ class App extends React.Component {
 
   render() {
     const files = this.state.files
-    const file = this.state.selectedFile
+    const file = getFileByPath(files, this.state.selectedFile)
 
     return (
       <div>
@@ -106,44 +91,3 @@ class App extends React.Component {
 }
 
 export default hot(module)(App)
-
-/*
-<div>
-<Row>
-  <Col md="6">
-    <Map />
-  </Col>
-  <Col xs="3">
-    <Card>
-      <CardHeader>
-        Sounds
-      </CardHeader>
-      <CardBody>
-        <FileList files={files} onChange={this.handleFileListChange}
-          onFileClick={this.handleFileClick}/>
-      </CardBody>
-      <CardFooter>
-      </CardFooter>
-    </Card>
-  </Col>
-
-  <Col xs="3">
-    <Card>
-      <CardHeader>
-        File Info
-      </CardHeader>
-      <CardBody>
-        <FileInfo file={file}/>
-      </CardBody>
-      <CardFooter>
-      </CardFooter>
-    </Card>
-  </Col>
-</Row>
-<Row>
-  <Col>
-    <UserSelection />
-  </Col>
-</Row>
-</div>
-*/

@@ -93,5 +93,5 @@ app.on('activate', () => {
 });
 
 ipcMain.on('from-background', (event, arg) => {
-  mainWindow.webContents.send('to-ui', arg)
+  mainWindow.webContents.send(arg.path, arg)
 })
