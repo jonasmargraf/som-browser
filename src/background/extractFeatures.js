@@ -6,13 +6,6 @@ const fs = require('fs');
 // Meyda.bufferSize = 65536;
 
 var context = new AudioContext()
-// console.log(context)
-
-//var audioFile = new Audio('./audio/Plank 3.wav')
-//var source = context.createMediaElementSource(audioFile)
-// var buffer = context.decodeAudioData()
-// source.connect(context.destination)
-// audioFile.play()
 
 // TODO: can't have bufferSize > 512
 // WHY?
@@ -34,6 +27,8 @@ function nearestPowerOf2(value) {
 
 window.extractFeatures = (file) => {
 
+  // console.log("jelfdsa", file)
+
   let features = '';
 
   return new Promise(function(resolve, reject) {
@@ -48,7 +43,7 @@ window.extractFeatures = (file) => {
             return sample + channelData[index]
           })
         }
-        var signal = summedToMono.map( sample => sample / channelCount)
+        var signal = summedToMono.map(sample => sample / channelCount)
         // zero-padding up to nearest power of 2
         // var zeroPaddedSignal = new Float32Array(nearestPowerOf2(signal.length))
         let zeroPaddedSignal = new Float32Array(signal.length + (bufferSize - (signal.length % bufferSize)))

@@ -82,10 +82,12 @@ class FileList extends React.Component {
           Sounds
         </h3>
         <div className="ActionButtons">
+          <input className="AnalyzeSounds" type="button" value="Analyze"
+            disabled={this.props.loading}
+            onClick={this.handleAnalyzeClick}/>
+          {this.props.loading && <span>loading</span>}
           <input className="OpenFile" type="button" value="Open..."
             onClick={this.handleClick}/>
-          <input className="AnalyzeSounds" type="button" value="Analyze"
-            onClick={this.handleAnalyzeClick}/>
         </div>
         <ul>
           {

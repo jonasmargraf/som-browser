@@ -32,10 +32,10 @@ function createBackgroundWindow(file) {
 }
 
 const processFiles = (files) =>
-  Promise.all(files.map((f)=>createBackgroundWindow(f)))
+  Promise.all(files.map((file) => createBackgroundWindow(file)))
 
 const getFileByPath = (files, path) =>
-  (path == null) ? null : files.filter((f)=>f.path==path)[0]
+  (path == null) ? null : files.filter((file) => file.path == path)[0]
 
 class App extends React.Component {
   constructor(props) {
@@ -45,7 +45,8 @@ class App extends React.Component {
     this.handleAnalyzeClick = this.handleAnalyzeClick.bind(this)
     this.state = {
       files: null,
-      selectedFile: null
+      selectedFile: null,
+      loading: false
     }
   }
 
@@ -61,10 +62,10 @@ class App extends React.Component {
   }
 
   handleAnalyzeClick() {
-
+    this.setState({loading : true})
     // createBackgroundWindow()
     processFiles(this.state.files).then((files)=>
-      this.setState({files:files}))
+      this.setState({files:files, loading: false}))
   }
 
   componentDidMount() {
@@ -78,7 +79,9 @@ class App extends React.Component {
     return (
       <div>
         <Map />
+
         <FileList
+          loading={this.state.loading}
           files={files}
           onChange={this.handleFileListChange}
           onFileClick={this.handleFileClick}
