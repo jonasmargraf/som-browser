@@ -1,16 +1,13 @@
-// import fetch from 'electron-fetch';
 const math = require('mathjs');
 const Meyda = require('meyda');
 const fs = require('fs');
 
-// Meyda.bufferSize = 65536;
-
-var context = new AudioContext()
+const context = new AudioContext()
 
 // TODO: can't have bufferSize > 512
 // WHY?
 const bufferSize = 512
-const featureList = [ 'energy',
+const featureList = [ 'rms',
                     'zcr',
                     'spectralCentroid',
                     'spectralFlatness',
@@ -21,42 +18,74 @@ const featureList = [ 'energy',
                     'spectralKurtosis',
                     'loudness']
 
-function nearestPowerOf2(value) {
-  return Math.pow(2, Math.round(Math.log(value) / Math.log(2)))
-}
+// function nearestPowerOf2(value) {
+//   return Math.pow(2, Math.round(Math.log(value) / Math.log(2)))
+// }
 
 window.extractFeatures = (file) => {
 
-  // console.log("jelfdsa", file)
-
-  let features = '';
+  // let features = '';
+  let features = {  rms: [],
+                    zcr: [],
+                    spectralCentroid: [],
+                    spectralFlatness: [],
+                    spectralSlope: [],
+                    spectralRolloff: [],
+                    spectralSpread: [],
+                    spectralSkewness: [],
+                    spectralKurtosis: [],
+                    loudness: []
+                  }
 
   return new Promise(function(resolve, reject) {
+
     fs.readFile(file.path, (error, data) => {
+
       if (error) throw error
+
       context.decodeAudioData(data.buffer, decodedAudio => {
-        var channelCount = decodedAudio.numberOfChannels
-        var summedToMono = decodedAudio.getChannelData(0)
-        for (var channel = 1; channel < channelCount; channel++) {
-          var channelData = decodedAudio.getChannelData(channel)
-          var summedToMono = summedToMono.map((sample, index) => {
+
+        // In case of multichannel audio: sum to mono
+        let channelCount = decodedAudio.numberOfChannels
+        let summedToMono = decodedAudio.getChannelData(0)
+        for (let channel = 1; channel < channelCount; channel++) {
+          let channelData = decodedAudio.getChannelData(channel)
+          summedToMono = summedToMono.map((sample, index) => {
             return sample + channelData[index]
           })
         }
-        var signal = summedToMono.map(sample => sample / channelCount)
-        // zero-padding up to nearest power of 2
+        let signal = summedToMono.map(sample => sample / channelCount)
+
+        // Zero-pad up to nearest multiple of bufferSize
         // var zeroPaddedSignal = new Float32Array(nearestPowerOf2(signal.length))
-        let zeroPaddedSignal = new Float32Array(signal.length + (bufferSize - (signal.length % bufferSize)))
+        let zeroPaddedSignal = new Float32Array(signal.length + bufferSize - (signal.length % bufferSize))
         zeroPaddedSignal.set(signal)
         Meyda.bufferSize = bufferSize
         Meyda.windowingFunction = 'rect'
-        var signalExtract = zeroPaddedSignal.slice(0, bufferSize)
-        // var rms = Meyda.extract(['rms'], zeroPaddedSignal)
-        features = Meyda.extract(featureList, signalExtract)
+
+        // Framewise loop over audio and extract features
+        for (let start = 0; start < zeroPaddedSignal.length; start += bufferSize) {
+
+          let signalFrame = zeroPaddedSignal.slice(start, start + bufferSize)
+          let frameFeatures = Meyda.extract(featureList, signalFrame)
+          // we only use total loudness, not per band
+          frameFeatures.loudness = frameFeatures.loudness.total
+
+          // Append this frame's features to array of feature frames
+          // features.push(frameFeatures)
+          for (let feature in frameFeatures) {
+            features[feature].push(frameFeatures[feature])
+          }
+        }
+
+        // Get feature average
+        for (let feature in features) {
+          features[feature] = math.mean(features[feature])
+        }
+
+        // Pass averaged features to parent file
         file.features = features
-        // console.log(zeroPaddedSignal.length)
         resolve(file)
-        // console.log(features)
       })
     })
   })

@@ -16,10 +16,10 @@ function createBackgroundWindow(file) {
     });
 
     // console.log("hi"+ path.join(__dirname, 'background', 'background.html'))
-    win.loadURL("file:///Users/jm/Dropbox/AKT/Masterarbeit/dev/basic-electron-react-boilerplate/src/background/background.html")
+    win.loadURL("file:///Users/jm/Dropbox/AKT/Masterarbeit/dev/som-browser/src/background/background.html")
 
     win.once('ready-to-show', () => {
-      win.webContents.openDevTools();
+      // win.webContents.openDevTools();
 
       ipcRenderer.once(file.path, (event, arg) => {
         win.destroy()
@@ -64,8 +64,13 @@ class App extends React.Component {
   handleAnalyzeClick() {
     this.setState({loading : true})
     // createBackgroundWindow()
-    processFiles(this.state.files).then((files)=>
-      this.setState({files:files, loading: false}))
+    processFiles(this.state.files).then((files) => {
+      this.setState({files:files, loading: false})
+      console.log(files)
+      // for (let feature in files[0].features) {
+        // console.log(files[0].features[feature])
+      // }
+    })
   }
 
   componentDidMount() {
