@@ -19,7 +19,6 @@ function createBackgroundWindow(file) {
     win.loadURL("file:///Users/jm/Dropbox/AKT/Masterarbeit/dev/som-browser/src/background/background.html")
 
     win.once('ready-to-show', () => {
-      console.log('bg ready')
       win.webContents.openDevTools();
 
       ipcRenderer.once(file.path, (event, arg) => {
@@ -95,8 +94,9 @@ class App extends React.Component {
       console.log(files)
     })
     .then(() => {
-      let x = createSOMBackgroundWindow(this.state.files).then(value => console.log(value))
-      console.log('x: ' + x)
+      createSOMBackgroundWindow(this.state.files)
+      .then(value => console.log(value))
+      // console.log('x: ' + x)
       // console.log('SOM done.')
     })
   }
