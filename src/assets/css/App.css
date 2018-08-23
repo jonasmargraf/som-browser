@@ -27,7 +27,7 @@ ul {
   /* border: 1px solid grey; */
   background-color: white;
   box-shadow: 0px 1px 5px rgb(220, 220, 220);
-  border-radius: 8px;
+  border-radius: 2px;
   margin: 10px;
   width: calc(50vw - 20px);
   height: calc(80vh - 20px);
@@ -42,7 +42,7 @@ ul {
   /* border: 1px solid grey; */
   background-color: white;
   box-shadow: 0px 1px 5px rgb(220, 220, 220);
-  border-radius: 8px;
+  border-radius: 2px;
   margin: 10px;
   width: calc(25vw - 20px);
   height: calc(80vh - 20px);
@@ -100,7 +100,7 @@ ul {
   /* border: 1px solid grey; */
   background-color: white;
   box-shadow: 0px 1px 5px rgb(220, 220, 220);
-  border-radius: 8px;
+  border-radius: 2px;
   margin: 10px;
   width: calc(25vw - 20px);
   height: calc(80vh - 20px);
@@ -134,7 +134,7 @@ ul {
   /* border: 1px solid grey; */
   background-color: white;
   box-shadow: 0px 1px 5px rgb(220, 220, 220);
-  border-radius: 8px;
+  border-radius: 2px;
   margin: 10px;
   width: calc(100vw - 20px);
   height: calc(20vh - 20px);

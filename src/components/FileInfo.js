@@ -35,7 +35,7 @@ class FileInfo extends React.Component {
                   <li>Zero-Crossing Rate: {math.round(file.features.zcr, 2)}</li>
                   <li>Spectral Centroid:  {math.round(file.features.spectralCentroid, 2)}</li>
                   <li>Spectral Flatness:  {math.round(file.features.spectralFlatness, 2)}</li>
-                  <li>Spectral Slope:     {math.round(file.features.spectralSlope, 2)}</li>
+                  <li>Spectral Slope:     {math.round(file.features.spectralSlope, 9)}</li>
                   <li>Spectral Rolloff:   {math.round(file.features.spectralRolloff, 0)}</li>
                   <li>Spectral Spread:    {math.round(file.features.spectralSpread, 2)}</li>
                   <li>Spectral Skewness:  {math.round(file.features.spectralSkewness, 2)}</li>

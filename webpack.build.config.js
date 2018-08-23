@@ -14,7 +14,8 @@ const defaultInclude = [SRC_DIR];
 module.exports = {
   entry: {
     main: SRC_DIR + '/index.js',
-    background: SRC_DIR + '/background/background.js'
+    background: SRC_DIR + '/background/background.js',
+    som: SRC_DIR + '/background/som.js'
   },
   output: {
     path: OUTPUT_DIR,
@@ -50,7 +51,7 @@ module.exports = {
   },
   target: 'electron-renderer',
   plugins: [
-    new HtmlWebpackPlugin({title: 'SOM Browser App'}),
+    new HtmlWebpackPlugin({title: 'SOM Browser App', excludeChunks: [ 'background', 'som' ]}),
     new ExtractTextPlugin('bundle.css'),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')

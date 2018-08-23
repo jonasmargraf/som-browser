@@ -52,7 +52,7 @@ class FileList extends React.Component {
       properties: ['openFile', 'multiSelections'],
       filters: [{name: 'Audio Files', extensions: ['wav', 'mp3', 'flac', 'ogg']}]
     }
-    dialog.showOpenDialog(options, files => this.addToFileList(files))
+    dialog.showOpenDialog(options, files => files && this.addToFileList(files))
   }
 
   handleAnalyzeClick() {

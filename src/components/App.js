@@ -19,14 +19,40 @@ function createBackgroundWindow(file) {
     win.loadURL("file:///Users/jm/Dropbox/AKT/Masterarbeit/dev/som-browser/src/background/background.html")
 
     win.once('ready-to-show', () => {
-      // win.webContents.openDevTools();
+      console.log('bg ready')
+      win.webContents.openDevTools();
 
       ipcRenderer.once(file.path, (event, arg) => {
         win.destroy()
         resolve(arg)
       })
 
-      win.webContents.send("to-background", file)
+      win.webContents.send('to-background', file)
+    })
+  })
+}
+
+function createSOMBackgroundWindow(files) {
+  // console.log('inside createSOMBackgroundWindow()')
+  return new Promise(function(resolve, reject) {
+    let win = new BrowserWindow({
+      show: false
+    });
+
+    // console.log("hi"+ path.join(__dirname, 'background', 'background.html'))
+    win.loadURL("file:///Users/jm/Dropbox/AKT/Masterarbeit/dev/som-browser/src/background/som.html")
+
+    win.once('ready-to-show', () => {
+      // win.show()
+      // console.log('ready2show')
+      // win.webContents.openDevTools()
+
+      ipcRenderer.once('som-done', (event, value) => {
+        win.destroy()
+        resolve(value)
+      })
+
+      win.webContents.send('to-som', files)
     })
   })
 }
@@ -67,9 +93,11 @@ class App extends React.Component {
     processFiles(this.state.files).then((files) => {
       this.setState({files:files, loading: false})
       console.log(files)
-      // for (let feature in files[0].features) {
-        // console.log(files[0].features[feature])
-      // }
+    })
+    .then(() => {
+      let x = createSOMBackgroundWindow(this.state.files).then(value => console.log(value))
+      console.log('x: ' + x)
+      // console.log('SOM done.')
     })
   }
 

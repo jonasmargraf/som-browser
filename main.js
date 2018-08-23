@@ -95,3 +95,8 @@ app.on('activate', () => {
 ipcMain.on('from-background', (event, arg) => {
   mainWindow.webContents.send(arg.path, arg)
 })
+
+ipcMain.on('from-som', (event, arg) => {
+  mainWindow.webContents.send('som-done', arg)
+  // console.log(arg)
+})
