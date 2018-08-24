@@ -58,7 +58,8 @@ window.extractFeatures = (file) => {
 
         // Zero-pad up to nearest multiple of bufferSize
         // var zeroPaddedSignal = new Float32Array(nearestPowerOf2(signal.length))
-        let zeroPaddedSignal = new Float32Array(signal.length + bufferSize - (signal.length % bufferSize))
+        let zeroPaddedSignal = new Float32Array(signal.length
+                                  + bufferSize - (signal.length % bufferSize))
         zeroPaddedSignal.set(signal)
         Meyda.bufferSize = bufferSize
         Meyda.windowingFunction = 'rect'
