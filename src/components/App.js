@@ -96,7 +96,7 @@ class App extends React.Component {
     .then(() => {
       let x = createSOMBackgroundWindow(this.state.files)
       .then(value => console.log(value))
-      // console.log('x: ' + x)
+      console.log(x)
       // console.log('SOM done.')
     })
   }
