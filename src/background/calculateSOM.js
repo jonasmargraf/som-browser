@@ -3,8 +3,8 @@ math.config({randomSeed: 7});
 
 window.calculateSOM = (files) => {
 
-  let descriptorData = [];
-  // let normalizedData = [];
+  // let descriptorData = [];
+  let normalizedData = [];
   let dimensionCount;
   let mapSize = [7, 7];
   let neuronCount = mapSize[0] * mapSize[1];
@@ -25,21 +25,46 @@ window.calculateSOM = (files) => {
   let alpha;
   let t = 0;
 
-  let result = normalize(files)
-  // result = initializeMap(result)
-  let normalizedData = result.normalizedData
-  let featureStds = result.featureStds
+  let som = {
+    normalizedData,
+    dimensionCount,
+    mapSize,
+    neuronCount,
+    neurons,
+    coordinates,
+    distances,
+    bestMatches,
+    trainingEpochs,
+    radiusStart,
+    radiusEnd,
+    initialAlpha,
+    magnificationM,
+    learningRateType, // 'BDH', 'linear' or 'inverse'
+    trainingLength,
+    winTimeStamp,
+    rStep,
+    alpha,
+    t
+  }
+
+  som = normalize(files, som)
+  som = initializeMap(som)
+  som = trainMap(som)
+  som = findBestMatches(som)
+  // TODO:
+  // - port trainMap()
+  // - findBestMatches()
+
 
   return new Promise((resolve, reject) => {
-    resolve(result)
+    resolve(som)
   })
 }
 
-function normalize(files) {
+function normalize(files, som) {
   // Initialize data matrix for SOM as an array of empty arrays,
   // where each element represents one file's feature values
   let normalizedDataMatrix = new Array(files.length).fill(new Array())
-  let dimensionCount = files[0].features.length
   let featureStds = {}
   // Keep track of order in which we will access the features
   let featureKeys = Object.keys(files[0].features)
@@ -51,41 +76,46 @@ function normalize(files) {
     // Normalize the feature value for each file by
     // dividing through that feature's standard deviation
     normalizedDataMatrix = normalizedDataMatrix.map((file, i) =>
-      file.concat(featureValues[i] / featureStds[featureKey]))
+    file.concat(featureValues[i] / featureStds[featureKey]))
   })
 
-  return {
-    normalizedData: normalizedDataMatrix,
-    featureKeys: featureKeys,
-    featureStds: featureStds
-  }
+  som.dimensionCount = featureKeys.length
+  som.fileNames = files.map(file => file.name)
+  som.normalizedData = normalizedDataMatrix
+  som.featureKeys = featureKeys
+  som.featureStds = featureStds
+
+  return som
 }
 
-/*
-function initializeMap(data) {
+
+function initializeMap(som) {
+
+  let data = som.normalizedData
+  som.coordinates = []
+
   // Create neuron coordinate array
   var _i = 0;
-  for (var i = 0; i < mapSize[1]; i++) {
-    for (var j = 0; j < mapSize[0]; j++) {
-      coordinates.push([j, i]);
+  for (var i = 0; i < som.mapSize[1]; i++) {
+    for (var j = 0; j < som.mapSize[0]; j++) {
+      som.coordinates.push([j, i]);
       _i++;
     }
   }
   // Calculate matrix of distances between neurons on the map
   // Each row represents the distances from one neuron (where distance = 0)
   // to all others.
-  for (var i = 0; i < coordinates.length; i++) {
-    distances[i] = [];
-    var x1 = coordinates[i][0];
-    var y1 = coordinates[i][1];
+  for (var i = 0; i < som.coordinates.length; i++) {
+    som.distances[i] = [];
+    var x1 = som.coordinates[i][0];
+    var y1 = som.coordinates[i][1];
 
-    for (var j = 0; j < coordinates.length; j++) {
-      var x2 = coordinates[j][0];
-      var y2 = coordinates[j][1];
-      distances[i].push(math.sqrt(math.square(x1 - x2) + math.square(y1 - y2)));
+    for (var j = 0; j < som.coordinates.length; j++) {
+      var x2 = som.coordinates[j][0];
+      var y2 = som.coordinates[j][1];
+      som.distances[i].push(math.sqrt(math.square(x1 - x2) + math.square(y1 - y2)));
     }
   }
-  // distances.forEach(function(element) { outlet(0, element); });
 
   // TODO: Add linear initialization.
 
@@ -93,31 +123,175 @@ function initializeMap(data) {
   // First find each dimensions upper & lower bound, then use for random range.
   let dimMax = [];
   let dimMin = [];
-  for (let dim = 0; dim < dimensionCount; dim++)
+  for (let dim = 0; dim < som.dimensionCount; dim++)
   {
-    dimMax.push(math.max(getDimension(data.normalizedDataMatrix, dim)));
-    dimMin.push(math.min(getDimension(data.normalizedDataMatrix, dim)));
+    dimMax.push(math.max(getDimension(data, dim)));
+    dimMin.push(math.min(getDimension(data, dim)));
   }
 
-  // let featuresMax = {}
-  // let featuresMin = {}
-  //
-  // for (feature in normalizedData[0].features) {
-  //   let featureValues = normalizedData.map(file => file.normalizedFeatures[feature])
-  //   featuresMax[feature] = math.max(featureValues)
-  //   featuresMin[feature] = math.min(featureValues)
-  // }
-
-  for (var i = 0; i < neuronCount; i++)
+  for (var i = 0; i < som.neuronCount; i++)
   {
-    neurons[i] = []
-    for (var j = 0; j < dimensionCount; j++) {
-    // for (feature in normalizedData[0].features) {
-      neurons[i].push(math.random(dimMin[j], dimMax[j]));
+    som.neurons[i] = []
+    for (var j = 0; j < som.dimensionCount; j++) {
+      // for (feature in normalizedData[0].features) {
+      som.neurons[i].push(math.random(dimMin[j], dimMax[j]));
       // neurons[i].push(math.random(featuresMin[feature], featuresMax[feature]))
     }
   }
 
-  return Object.assign(data, neurons)
+  return som
 }
-*/
+
+// Return a single feature (dimension / column) of descriptor data
+function getDimension(data, dimensionIndex) {
+  var dimensionData = data.map(function(element) {
+    return element[dimensionIndex]
+  })
+  return dimensionData
+}
+
+function trainMap(som) {
+  som.trainingLength = som.trainingEpochs * som.normalizedData.length
+  som.rStep = (som.radiusEnd - som.radiusStart) / (som.trainingLength - 1)
+
+  // Initialize winTimeStamp as array filled with zeros
+  som.winTimeStamp = new Array(som.neuronCount)
+  for (var i = 0; i < som.winTimeStamp.length; i++) {
+    som.winTimeStamp[i] = 0
+  }
+
+  // let neurons = som.neurons
+
+  // Begin training
+  for (var t = 0; t < som.trainingLength; t++) {
+    som = trainingStep(t, som)
+    // som = trainingStep(t, som, neurons)
+  }
+
+  return som
+  // return neurons
+}
+
+// function training(t, trainingLength, rStep, alpha, winTimeStamp)
+function training()
+{
+  // Progress percentage on outlet 4
+  if (t < trainingLength)
+  {
+    trainingStep(t, trainingLength, rStep, alpha, winTimeStamp);
+    outlet(3, math.ceil(100 * (t / trainingLength)));
+    t++;
+  }
+  else
+  {
+    post('Training done.\n');
+    findBestMatches();
+    outputDataCoordinatesOnMap();
+    // post(neurons + '\n');
+    arguments.callee.task.cancel();
+  }
+}
+
+// function trainingStep(t, trainingLength, rStep, alpha, winTimeStamp) {
+// function trainingStep(t, som, neurons) {
+function trainingStep(t, som) {
+  // Pick random vector on each iteration
+  var vector = som.normalizedData[math.randomInt(0, som.normalizedData.length)]
+  // check if random outputs the same every time
+  // if (t === 0)
+  // {
+  //   post(math.randomInt(0, normalizedData.length) + '\n');
+  // }
+  var differences = []
+  // var differenceMagnitudes = [];
+  var distancesFromVector = []
+
+  // Subtract chosen vector from each neuron / map unit, then calculate that
+  // difference vector's magnitude.
+  // In other words, calculate the Euclidean distance between each neuron and
+  // the chosen vector.
+  //
+  // NOTE: I believe I made a mistake in the original MATLAB code -
+  // the calculation there (see trainMap.m line 66) only comes out to the
+  // equivalent of mag = sum(difference^2),
+  // instead it should be sqrt(sum(difference^2)).
+  // I don't think it actually affects the result however.
+  for (var n = 0; n < som.neuronCount; n++) {
+    differences.push(math.subtract(som.neurons[n], vector));
+    distancesFromVector.push(math.norm(math.subtract(som.neurons[n], vector)));
+  }
+
+  // Find best matching unit's distance and index: min(norm(neurons - vector))
+  var bmuDistance = math.min(distancesFromVector);
+  var bmu = distancesFromVector.indexOf(bmuDistance);
+
+  // When did this neuron last win?
+  var timeSinceLastWin = t - som.winTimeStamp[bmu];
+
+  // If neuron has never won, set to 0
+  if (timeSinceLastWin === t)
+  {
+    timeSinceLastWin = 0;
+  }
+
+  // Keep track of time t at which this neuron 'won' (was selected as bmu)
+  som.winTimeStamp[bmu] = t;
+
+  switch (som.learningRateType) {
+    // Linearly decreasing learning rate
+    case 'linear':
+      som.alpha = som.initialAlpha * (1 - t / som.trainingLength);
+      break;
+    // Inverse decrease (to 0.01 * initialAlpha at last training step)
+    case 'inverse':
+      b = som.trainingLength / 100;
+      a = b * som.initialAlpha;
+      som.alpha = a / (b + t);
+      break;
+    // BDH adaptive local learning rate
+    case 'BDH':
+      som.alpha = math.pow((1 / bmuDistance), som.dimensionCount);
+      som.alpha = som.initialAlpha *
+              math.pow(((1 / timeSinceLastWin) * som.alpha), som.magnificationM);
+      // Limit alpha to <= 0.9
+      som.alpha = math.min(som.alpha, 0.9);
+      break;
+    }
+
+    // Radius decreases from rStart to rEnd over n=trainingLength steps.
+    var r = som.radiusStart + t * som.rStep;
+
+    som.neurons = som.neurons.map((neuron, index) => {
+    // Gaussian neighborhood function
+      var h = som.alpha * math.exp(-(math.square(som.distances[index][bmu])
+                                      / (2 * math.square(r))));
+      return math.subtract(neuron, math.multiply(h, differences[index]));
+    })
+
+    return som
+}
+
+function findBestMatches(som) {
+  som.bestMatches = som.normalizedData.map(function (vector) {
+    var differences = [];
+    // var differenceMagnitudes = [];
+    var distancesFromVector = [];
+
+    // Subtract chosen vector from each neuron / map unit, then calculate that
+    // difference vector's magnitude.
+    // In other words, calculate the Euclidean distance between each neuron and
+    // the chosen vector.
+    for (var n = 0; n < som.neuronCount; n++)
+    {
+      distancesFromVector.push(math.norm(math.subtract(som.neurons[n], vector)));
+    }
+    // Find best matching unit's distance and index: min(norm(neurons - vector))
+    var bmuDistance = math.min(distancesFromVector);
+    var bmu = distancesFromVector.indexOf(bmuDistance);
+    // post('vector: ' + vector + '\n');
+    // post('bmu: ' + bmu + '\t bmuDistance: ' + bmuDistance + '\n');
+    return [bmu, bmuDistance];
+  });
+
+  return som
+}
