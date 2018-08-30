@@ -4,3 +4,4 @@ node_modules/
 dist/
 builds/
 audio
+audio_big
