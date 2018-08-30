@@ -286,14 +286,13 @@ function findBestMatches(som) {
     :
     som.neuronAssignedFiles[e] = [i]
   })
+  // Look for undefined array entries and replace explicitly with null
   for (var i = 0; i < som.neuronCount; i++) {
     som.neuronAssignedFiles[i] === undefined ?
     som.neuronAssignedFiles[i] = null
     :
     som.neuronAssignedFiles[i]
   }
-    // (e === undefined) && (e = null))
-
 
   return som
 }
