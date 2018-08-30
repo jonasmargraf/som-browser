@@ -172,26 +172,6 @@ function trainMap(som) {
   // return neurons
 }
 
-// function training(t, trainingLength, rStep, alpha, winTimeStamp)
-function training()
-{
-  // Progress percentage on outlet 4
-  if (t < trainingLength)
-  {
-    trainingStep(t, trainingLength, rStep, alpha, winTimeStamp);
-    outlet(3, math.ceil(100 * (t / trainingLength)));
-    t++;
-  }
-  else
-  {
-    post('Training done.\n');
-    findBestMatches();
-    outputDataCoordinatesOnMap();
-    // post(neurons + '\n');
-    arguments.callee.task.cancel();
-  }
-}
-
 // function trainingStep(t, trainingLength, rStep, alpha, winTimeStamp) {
 // function trainingStep(t, som, neurons) {
 function trainingStep(t, som) {
@@ -292,6 +272,28 @@ function findBestMatches(som) {
     // post('bmu: ' + bmu + '\t bmuDistance: ' + bmuDistance + '\n');
     return [bmu, bmuDistance];
   });
+
+  // neuronAssignedFiles = array where index represents neuron and the element
+  // at that index is an array of the files assigned to that neuron
+  som.neuronAssignedFiles = new Array(som.neuronCount)
+  // get just the best matching unit indexes
+  let bmus = som.bestMatches.map(e => e[0])
+  bmus.forEach((e, i) => {
+    // If neuronAssignedFiles at this index is already an array, push current
+    // file's index there, otherwise create array with file index as first element
+    Array.isArray(som.neuronAssignedFiles[e]) ?
+    som.neuronAssignedFiles[e].push(i)
+    :
+    som.neuronAssignedFiles[e] = [i]
+  })
+  for (var i = 0; i < som.neuronCount; i++) {
+    som.neuronAssignedFiles[i] === undefined ?
+    som.neuronAssignedFiles[i] = null
+    :
+    som.neuronAssignedFiles[i]
+  }
+    // (e === undefined) && (e = null))
+
 
   return som
 }
