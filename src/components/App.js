@@ -111,7 +111,6 @@ class App extends React.Component {
 
     return (
       <div>
-        <Map />
 
         <FileList
           loading={this.state.loading}
@@ -119,8 +118,13 @@ class App extends React.Component {
           onChange={this.handleFileListChange}
           onFileClick={this.handleFileClick}
           onAnalyzeClick={this.handleAnalyzeClick}/>
+
+        <Map />
+
         <FileInfo file={file}/>
+
         <UserSelection />
+        
       </div>
     );
   }
