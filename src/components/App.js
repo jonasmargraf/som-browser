@@ -126,7 +126,9 @@ class App extends React.Component {
           onFileClick={this.handleFileClick}
           onAnalyzeClick={this.handleAnalyzeClick}/>
 
-        <Map som={this.state.som}/>
+        <Map
+          som={this.state.som}
+          files={this.state.files}/>
 
         <FileInfo file={file}/>
 

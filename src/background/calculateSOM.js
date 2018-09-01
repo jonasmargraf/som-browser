@@ -6,7 +6,7 @@ window.calculateSOM = (files) => {
   // let descriptorData = [];
   let normalizedData = [];
   let dimensionCount;
-  let mapSize = [7, 7];
+  let mapSize = [5, 5];
   let neuronCount = mapSize[0] * mapSize[1];
   let neurons = [];
   let coordinates = [];

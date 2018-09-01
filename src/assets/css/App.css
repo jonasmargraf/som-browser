@@ -12,12 +12,14 @@ html {
 }
 
 h3 {
-  font-weight:  800 !important;
+  font-weight: 800 !important;
+  color: dimgrey;
   /* font-size: 1.0em; */
 }
 
-ul {
+ul, p, input {
   list-style: none;
+  color: grey;
 }
 
 .Map {
@@ -50,13 +52,26 @@ ul {
 
 .Node {
   /* margin: 10px; */
-  fill: white;
-  stroke: rgb(230, 230, 230);
+  fill: rgb(250, 250, 250);
+  /* stroke: rgb(230, 230, 230); */
   transition: fill 0.2s ease-out;
 }
 
 .Node:hover {
-  fill: rgb(230, 230, 230);
+  /* fill: rgb(230, 230, 230); */
+  transition: fill 0.1s ease-in;
+}
+
+.SubNode {
+  /* fill: rgb(230, 230, 230); */
+  fill: white;
+  stroke: lightgrey;
+  transition: fill 0.2s ease-out;
+}
+
+.SubNode:hover {
+  fill: lightgrey;
+  stroke: lightgrey;
   transition: fill 0.1s ease-in;
 }
 
@@ -113,8 +128,8 @@ ul {
 
 .OpenFile {
   float: right;
-  background-color: white;
-  border: none;
+  /* background-color: white; */
+  /* border: none; */
   cursor: pointer;
 }
 

@@ -6,45 +6,41 @@ class Map extends React.Component {
     super(props)
   }
 
-  createMap(som) {
-    let map = []
+  createMap(som, files) {
     let xPos
     let yPos
-    som.coordinates.forEach((coordinate, index) => {
+    let map = som.coordinates.map((coordinate, index) => {
       xPos = (coordinate[0] * (100 / som.mapSize[0]))
       yPos = (coordinate[1] * (100 / som.mapSize[1]))
-      map.push(
-        <svg>
+      let node =
+        <svg x={xPos + "%"} y={yPos + "%"}>
           <rect
             className="Node"
-            x={xPos + '%'}
-            y={yPos + '%'}
-            rx="1px"
-            ry="1px"
+            rx="0px"
+            ry="0px"
             width={(100 / som.mapSize[0]) + '%'}
             height={(100 / som.mapSize[1]) + '%'}>
           </rect>
-          <rect
-            x={xPos + '%'}
-            y={yPos + '%'}
-            width={(100 / som.mapSize[0] - 2) + '%'}
-            height={(100 / som.mapSize[0] - 2) + '%'}
-            fill="white">
-          </rect>
-          <text
-            x={xPos + '%'}
-            y={yPos + '%'}
-            dx="1%"
-            dy="3%">
-            {som.neuronAssignedFiles[index] ?
-              som.neuronAssignedFiles[index].length
-              :
-              "nuthin'"}
-            </text>
+          {som.neuronAssignedFiles[index] &&
+            som.neuronAssignedFiles[index].map((e, i) => {
+              var nodeFileCount = som.neuronAssignedFiles[index].length
+              var nodeGridRoot = Math.ceil(Math.sqrt(nodeFileCount))
+              var x = (i % nodeGridRoot) * (100 / nodeGridRoot)
+              var y = Math.floor(i / nodeGridRoot) * (100 / nodeGridRoot)
+              return <rect
+                className="SubNode"
+                x={x / som.mapSize[0] + 0.5 + "%"}
+                y={y / som.mapSize[1] + 0.5 + "%"}
+                rx="1px"
+                ry="1px"
+                width={100 / (som.mapSize[0] * nodeGridRoot) - 1 + "%"}
+                height={100 / (som.mapSize[1] * nodeGridRoot) - 1 + "%"}>
+              </rect>
+            })
+          }
         </svg>
-      )
+      return node
     })
-
     return map
   }
 
