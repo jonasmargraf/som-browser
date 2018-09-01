@@ -35,6 +35,10 @@ ul {
 }
 
 .Map > * {
+  /* padding: 10px; */
+}
+
+.Map div * {
   padding: 10px;
 }
 
@@ -45,13 +49,14 @@ ul {
 }
 
 .Node {
-  fill: rgb(230, 230, 230);
+  /* margin: 10px; */
+  fill: white;
   stroke: rgb(230, 230, 230);
-  transition: fill 0.4s ease-out;
+  transition: fill 0.2s ease-out;
 }
 
 .Node:hover {
-  fill: white;
+  fill: rgb(230, 230, 230);
   transition: fill 0.1s ease-in;
 }
 

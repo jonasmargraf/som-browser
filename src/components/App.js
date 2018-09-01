@@ -71,6 +71,7 @@ class App extends React.Component {
     this.state = {
       files: null,
       selectedFile: null,
+      som: null,
       loading: false
     }
   }
@@ -87,16 +88,22 @@ class App extends React.Component {
   }
 
   handleAnalyzeClick() {
-    this.setState({loading : true})
+    this.setState({loading: true})
+    console.log("Processing files...")
     // createBackgroundWindow()
-    processFiles(this.state.files).then((files) => {
-      this.setState({files:files, loading: false})
+    processFiles(this.state.files)
+    .then(files => this.setState({files: files, loading: false}))
       // console.log(files)
-    })
+    // })
     .then(() => {
-      let x = createSOMBackgroundWindow(this.state.files)
-      .then(value => console.log(value))
-      console.log(x)
+      console.log("Building map...")
+      createSOMBackgroundWindow(this.state.files)
+      .then(som => {
+        this.setState({som: som})
+        console.log(this.state)
+      })
+      // .then(value => console.log(value))
+      // console.log(x)
       // console.log('SOM done.')
     })
   }
@@ -119,12 +126,12 @@ class App extends React.Component {
           onFileClick={this.handleFileClick}
           onAnalyzeClick={this.handleAnalyzeClick}/>
 
-        <Map />
+        <Map som={this.state.som}/>
 
         <FileInfo file={file}/>
 
         <UserSelection />
-        
+
       </div>
     );
   }

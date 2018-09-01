@@ -2,26 +2,49 @@ import '../assets/css/App.css';
 import React, { Component } from 'react';
 
 class Map extends React.Component {
+  constructor(props) {
+    super(props)
+  }
 
-  createMap() {
+  createMap(som) {
     let map = []
     let xPos
     let yPos
-    for (var i = 0; i < 8; i++) {
-      xPos = 0.25 + ((100 / 8) * i) + '%'
-      for (var j = 0; j < 8; j++) {
-        yPos = 0.25 + ((100 / 8) * j) + '%'
-        map.push(<rect
-          className="Node"
-          x={xPos}
-          y={yPos}
-          rx="1px"
-          ry="1px"
-          width="12%"
-          height="12%">
-        </rect>)
-      }
-    }
+    som.coordinates.forEach((coordinate, index) => {
+      xPos = (coordinate[0] * (100 / som.mapSize[0]))
+      yPos = (coordinate[1] * (100 / som.mapSize[1]))
+      map.push(
+        <svg>
+          <rect
+            className="Node"
+            x={xPos + '%'}
+            y={yPos + '%'}
+            rx="1px"
+            ry="1px"
+            width={(100 / som.mapSize[0]) + '%'}
+            height={(100 / som.mapSize[1]) + '%'}>
+          </rect>
+          <rect
+            x={xPos + '%'}
+            y={yPos + '%'}
+            width={(100 / som.mapSize[0] - 2) + '%'}
+            height={(100 / som.mapSize[0] - 2) + '%'}
+            fill="white">
+          </rect>
+          <text
+            x={xPos + '%'}
+            y={yPos + '%'}
+            dx="1%"
+            dy="3%">
+            {som.neuronAssignedFiles[index] ?
+              som.neuronAssignedFiles[index].length
+              :
+              "nuthin'"}
+            </text>
+        </svg>
+      )
+    })
+
     return map
   }
 
@@ -30,12 +53,17 @@ class Map extends React.Component {
     return (
       <div className="Map">
         {
-          // <h3>Map</h3>
-          // <p>This is where the Map visualization will be shown.</p>
+          this.props.som ?
+
+          <svg className="Drawing">
+            {this.createMap(this.props.som)}
+          </svg>
+          :
+          <div>
+            <h3>Map</h3>
+            <p>This is where the Map visualization will be shown.</p>
+          </div>
         }
-        <svg className="Drawing">
-          {this.createMap()}
-        </svg>
 
       </div>
     );
