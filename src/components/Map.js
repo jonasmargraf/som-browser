@@ -54,7 +54,6 @@ class Map extends React.Component {
 
   render() {
     const fileKey = this.props.selectedFile ? this.props.selectedFile.path : null
-    // console.log(this.props.selectedFile)
 
     return (
       <div className="Map">

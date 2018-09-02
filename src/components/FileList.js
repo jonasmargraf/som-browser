@@ -21,8 +21,6 @@ class FileListItem extends React.Component {
 
   render() {
     const file = this.props.file
-    // const selectedFile = this.props.key
-    //     id={file.path === selectedFile ? "FileListSelectedFile" : null}
 
     return (
       <li

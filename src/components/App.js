@@ -80,7 +80,8 @@ class App extends React.Component {
   handleFileListChange(files) {
     this.setState({
       files: files,
-      selectedFile: null
+      selectedFile: null,
+      som: null
     })
   }
 
@@ -90,7 +91,6 @@ class App extends React.Component {
 
   handleMapClick(mapElement) {
     this.setState({selectedFile: mapElement})
-    console.log(mapElement)
   }
 
   handleAnalyzeClick() {
