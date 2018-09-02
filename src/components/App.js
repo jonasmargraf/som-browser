@@ -102,9 +102,6 @@ class App extends React.Component {
         this.setState({som: som})
         console.log(this.state)
       })
-      // .then(value => console.log(value))
-      // console.log(x)
-      // console.log('SOM done.')
     })
   }
 
