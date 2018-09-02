@@ -141,7 +141,7 @@ class App extends React.Component {
         <UserSelection />
 
       </div>
-    );
+    )
   }
 }
 

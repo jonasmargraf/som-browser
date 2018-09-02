@@ -67,7 +67,7 @@ ul, p, input, span {
   /* fill: rgb(230, 230, 230); */
   fill: white;
   stroke: lightgrey;
-  transition: stroke 0.1s ease-out;
+  transition: stroke 0.1s ease-out, fill 0.05s ease-out;
 }
 
 .SubNode:hover {
@@ -81,8 +81,8 @@ ul, p, input, span {
   /* fill: rgb(230, 230, 230); */
   fill: dodgerblue;
   stroke: dodgerblue;
-  transition: fill 0.8s ease-in;
-  transition: stroke 0.8s ease-in;
+  transition: fill 0.05s ease-in;
+  /* transition: stroke 0.8s ease-in; */
 }
 
 .FileList {

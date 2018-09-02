@@ -1,13 +1,7 @@
 import '../assets/css/App.css';
 import React, { Component } from 'react';
-// import { ListGroup, ListGroupItem } from 'reactstrap';
 const {dialog} = require('electron').remote;
 const path = require('path');
-// const {extractFeatures} = require('../extractFeatures.js');
-
-// var file = fetch('../../audio/.Plank 3.wav')
-//             .then(response => response.arrayBuffer())
-//             .then(buffer => console.log(buffer))
 
 class FileListItem extends React.Component {
   constructor(props) {
@@ -95,15 +89,7 @@ class FileList extends React.Component {
             onClick={this.handleClick}/>
         </div>
         <ul>
-          {
-            files ?
-
-            fileListItems
-
-            :
-
-            <p>No audio files loaded.</p>
-          }
+          { files ? fileListItems : <p>No audio files loaded.</p> }
         </ul>
       </div>
     );

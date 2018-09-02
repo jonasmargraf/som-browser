@@ -63,7 +63,9 @@ class Map extends React.Component {
           <svg className="Drawing" >
             {this.createMap(this.props.som, this.props.files, fileKey)}
           </svg>
+
           :
+          
           <div>
             <h3>Map</h3>
             <p>This is where the Map visualization will be shown.</p>
