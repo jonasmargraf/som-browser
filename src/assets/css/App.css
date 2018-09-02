@@ -77,6 +77,14 @@ ul, p, input, span {
   transition: stroke 0.1s ease-in;
 }
 
+#SubNodeSelected {
+  /* fill: rgb(230, 230, 230); */
+  fill: dodgerblue;
+  stroke: dodgerblue;
+  transition: fill 0.8s ease-in;
+  transition: stroke 0.8s ease-in;
+}
+
 .FileList {
   /* border: 1px solid grey; */
   background-color: white;
@@ -108,7 +116,7 @@ ul, p, input, span {
   /* border: 1px solid black; */
 }
 
-.FileList > ul > li {
+.FileListItem {
   /* margin: 15px; */
   padding-top: 5px;
   padding-bottom: 5px;
@@ -121,6 +129,10 @@ ul, p, input, span {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 200;
+}
+
+#FileListSelectedFile {
+  color: dodgerblue;
 }
 
 .FileList > ul > li:hover {

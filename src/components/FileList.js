@@ -21,9 +21,14 @@ class FileListItem extends React.Component {
 
   render() {
     const file = this.props.file
+    // const selectedFile = this.props.key
+    //     id={file.path === selectedFile ? "FileListSelectedFile" : null}
 
     return (
-      <li className="FileListItem" onClick={this.handleClick.bind(this, file)}>
+      <li
+        id={this.props.selected ? "FileListSelectedFile" : undefined}
+        className="FileListItem"
+        onClick={this.handleClick.bind(this, file)}>
         {file.name}
       </li>
     )
@@ -66,12 +71,14 @@ class FileList extends React.Component {
   render() {
     const files = this.props.files;
     const fileListItems = [];
+    const selectedFile = this.props.selectedFile && this.props.selectedFile.path
 
     if (files) {
       files.forEach(file => fileListItems.push(
         <FileListItem
           key={file.path}
           file={file}
+          selected={file.path === selectedFile}
           onFileClick={this.props.onFileClick}/>
       ))
     }

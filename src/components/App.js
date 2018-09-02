@@ -68,6 +68,7 @@ class App extends React.Component {
     this.handleFileListChange = this.handleFileListChange.bind(this)
     this.handleFileClick = this.handleFileClick.bind(this)
     this.handleAnalyzeClick = this.handleAnalyzeClick.bind(this)
+    this.handleMapClick = this.handleMapClick.bind(this)
     this.state = {
       files: null,
       selectedFile: null,
@@ -85,6 +86,11 @@ class App extends React.Component {
 
   handleFileClick(file) {
     this.setState({selectedFile: file.path})
+  }
+
+  handleMapClick(mapElement) {
+    this.setState({selectedFile: mapElement})
+    console.log(mapElement)
   }
 
   handleAnalyzeClick() {
@@ -119,13 +125,16 @@ class App extends React.Component {
         <FileList
           loading={this.state.loading}
           files={files}
+          selectedFile={file}
           onChange={this.handleFileListChange}
           onFileClick={this.handleFileClick}
           onAnalyzeClick={this.handleAnalyzeClick}/>
 
         <Map
           som={this.state.som}
-          files={this.state.files}/>
+          files={this.state.files}
+          selectedFile={file}
+          onMapClick={this.handleMapClick}/>
 
         <FileInfo file={file}/>
 
