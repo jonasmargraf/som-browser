@@ -12,12 +12,12 @@ html {
 }
 
 h3 {
-  font-weight: 800 !important;
-  color: dimgrey;
-  /* font-size: 1.0em; */
+  font-weight: 200 !important;
+  color: dodgerblue;
+  font-size: 1.5em;
 }
 
-ul, p, input {
+ul, p, input, span {
   list-style: none;
   color: grey;
 }
@@ -53,7 +53,8 @@ ul, p, input {
 .Node {
   /* margin: 10px; */
   fill: rgb(250, 250, 250);
-  /* stroke: rgb(230, 230, 230); */
+  stroke: white;
+  stroke-width: 1px;
   transition: fill 0.2s ease-out;
 }
 
@@ -66,13 +67,14 @@ ul, p, input {
   /* fill: rgb(230, 230, 230); */
   fill: white;
   stroke: lightgrey;
-  transition: fill 0.2s ease-out;
+  transition: stroke 0.1s ease-out;
 }
 
 .SubNode:hover {
-  fill: lightgrey;
-  stroke: lightgrey;
-  transition: fill 0.1s ease-in;
+  /* fill: dodgerblue; */
+  stroke: dodgerblue;
+  stroke-width: 1.2px;
+  transition: stroke 0.1s ease-in;
 }
 
 .FileList {

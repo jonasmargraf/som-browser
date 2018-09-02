@@ -16,8 +16,8 @@ class Map extends React.Component {
         <svg x={xPos + "%"} y={yPos + "%"}>
           <rect
             className="Node"
-            rx="0px"
-            ry="0px"
+            rx="1px"
+            ry="1px"
             width={(100 / som.mapSize[0]) + '%'}
             height={(100 / som.mapSize[1]) + '%'}>
           </rect>
