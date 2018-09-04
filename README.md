@@ -1,6 +1,8 @@
 # SOM Browser
 _Sample library organization using self-organizing maps._
 
+![Screenshot of SOM Browser](https://github.com/jonasmargraf/som-browser/img/som-browser.png)
+
 ### Setup:
 * `npm install`
 * `npm run dev`
