@@ -2,8 +2,8 @@
 _Sample library organization using self-organizing maps._
 
 ### Setup:
-`npm install`
-`npm run dev`
+* `npm install`
+* `npm run dev`
 
-##### Credit:
+#### Credit:
 Built using a [Electron + React + Webpack template](https://github.com/pbarbiero/basic-electron-react-boilerplate) by Phillip Barbiero.
