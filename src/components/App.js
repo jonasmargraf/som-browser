@@ -7,6 +7,9 @@ import FileInfo from './FileInfo';
 import UserSelection from './UserSelection';
 const { ipcRenderer, remote } = require('electron');
 const { BrowserWindow } = remote;
+const fs = require('fs');
+
+const context = new AudioContext()
 
 // Invisible background Window for async background processing
 function createBackgroundWindow(file) {
@@ -62,6 +65,19 @@ const processFiles = (files) =>
 const getFileByPath = (files, path) =>
   (path == null) ? null : files.filter((file) => file.path == path)[0]
 
+const playFile = (filePath) => {
+  fs.readFile(filePath, (error, data) => {
+    if (error) throw error
+    context.decodeAudioData(data.buffer, decodedAudio => {
+      const source = context.createBufferSource()
+      source.buffer = decodedAudio
+      source.connect(context.destination)
+      source.start()
+    })
+  })
+
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props)
@@ -90,7 +106,8 @@ class App extends React.Component {
   }
 
   handleMapClick(mapElement) {
-    this.setState({selectedFile: mapElement})
+    this.setState({selectedFile: mapElement}, () =>
+      playFile(this.state.selectedFile))
   }
 
   handleAnalyzeClick() {
@@ -99,8 +116,6 @@ class App extends React.Component {
     // createBackgroundWindow()
     processFiles(this.state.files)
     .then(files => this.setState({files: files, loading: false}))
-      // console.log(files)
-    // })
     .then(() => {
       console.log("Building map...")
       createSOMBackgroundWindow(this.state.files)
