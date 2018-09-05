@@ -11,37 +11,71 @@ const fs = require('fs');
 
 const context = new AudioContext()
 
-// Invisible background Window for async background processing
-function createBackgroundWindow(file) {
+// Invisible background window for async background processing
+function processFiles(files) {
   return new Promise(function(resolve, reject) {
     let win = new BrowserWindow({
       show: false
     });
 
     // console.log("hi"+ path.join(__dirname, 'background', 'background.html'))
+    // let backgroundPath
+    // if ( dev && process.argv.indexOf('--noDevServer') === -1 ) {
+    //   indexPath = url.format({
+    //     protocol: 'http:',
+    //     host: 'localhost:8080',
+    //     pathname: '/background/background.html',
+    //     slashes: true
+    //   })
+    // }
+    // else {
+    //   indexPath = url.format({
+    //     protocol: 'file:',
+    //     pathname: path.join(__dirname, 'dist', '/background/background.html'),
+    //     slashes: true
+    //   })
+    // }
+    // win.loadURL( backgroundPath )
     win.loadURL("file:///Users/jm/Dropbox/AKT/Masterarbeit/dev/som-browser/src/background/background.html")
 
     win.once('ready-to-show', () => {
+      // win.show()
       // win.webContents.openDevTools();
 
-      ipcRenderer.once(file.path, (event, arg) => {
+      ipcRenderer.once('features-done', (event, value) => {
         win.destroy()
-        resolve(arg)
+        resolve(value)
       })
 
-      win.webContents.send('to-background', file)
+      win.webContents.send('to-background', files)
     })
   })
 }
 
-function createSOMBackgroundWindow(files) {
-  // console.log('inside createSOMBackgroundWindow()')
+function createSOM(files) {
   return new Promise(function(resolve, reject) {
     let win = new BrowserWindow({
       show: false
     });
 
     // console.log("hi"+ path.join(__dirname, 'background', 'background.html'))
+    // let backgroundPath
+    // if ( dev && process.argv.indexOf('--noDevServer') === -1 ) {
+    //   indexPath = url.format({
+    //     protocol: 'http:',
+    //     host: 'localhost:8080',
+    //     pathname: '/background/som.html',
+    //     slashes: true
+    //   })
+    // }
+    // else {
+    //   indexPath = url.format({
+    //     protocol: 'file:',
+    //     pathname: path.join(__dirname, 'dist', '/background/som.html'),
+    //     slashes: true
+    //   })
+    // }
+    // win.loadURL( backgroundPath )
     win.loadURL("file:///Users/jm/Dropbox/AKT/Masterarbeit/dev/som-browser/src/background/som.html")
 
     win.once('ready-to-show', () => {
@@ -58,9 +92,6 @@ function createSOMBackgroundWindow(files) {
     })
   })
 }
-
-const processFiles = (files) =>
-  Promise.all(files.map((file) => createBackgroundWindow(file)))
 
 const getFileByPath = (files, path) =>
   (path == null) ? null : files.filter((file) => file.path == path)[0]
@@ -117,7 +148,7 @@ class App extends React.Component {
     .then(files => this.setState({files: files, loading: false}))
     .then(() => {
       console.log("Building map...")
-      createSOMBackgroundWindow(this.state.files)
+      createSOM(this.state.files)
       .then(som => {
         this.setState({som: som})
         console.log(this.state)

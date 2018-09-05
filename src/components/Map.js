@@ -65,7 +65,7 @@ class Map extends React.Component {
           </svg>
 
           :
-          
+
           <div>
             <h3>Map</h3>
             <p>This is where the Map visualization will be shown.</p>
