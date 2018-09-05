@@ -76,7 +76,7 @@ class FileList extends React.Component {
     }
 
     return (
-      <div className="FileList">
+      <div className="FileListContainer">
         <h3>
           Sounds
         </h3>
@@ -84,12 +84,12 @@ class FileList extends React.Component {
           <input className="AnalyzeSounds" type="button" value="Analyze"
             disabled={this.props.loading}
             onClick={this.handleAnalyzeClick}/>
-          {this.props.loading && <span>loading</span>}
+          {this.props.loading && <span>Loading...</span>}
           <input className="OpenFile" type="button" value="Open..."
             onClick={this.handleClick}/>
         </div>
-        <ul>
-          { files ? fileListItems : <p>No audio files loaded.</p> }
+        <ul className="FileList">
+          { files ? fileListItems : <span>No audio files loaded.</span> }
         </ul>
       </div>
     );

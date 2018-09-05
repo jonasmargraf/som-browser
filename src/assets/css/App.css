@@ -22,6 +22,10 @@ ul, p, input, span {
   color: dimgrey;
 }
 
+span {
+  padding: 10px;
+}
+
 .Map {
   /* border-style: solid;
   border-width: 3px;
@@ -86,7 +90,7 @@ ul, p, input, span {
   /* transition: stroke 0.8s ease-in; */
 }
 
-.FileList {
+.FileListContainer{
   /* border: 1px solid grey; */
   background-color: white;
   box-shadow: 0px 1px 5px rgb(220, 220, 220);
@@ -98,10 +102,14 @@ ul, p, input, span {
   white-space: nowrap;
 }
 
-.FileList > * {
+.FileList {
+  margin: 10px;
 }
 
-.FileList > h3 {
+.FileListContainer> * {
+}
+
+.FileListContainer> h3 {
   /* margin: 10px; */
   padding: 10px;
 }
@@ -111,7 +119,7 @@ ul, p, input, span {
   /* padding-bottom: 0px; */
 }
 
-.FileList ul {
+.FileList {
   overflow: scroll;
   height: 80%;
   /* border: 1px solid black; */
@@ -136,7 +144,7 @@ ul, p, input, span {
   color: dodgerblue;
 }
 
-.FileList > ul > li:hover {
+.FileListItem:hover {
   padding-left: 5px;
   transition: padding-left 0.25s;
 }
@@ -160,7 +168,12 @@ ul, p, input, span {
   /* white-space: nowrap; */
 }
 
-.FileInfo h3, ul {
+.FileInfo h3 {
+  padding: 10px;
+}
+
+.FileInfo p {
+  /* margin: 10px; */
   padding: 10px;
 }
 
@@ -170,16 +183,24 @@ ul, p, input, span {
   text-overflow: ellipsis;
 }
 
-.FileInfo > ul {
+.FileInfoList {
   overflow-wrap: break-word;
   overflow: scroll;
+  margin: 10px;
+  /* margin-bottom: 50px; */
   /* border: 1px solid black; */
 }
 
-.FileInfo li {
+.FileInfoList li {
   border-bottom: 1px solid rgb(220, 220, 220);
   padding-top: 5px;
   padding-bottom: 5px;
+}
+
+#featuresHeader {
+  font-weight: 400;
+  border-bottom: none;
+  /* margin-bottom: 50px; */
 }
 
 .UserSelection {
