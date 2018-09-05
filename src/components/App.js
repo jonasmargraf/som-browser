@@ -75,7 +75,6 @@ const playFile = (filePath) => {
       source.start()
     })
   })
-
 }
 
 class App extends React.Component {
