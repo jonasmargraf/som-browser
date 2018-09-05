@@ -3,16 +3,18 @@ math.config({randomSeed: 7});
 
 window.calculateSOM = (files) => {
 
+  let mapSideLength = Math.floor(Math.sqrt(files.length))
+
   // let descriptorData = [];
   let normalizedData = [];
   let dimensionCount;
-  let mapSize = [5, 5];
+  let mapSize = [mapSideLength, mapSideLength];
   let neuronCount = mapSize[0] * mapSize[1];
   let neurons = [];
   let coordinates = [];
   let distances = [];
   let bestMatches = [];
-  let trainingEpochs = 10;
+  let trainingEpochs = 30;
   let radiusStart = math.max(mapSize) / 5;
   let radiusEnd = math.max(mapSize) / 30;
   let initialAlpha = 0.5;

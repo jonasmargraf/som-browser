@@ -32,6 +32,7 @@ class Map extends React.Component {
               let nodeGridRoot = Math.ceil(Math.sqrt(nodeFileCount))
               let x = (i % nodeGridRoot) * (100 / nodeGridRoot)
               let y = Math.floor(i / nodeGridRoot) * (100 / nodeGridRoot)
+              let subNodeLength = 100 / (som.mapSize[0] * nodeGridRoot)
               return <rect
                 key={files[e].path}
                 id={files[e].path === selectedFile ? "SubNodeSelected" : null}
@@ -41,8 +42,8 @@ class Map extends React.Component {
                 y={y / som.mapSize[1] + 0.5 + "%"}
                 rx="1px"
                 ry="1px"
-                width={100 / (som.mapSize[0] * nodeGridRoot) - 1 + "%"}
-                height={100 / (som.mapSize[1] * nodeGridRoot) - 1 + "%"}>
+                width={subNodeLength - 1 + "%"}
+                height={subNodeLength - 1 + "%"}>
               </rect>
             })
           }
