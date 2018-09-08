@@ -1,5 +1,5 @@
 {
-  "name": "basic-electron-react-boilerplate",
+  "name": "SomBrowser",
   "version": "0.7.0",
   "description": "Minimal and modern react+electron+webpack boilerplate",
   "author": "Phillip Barbiero",
@@ -15,7 +15,7 @@
     "dev": "webpack-dev-server --hot --host 0.0.0.0 --config=./webpack.dev.config.js",
     "build": "webpack --config webpack.build.config.js",
     "package": "webpack --config webpack.build.config.js",
-    "postpackage": "electron-packager ./ --out=./builds"
+    "postpackage": "node_modules/.bin/electron-packager ./ --out=./builds"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

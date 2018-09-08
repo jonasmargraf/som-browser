@@ -8,6 +8,8 @@ import UserSelection from './UserSelection';
 const { ipcRenderer, remote } = require('electron');
 const { BrowserWindow } = remote;
 const fs = require('fs');
+const url = require('url')
+
 
 const context = new AudioContext()
 
@@ -15,32 +17,22 @@ const context = new AudioContext()
 function processFiles(files) {
   return new Promise(function(resolve, reject) {
     let win = new BrowserWindow({
-      show: false
+      show: false,
+
     });
 
-    // console.log("hi"+ path.join(__dirname, 'background', 'background.html'))
-    // let backgroundPath
-    // if ( dev && process.argv.indexOf('--noDevServer') === -1 ) {
-    //   indexPath = url.format({
-    //     protocol: 'http:',
-    //     host: 'localhost:8080',
-    //     pathname: '/background/background.html',
-    //     slashes: true
-    //   })
-    // }
-    // else {
-    //   indexPath = url.format({
-    //     protocol: 'file:',
-    //     pathname: path.join(__dirname, 'dist', '/background/background.html'),
-    //     slashes: true
-    //   })
-    // }
-    // win.loadURL( backgroundPath )
-    win.loadURL("file:///Users/jm/Dropbox/AKT/Masterarbeit/dev/som-browser/src/background/background.html")
+    let indexPath = url.format({
+      protocol: 'file:',
+      pathname: path.join(__dirname, 'dist', 'background', 'background.html'),
+      slashes: true
+    });
+
+    alert(indexPath)
+    win.loadURL(indexPath)
 
     win.once('ready-to-show', () => {
-      // win.show()
-      // win.webContents.openDevTools();
+      win.show()
+      win.webContents.openDevTools();
 
       ipcRenderer.once('features-done', (event, value) => {
         win.destroy()
