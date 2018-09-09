@@ -12,8 +12,8 @@ class Map extends React.Component {
   }
 
   createMap(som, files, selectedFile) {
-    let xPos
-    let yPos
+    var xPos
+    var yPos
     let map = som.coordinates.map((coordinate, index) => {
       xPos = (coordinate[0] * (100 / som.mapSize[0]))
       yPos = (coordinate[1] * (100 / som.mapSize[1]))
