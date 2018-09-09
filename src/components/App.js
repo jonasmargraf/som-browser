@@ -9,6 +9,7 @@ const { ipcRenderer, remote } = require('electron');
 const { BrowserWindow } = remote;
 const fs = require('fs');
 const url = require('url')
+const path = require('path')
 
 
 const context = new AudioContext()
@@ -27,8 +28,9 @@ function processFiles(files) {
       slashes: true
     });
 
-    alert(indexPath)
-    win.loadURL(indexPath)
+    // alert(indexPath)
+    // win.loadURL(indexPath)
+    win.loadURL('file:///Users/jm/Dropbox/AKT/Masterarbeit/dev/som-browser/src/background/background.html')
 
     win.once('ready-to-show', () => {
       win.show()

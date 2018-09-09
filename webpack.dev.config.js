@@ -48,8 +48,8 @@ module.exports = {
   target: 'electron-renderer',
   plugins: [
     new HtmlWebpackPlugin({title: 'SOM Browser App', excludeChunks: [ 'background', 'som' ]}),
-    new HtmlWebpackPlugin({title: 'back', filename: "background/background.html", excludeChunks: [ 'main', 'som' ]}),
-    new HtmlWebpackPlugin({title: 'back', filename: "background/som.html", excludeChunks: [ 'main', 'background' ]}),
+    new HtmlWebpackPlugin({title: 'back', filename: "background.html", excludeChunks: [ 'main', 'som' ]}),
+    new HtmlWebpackPlugin({title: 'back', filename: "som.html", excludeChunks: [ 'main', 'background' ]}),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development')
     })
