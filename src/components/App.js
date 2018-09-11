@@ -6,7 +6,7 @@ import FileList from './FileList';
 import FileInfo from './FileInfo';
 import UserSelection from './UserSelection';
 const { ipcRenderer, remote } = require('electron');
-const { BrowserWindow } = remote;
+const { app, BrowserWindow } = remote;
 const fs = require('fs');
 const url = require('url')
 const path = require('path')
@@ -24,20 +24,21 @@ function processFiles(files) {
 
     let indexPath = url.format({
       protocol: 'file:',
-      pathname: path.join(__dirname, 'dist', 'background', 'background.html'),
+      // pathname: path.join(__dirname, 'dist', 'background.html'),
+      pathname: path.join(app.getAppPath(), 'dist', 'background.html'),
       slashes: true
     });
 
-    // alert(indexPath)
-    // win.loadURL(indexPath)
-    win.loadURL('file:///Users/jm/Dropbox/AKT/Masterarbeit/dev/som-browser/src/background/background.html')
+    alert(indexPath)
+    win.loadURL(indexPath)
+    // win.loadURL('file:///Users/jm/Dropbox/AKT/Masterarbeit/dev/som-browser/src/background/background.html')
 
     win.once('ready-to-show', () => {
       win.show()
       win.webContents.openDevTools();
 
       ipcRenderer.once('features-done', (event, value) => {
-        win.destroy()
+        // win.destroy()
         resolve(value)
       })
 
@@ -55,30 +56,32 @@ function createSOM(files) {
     // console.log("hi"+ path.join(__dirname, 'background', 'background.html'))
     // let backgroundPath
     // if ( dev && process.argv.indexOf('--noDevServer') === -1 ) {
-    //   indexPath = url.format({
-    //     protocol: 'http:',
-    //     host: 'localhost:8080',
-    //     pathname: '/background/som.html',
-    //     slashes: true
-    //   })
+      // indexPath = url.format({
+      //   protocol: 'http:',
+      //   host: 'localhost:8080',
+      //   pathname: '/background/som.html',
+      //   slashes: true
+      // })
     // }
     // else {
-    //   indexPath = url.format({
-    //     protocol: 'file:',
-    //     pathname: path.join(__dirname, 'dist', '/background/som.html'),
-    //     slashes: true
-    //   })
+      let backgroundPath = url.format({
+        protocol: 'file:',
+        // pathname: path.join(__dirname, 'dist', '/background/som.html'),
+        pathname: path.join(app.getAppPath(), 'dist', 'som.html'),
+        slashes: true
+      })
     // }
-    // win.loadURL( backgroundPath )
-    win.loadURL("file:///Users/jm/Dropbox/AKT/Masterarbeit/dev/som-browser/src/background/som.html")
+    alert(backgroundPath)
+    win.loadURL( backgroundPath )
+    // win.loadURL("file:///Users/jm/Dropbox/AKT/Masterarbeit/dev/som-browser/src/background/som.html")
 
     win.once('ready-to-show', () => {
-      // win.show()
+      win.show()
       // console.log('ready2show')
-      // win.webContents.openDevTools()
+      win.webContents.openDevTools()
 
       ipcRenderer.once('som-done', (event, value) => {
-        win.destroy()
+        // win.destroy()
         resolve(value)
       })
 

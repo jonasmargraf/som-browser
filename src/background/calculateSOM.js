@@ -7,7 +7,7 @@ window.calculateSOM = (files) => {
 
   // let descriptorData = [];
   let normalizedData = [];
-  let dimensionCount;
+  let dimensionCount = null;
   let mapSize = [mapSideLength, mapSideLength];
   let neuronCount = mapSize[0] * mapSize[1];
   let neurons = [];
@@ -21,10 +21,10 @@ window.calculateSOM = (files) => {
   // let magnificationM = -0.02;
   let magnificationM = 1;
   let learningRateType = 'linear'; // 'BDH', 'linear' or 'inverse'
-  let trainingLength;
-  let winTimeStamp;
-  let rStep;
-  let alpha;
+  let trainingLength = null;
+  let winTimeStamp = null;
+  let rStep = null;
+  let alpha = null;
   let t = 0;
 
   let som = {
