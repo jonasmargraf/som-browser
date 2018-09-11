@@ -11,34 +11,53 @@ const fs = require('fs');
 const url = require('url')
 const path = require('path')
 
+let dev = false
 
 const context = new AudioContext()
+
+// Are we in dev or production mode?
+window.onload = () => {
+  ipcRenderer.send('dev-request', true)
+}
+ipcRenderer.once('dev-mode', (event, value) => {
+  dev = value
+  // console.log('dev-mode in App.js: ' + dev + ' ' + value)
+})
 
 // Invisible background window for async background processing
 function processFiles(files) {
   return new Promise(function(resolve, reject) {
     let win = new BrowserWindow({
       show: false,
-
     });
 
-    let indexPath = url.format({
+    let backgroundPath
+    if ( dev && process.argv.indexOf('--noDevServer') === -1 ) {
+      backgroundPath = url.format({
+        protocol: 'http:',
+        host: 'localhost:8080',
+        pathname: 'background.html',
+        slashes: true
+      })
+    }
+    else {
+    backgroundPath = url.format({
       protocol: 'file:',
-      // pathname: path.join(__dirname, 'dist', 'background.html'),
       pathname: path.join(app.getAppPath(), 'dist', 'background.html'),
       slashes: true
-    });
+    })
+  }
 
-    alert(indexPath)
-    win.loadURL(indexPath)
+    // alert(backgroundPath)
+    win.loadURL(backgroundPath)
     // win.loadURL('file:///Users/jm/Dropbox/AKT/Masterarbeit/dev/som-browser/src/background/background.html')
 
     win.once('ready-to-show', () => {
-      win.show()
-      win.webContents.openDevTools();
+      // win.show()
+      // win.webContents.openDevTools();
 
       ipcRenderer.once('features-done', (event, value) => {
-        // win.destroy()
+        win.destroy()
         resolve(value)
       })
 
@@ -53,35 +72,32 @@ function createSOM(files) {
       show: false
     });
 
-    // console.log("hi"+ path.join(__dirname, 'background', 'background.html'))
-    // let backgroundPath
-    // if ( dev && process.argv.indexOf('--noDevServer') === -1 ) {
-      // indexPath = url.format({
-      //   protocol: 'http:',
-      //   host: 'localhost:8080',
-      //   pathname: '/background/som.html',
-      //   slashes: true
-      // })
-    // }
-    // else {
-      let backgroundPath = url.format({
+    let backgroundPath
+    if ( dev && process.argv.indexOf('--noDevServer') === -1 ) {
+      backgroundPath = url.format({
+        protocol: 'http:',
+        host: 'localhost:8080',
+        pathname: 'som.html',
+        slashes: true
+      })
+    }
+    else {
+      backgroundPath = url.format({
         protocol: 'file:',
-        // pathname: path.join(__dirname, 'dist', '/background/som.html'),
         pathname: path.join(app.getAppPath(), 'dist', 'som.html'),
         slashes: true
       })
-    // }
-    alert(backgroundPath)
+    }
+    // alert(backgroundPath)
     win.loadURL( backgroundPath )
     // win.loadURL("file:///Users/jm/Dropbox/AKT/Masterarbeit/dev/som-browser/src/background/som.html")
 
     win.once('ready-to-show', () => {
-      win.show()
-      // console.log('ready2show')
-      win.webContents.openDevTools()
+      // win.show()
+      // win.webContents.openDevTools()
 
       ipcRenderer.once('som-done', (event, value) => {
-        // win.destroy()
+        win.destroy()
         resolve(value)
       })
 
@@ -107,6 +123,7 @@ const playFile = (filePath) => {
 
 class App extends React.Component {
   constructor(props) {
+
     super(props)
     this.handleFileListChange = this.handleFileListChange.bind(this)
     this.handleFileClick = this.handleFileClick.bind(this)
@@ -140,7 +157,6 @@ class App extends React.Component {
   handleAnalyzeClick() {
     this.setState({loading: true})
     console.log("Processing files...")
-    // createBackgroundWindow()
     processFiles(this.state.files)
     .then(files => this.setState({files: files, loading: false}))
     .then(() => {
@@ -154,7 +170,6 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-
   }
 
   render() {

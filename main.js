@@ -11,8 +11,14 @@ let mainWindow;
 
 // Keep a reference for dev mode
 let dev = false;
+// TODO: For whatever reason dev isnt' actually false when it needs to be,
+// so we are creating another variable, actuallyDev, and only set it to true
+// inside the if condition in createMainWindow (line 42).
+// This should probably be done in a cleaner fashion.
+let actuallyDev = false;
 if ( process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath) ) {
   dev = true;
+  // console.log('dev-mode in main.js: ' + actuallyDev)
 }
 
 function createMainWindow() {
@@ -34,6 +40,7 @@ function createMainWindow() {
       pathname: 'index.html',
       slashes: true
     });
+    actuallyDev = true;
   } else {
     indexPath = url.format({
       protocol: 'file:',
@@ -49,6 +56,7 @@ function createMainWindow() {
     // Open the DevTools automatically if developing
     if ( dev ) {
       win.webContents.openDevTools();
+      // win.webContents.send('dev-mode', dev)
     }
   });
 
@@ -57,9 +65,7 @@ function createMainWindow() {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    // backgroundWindow = null;
     mainWindow = null;
-    // win = null;
   });
 
   return win;
@@ -72,6 +78,7 @@ function createMainWindow() {
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
   mainWindow = createMainWindow();
+  // mainWindow.webContents.send('dev-mode', dev)
   // backgroundWindow = createBackgroundWindow();
 });
 
@@ -91,6 +98,12 @@ app.on('activate', () => {
     createMainWindow();
   }
 });
+
+ipcMain.on('dev-request', (event, arg) => {
+  // console.log(dev)
+  // console.log('dev-mode in main.js on dev-request: ' + actuallyDev)
+  mainWindow.webContents.send('dev-mode', actuallyDev)
+})
 
 ipcMain.on('from-background', (event, arg) => {
   // mainWindow.webContents.send(arg.path, arg)

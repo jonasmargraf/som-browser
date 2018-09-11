@@ -41,7 +41,7 @@ window.calculateSOM = (files) => {
     radiusEnd,
     initialAlpha,
     magnificationM,
-    learningRateType, // 'BDH', 'linear' or 'inverse'
+    learningRateType,
     trainingLength,
     winTimeStamp,
     rStep,

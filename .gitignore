@@ -3,5 +3,5 @@ node_modules/
 *.DS_Store
 dist/
 builds/
-audio
-audio_big
+audio/
+audio_big/
