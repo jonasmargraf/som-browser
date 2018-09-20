@@ -56,29 +56,30 @@ span {
 
 .Node {
   /* margin: 10px; */
-  fill: rgb(240, 240, 240);
+  /* fill: rgb(240, 240, 240); */
+  fill: lightgrey;
   /* fill: dimgrey; */
-  stroke: white;
+  stroke: rgb(230, 230, 230);
   stroke-width: 1px;
-  transition: fill 0.2s ease-out;
+  /* transition: fill 0.2s ease-out; */
 }
 
 .Node:hover {
   /* fill: rgb(230, 230, 230); */
-  transition: fill 0.1s ease-in;
+  /* transition: fill 0.1s ease-in; */
 }
 
 .SubNode {
   /* fill: rgb(230, 230, 230); */
   fill: white;
-  stroke: grey;
+  /* stroke: grey; */
   transition: stroke 0.1s ease-out, fill 0.05s ease-out;
 }
 
 .SubNode:hover {
   /* fill: dodgerblue; */
   stroke: dodgerblue;
-  stroke-width: 1.2px;
+  stroke-width: 1.5px;
   transition: stroke 0.1s ease-in;
 }
 
