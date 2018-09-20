@@ -88,7 +88,6 @@ span {
   fill: dodgerblue;
   stroke: dodgerblue;
   transition: fill 0.05s ease-in;
-  /* transition: stroke 0.8s ease-in; */
 }
 
 .FileListContainer{
