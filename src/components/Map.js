@@ -37,6 +37,7 @@ class Map extends React.Component {
                 key={files[e].path}
                 id={files[e].path === selectedFile ? "SubNodeSelected" : null}
                 className="SubNode"
+                onMouseOver={this.handleClick.bind(this, files[e].path)}
                 onClick={this.handleClick.bind(this, files[e].path)}
                 x={x / som.mapSize[0] + 0.5 + "%"}
                 y={y / som.mapSize[1] + 0.5 + "%"}

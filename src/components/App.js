@@ -14,6 +14,7 @@ const path = require('path')
 let dev = false
 
 const context = new AudioContext()
+let audioSources = []
 
 // Are we in dev or production mode?
 window.onload = () => {
@@ -110,13 +111,17 @@ const getFileByPath = (files, path) =>
   (path == null) ? null : files.filter((file) => file.path == path)[0]
 
 const playFile = (filePath) => {
+  audioSources.forEach(e => e.stop())
+  audioSources = []
   fs.readFile(filePath, (error, data) => {
     if (error) throw error
     context.decodeAudioData(data.buffer, decodedAudio => {
       const source = context.createBufferSource()
+      audioSources.push(source)
       source.buffer = decodedAudio
       source.connect(context.destination)
       source.start()
+      // console.log(audioSources)
     })
   })
 }
