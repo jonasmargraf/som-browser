@@ -51,7 +51,7 @@ module.exports = {
   },
   target: 'electron-renderer',
   plugins: [
-    new HtmlWebpackPlugin({title: 'SOM Browser App', excludeChunks: [ 'background', 'som' ]}),
+    new HtmlWebpackPlugin({title: 'SOM Browser', excludeChunks: [ 'background', 'som' ]}),
     new HtmlWebpackPlugin({title: 'background', filename: "background.html", excludeChunks: [ 'main', 'som' ]}),
     new HtmlWebpackPlugin({title: 'som', filename: "som.html", excludeChunks: [ 'main', 'background' ]}),
     new ExtractTextPlugin('bundle.css'),
