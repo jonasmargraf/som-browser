@@ -24,11 +24,12 @@ if ( process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) 
 function createMainWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 1200,
-    height: 722,
-    minWidth: 1200,
-    minHeight: 722,
-    show: false
+    width: 1142,
+    height: 768,
+    minWidth: 1142,
+    minHeight: 768,
+    show: false,
+    titleBarStyle: 'hidden'
   });
 
   // and load the index.html of the app.

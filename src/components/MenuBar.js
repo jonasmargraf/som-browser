@@ -3,31 +3,7 @@ import React, { Component } from 'react';
 const {dialog} = require('electron').remote;
 const path = require('path');
 
-class FileListItem extends React.Component {
-  constructor(props) {
-    super(props)
-    this.handleClick = this.handleClick.bind(this)
-  }
-
-  handleClick(file) {
-    this.props.onFileClick(file)
-  }
-
-  render() {
-    const file = this.props.file
-
-    return (
-      <li
-        id={this.props.selected ? "FileListSelectedFile" : undefined}
-        className="FileListItem"
-        onClick={this.handleClick.bind(this, file)}>
-        {file.name}
-      </li>
-    )
-    }
-}
-
-class FileList extends React.Component {
+class MenuBar extends React.Component {
   constructor(props) {
     super(props)
     this.handleClick = this.handleClick.bind(this)
@@ -71,31 +47,24 @@ class FileList extends React.Component {
   }
 
   render() {
-    const files = this.props.files;
-    const fileListItems = [];
-    const selectedFile = this.props.selectedFile && this.props.selectedFile.path
-
-    if (files) {
-      files.forEach(file => fileListItems.push(
-        <FileListItem
-          key={file.path}
-          file={file}
-          selected={file.path === selectedFile}
-          onFileClick={this.props.onFileClick}/>
-      ))
-    }
 
     return (
-      <div className="FileListContainer">
-        <h3>
-          Sounds
-        </h3>
-        <ul className="FileList">
-          { files ? fileListItems : <p>No audio files loaded.</p> }
-        </ul>
+      <div className="MenuBar">
+        <div className="ActionButtons">
+          <input className="AnalyzeSounds" type="button" value="Analyze"
+            disabled={this.props.loading}
+            onClick={this.handleAnalyzeClick}/>
+          {this.props.loading && <span>Loading...</span>}
+          <input className="SaveState" type="button" value="Save"
+            onClick={this.handleSave}/>
+          <input className="LoadState" type="button" value="Load Map..."
+            onClick={this.handleLoad}/>
+          <input className="OpenFile" type="button" value="Import Files..."
+            onClick={this.handleClick}/>
+        </div>
       </div>
     );
   }
 }
 
-export default FileList;
+export default MenuBar;

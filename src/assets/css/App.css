@@ -26,6 +26,36 @@ span {
   padding: 10px;
 }
 
+.TitleBar {
+  width: 100vw;
+  height: 30px;
+  display: block;
+  background-color: white;
+  display: table;
+  -webkit-app-region: drag;
+}
+
+.TitleBar p {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  color: dodgerblue;
+  font-weight: 200;
+  /* height: inherit; */
+}
+
+.MenuBar {
+  width: 100vw;
+  height: 8vh;
+  display: block;
+  background-color: white;
+  /* background-color: rgb(250, 250, 250); */
+  box-shadow: 0px 4px 4px rgb(230, 230, 230);
+  /* border-radius: 2px; */
+  margin-bottom: 10px;
+  /* -webkit-app-region: drag; */
+}
+
 .Map {
   /* border-style: solid;
   border-width: 3px;
@@ -35,8 +65,8 @@ span {
   box-shadow: 0px 1px 5px rgb(220, 220, 220);
   border-radius: 2px;
   margin: 10px;
-  width: calc(50vw - 20px);
-  height: calc(80vh - 20px);
+  width: calc(50vw - 40px);
+  height: calc(77vh - 60px);
   float: left;
 }
 
@@ -96,8 +126,9 @@ span {
   box-shadow: 0px 1px 5px rgb(220, 220, 220);
   border-radius: 2px;
   margin: 10px;
+  margin-left: 20px;
   width: calc(25vw - 20px);
-  height: calc(80vh - 20px);
+  height: calc(77vh - 60px);
   float: left;
   white-space: nowrap;
 }
@@ -116,12 +147,34 @@ span {
 
 .ActionButtons {
   padding: 10px;
+  padding-left: 20px;
   /* padding-bottom: 0px; */
+}
+
+.ActionButtons * {
+  width: 120px;
+  margin-right: 20px;
+  padding: 10px 0 10px 0;
+  cursor: pointer;
+  border-radius: 50vh;
+  /* border: 1px solid dimgrey; */
+  border: none;
+  color: dodgerblue;
+  /* background-color: rgb(250, 250, 250); */
+  background-color: white;
+  box-shadow: 0px 1px 5px rgb(220, 220, 220);
+  outline: none;
+  transition: box-shadow 0.2s ease-out;
+}
+
+.ActionButtons *:hover {
+  box-shadow: 0px 1px 5px dodgerblue;
+  transition: box-shadow 0.2s ease-in;
 }
 
 .FileList {
   overflow: scroll;
-  height: 80%;
+  height: 85%;
   /* border: 1px solid black; */
 }
 
@@ -150,10 +203,10 @@ span {
 }
 
 .OpenFile {
-  float: right;
+  /* float: right; */
   /* background-color: white; */
   /* border: none; */
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .FileInfo {
@@ -162,9 +215,10 @@ span {
   box-shadow: 0px 1px 5px rgb(220, 220, 220);
   border-radius: 2px;
   margin: 10px;
+  margin-right: 20px;
   width: calc(25vw - 20px);
-  height: calc(80vh - 20px);
-  float: left;
+  height: calc(77vh - 60px);
+  float: right;
   /* white-space: nowrap; */
 }
 
@@ -208,9 +262,10 @@ span {
   background-color: white;
   box-shadow: 0px 1px 5px rgb(220, 220, 220);
   border-radius: 2px;
-  margin: 10px;
-  width: calc(100vw - 20px);
-  height: calc(20vh - 20px);
+  margin: 20px;
+  margin-top: 10px;
+  width: calc(100vw - 40px);
+  height: calc(15vh - 30px);
   /* height: 4vw; */
   position: fixed;
   left: 0;

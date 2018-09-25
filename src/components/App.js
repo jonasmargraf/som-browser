@@ -1,6 +1,7 @@
 import '../assets/css/App.css';
 import React, { Component } from 'react';
-import { hot } from 'react-hot-loader'
+import { hot } from 'react-hot-loader';
+import MenuBar from './MenuBar';
 import Map from './Map';
 import FileList from './FileList';
 import FileInfo from './FileInfo';
@@ -8,8 +9,8 @@ import UserSelection from './UserSelection';
 const { ipcRenderer, remote } = require('electron');
 const { app, BrowserWindow, dialog } = remote;
 const fs = require('fs');
-const url = require('url')
-const path = require('path')
+const url = require('url');
+const path = require('path');
 
 let dev = false
 
@@ -205,7 +206,7 @@ class App extends React.Component {
       loadedData.som ?
       this.setState(loadedData)
       :
-      alert("This doesn't appear to be a valid file. Please try again")
+      alert("The loaded file doesn't appear to be valid. Please try again.")
     })
   }
 
@@ -218,6 +219,19 @@ class App extends React.Component {
 
     return (
       <div>
+
+        <div className="TitleBar">
+          <p>SOM Browser</p>
+        </div>
+
+        <MenuBar
+          files={files}
+          onChange={this.handleFileListChange}
+          onFileClick={this.handleFileClick}
+          onAnalyzeClick={this.handleAnalyzeClick}
+          onSaveClick={this.handleSaveClick}
+          onLoadClick={this.handleLoadClick}
+          />
 
         <FileList
           loading={this.state.loading}
