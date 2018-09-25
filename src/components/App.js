@@ -6,7 +6,7 @@ import FileList from './FileList';
 import FileInfo from './FileInfo';
 import UserSelection from './UserSelection';
 const { ipcRenderer, remote } = require('electron');
-const { app, BrowserWindow } = remote;
+const { app, BrowserWindow, dialog } = remote;
 const fs = require('fs');
 const url = require('url')
 const path = require('path')
@@ -134,6 +134,8 @@ class App extends React.Component {
     this.handleFileClick = this.handleFileClick.bind(this)
     this.handleAnalyzeClick = this.handleAnalyzeClick.bind(this)
     this.handleMapClick = this.handleMapClick.bind(this)
+    this.handleSaveClick = this.handleSaveClick.bind(this)
+    this.handleLoadClick = this.handleLoadClick.bind(this)
     this.state = {
       files: null,
       selectedFile: null,
@@ -174,6 +176,39 @@ class App extends React.Component {
     })
   }
 
+  // Save state to disk as JSON file
+  handleSaveClick() {
+    const options = {
+      defaultPath: path.join(app.getAppPath(), 'map'),
+      filters: [{name: 'JSON', extensions: ['json']}]
+    }
+    // Check that we aren't currently analyzing and that the map exists
+    !this.state.loading
+    && this.state.som
+    && dialog.showSaveDialog(options, path => {
+      fs.writeFileSync(path, JSON.stringify(this.state))
+    })
+  }
+
+  // Load state from JSON file
+  handleLoadClick() {
+    const options = {
+      defaultPath: app.getAppPath(),
+      properties: ['openFile'],
+      filters: [{name: 'JSON', extensions: ['json']}]
+    }
+    // let filePath = path.join(app.getAppPath(), 'map.json')
+    let loadedData
+    dialog.showOpenDialog(options, path => {
+      loadedData = JSON.parse(fs.readFileSync(path[0]))
+      // Check validity of file by looking for som property
+      loadedData.som ?
+      this.setState(loadedData)
+      :
+      alert("This doesn't appear to be a valid file. Please try again")
+    })
+  }
+
   componentDidMount() {
   }
 
@@ -190,7 +225,10 @@ class App extends React.Component {
           selectedFile={file}
           onChange={this.handleFileListChange}
           onFileClick={this.handleFileClick}
-          onAnalyzeClick={this.handleAnalyzeClick}/>
+          onAnalyzeClick={this.handleAnalyzeClick}
+          onSaveClick={this.handleSaveClick}
+          onLoadClick={this.handleLoadClick}
+          />
 
         <Map
           som={this.state.som}

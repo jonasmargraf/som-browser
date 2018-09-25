@@ -33,6 +33,8 @@ class FileList extends React.Component {
     this.handleClick = this.handleClick.bind(this)
     this.addToFileList = this.addToFileList.bind(this)
     this.handleAnalyzeClick = this.handleAnalyzeClick.bind(this)
+    this.handleSave = this.handleSave.bind(this)
+    this.handleLoad = this.handleLoad.bind(this)
   }
 
   addToFileList(files) {
@@ -60,6 +62,14 @@ class FileList extends React.Component {
     this.props.onAnalyzeClick()
   }
 
+  handleSave() {
+    this.props.onSaveClick()
+  }
+
+  handleLoad() {
+    this.props.onLoadClick()
+  }
+
   render() {
     const files = this.props.files;
     const fileListItems = [];
@@ -85,11 +95,15 @@ class FileList extends React.Component {
             disabled={this.props.loading}
             onClick={this.handleAnalyzeClick}/>
           {this.props.loading && <span>Loading...</span>}
-          <input className="OpenFile" type="button" value="Open..."
+          <input className="SaveState" type="button" value="Save"
+            onClick={this.handleSave}/>
+          <input className="LoadState" type="button" value="Load Map..."
+            onClick={this.handleLoad}/>
+          <input className="OpenFile" type="button" value="Import..."
             onClick={this.handleClick}/>
         </div>
         <ul className="FileList">
-          { files ? fileListItems : <span>No audio files loaded.</span> }
+          { files ? fileListItems : <p>No audio files loaded.</p> }
         </ul>
       </div>
     );
