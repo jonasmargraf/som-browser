@@ -120,6 +120,12 @@ span {
   transition: fill 0.05s ease-in;
 }
 
+.label {
+  fill: dodgerblue;
+  cursor: default;
+  -webkit-user-select: none;
+}
+
 .FileListContainer{
   /* border: 1px solid grey; */
   background-color: white;

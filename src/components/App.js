@@ -122,7 +122,6 @@ const playFile = (filePath) => {
       source.buffer = decodedAudio
       source.connect(context.destination)
       source.start()
-      // console.log(audioSources)
     })
   })
 }
@@ -137,6 +136,7 @@ class App extends React.Component {
     this.handleMapClick = this.handleMapClick.bind(this)
     this.handleSaveClick = this.handleSaveClick.bind(this)
     this.handleLoadClick = this.handleLoadClick.bind(this)
+    this.handlePrintStateClick = this.handlePrintStateClick.bind(this)
     this.state = {
       files: null,
       selectedFile: null,
@@ -210,6 +210,10 @@ class App extends React.Component {
     })
   }
 
+  handlePrintStateClick() {
+    console.log(this.state)
+  }
+
   componentDidMount() {
   }
 
@@ -231,6 +235,7 @@ class App extends React.Component {
           onAnalyzeClick={this.handleAnalyzeClick}
           onSaveClick={this.handleSaveClick}
           onLoadClick={this.handleLoadClick}
+          onPrintState={this.handlePrintStateClick}
           />
 
         <FileList
