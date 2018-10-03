@@ -33,8 +33,6 @@ class FileList extends React.Component {
     this.handleClick = this.handleClick.bind(this)
     this.addToFileList = this.addToFileList.bind(this)
     this.handleAnalyzeClick = this.handleAnalyzeClick.bind(this)
-    this.handleSave = this.handleSave.bind(this)
-    this.handleLoad = this.handleLoad.bind(this)
   }
 
   addToFileList(files) {

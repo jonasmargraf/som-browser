@@ -2,27 +2,51 @@ import '../assets/css/App.css';
 import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom'
 
-let label = {
-  name: null,
-  position: [0, 0],
-  show: false
-}
+let name
+let path
 
 class Map extends React.Component {
   constructor(props) {
     super(props)
     this.handleClick = this.handleClick.bind(this)
+    this.handleMouseEnter = this.handleMouseEnter.bind(this)
+    this.handleMouseLeave = this.handleMouseLeave.bind(this)
+    this.handleMouseMove = this.handleMouseMove.bind(this)
+    this.state = {
+      label: null,
+      labelPosition: [0, 0],
+      showLabel: false,
+      rect: undefined
+    }
   }
 
-  handleClick(mapElement, name) {
+  componentDidMount() {
+    this.setState({ rect: findDOMNode(this).getBoundingClientRect() })
+  }
+
+  componentDidUpdate() {
+    // console.log('update')
+  }
+
+  handleClick(mapElement, _name) {
     this.props.onMapClick(mapElement)
-    label.name = name
   }
 
-  handleMouseEnter(e) {
-    label.show = true
-    const rect = findDOMNode(this).getBoundingClientRect()
-    label.position = [e.clientX - rect.left + 20, e.clientY - rect.top]
+  handleMouseEnter(name) {
+    this.setState({
+        label: name,
+        showLabel: true
+    })
+  }
+
+  handleMouseLeave(e) {
+    this.setState({ showLabel: false })
+  }
+
+  handleMouseMove(e) {
+    this.setState({
+      labelPosition: [e.clientX - this.state.rect.left + 10, e.clientY - this.state.rect.top]
+    })
   }
 
   createMap(som, files, selectedFile) {
@@ -49,14 +73,17 @@ class Map extends React.Component {
               let subNodeX = x / som.mapSize[0] + 0.5
               let subNodeY = y / som.mapSize[0] + 0.5
               let subNodeLength = 100 / (som.mapSize[0] * nodeGridRoot)
+              name = files[e].name
+              path = files[e].path
               return (
                   <rect
                     key={files[e].path}
                     id={files[e].path === selectedFile ? "SubNodeSelected" : null}
                     className="SubNode"
-                    onMouseOver={this.handleClick.bind(this, files[e].path, files[e].name)}
-                    onMouseEnter={this.handleMouseEnter.bind(this)}
-                    onMouseLeave={() => {label.show = false; this.createLabel(label)}}
+                    onMouseOver={this.handleClick.bind(this, path, name)}
+                    onMouseEnter={this.handleMouseEnter.bind(this, name)}
+                    onMouseMove={this.handleMouseMove}
+                    onMouseLeave={this.handleMouseLeave}
                     onClick={this.handleClick.bind(this, files[e].path, files[e].name)}
                     x={subNodeX + "%"}
                     y={subNodeY + "%"}
@@ -74,19 +101,6 @@ class Map extends React.Component {
     return map
   }
 
-  createLabel(label) {
-    // console.log(label)
-    let returnValue
-    returnValue = <text
-      className="label"
-      x={label.position[0]}
-      y={label.position[1]}>
-      {label.show ? label.name : "fuq"}
-    </text>
-    // console.log(returnValue)
-    return returnValue
-  }
-
   render() {
     const fileKey = this.props.selectedFile ? this.props.selectedFile.path : null
 
@@ -95,10 +109,22 @@ class Map extends React.Component {
         {
           this.props.som ?
 
-          <svg className="Drawing">
-            {this.createMap(this.props.som, this.props.files, fileKey)}
-            {label.show && this.createLabel(label)}
-          </svg>
+          <div style={{position: 'absolute', width: 'inherit', height: 'inherit', zIndex: 1}}>
+            <svg className="Drawing">
+              {this.createMap(this.props.som, this.props.files, fileKey)}
+            </svg>
+          <span
+            className="label"
+            style={
+              {
+                left: this.state.labelPosition[0],
+                top: this.state.labelPosition[1],
+                display: this.state.showLabel ? 'block' : 'none'
+              }
+            }>
+            {this.state.showLabel && this.state.label}
+          </span>
+          </div>
 
           :
 
