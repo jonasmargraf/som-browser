@@ -162,7 +162,10 @@ class Map extends React.Component {
 
   handleMouseMove(e) {
     this.setState({
-      labelPosition: [e.clientX - this.state.rect.left + 10, e.clientY - this.state.rect.top]
+      labelPosition: [
+        e.clientX - this.state.rect.left + 10,
+        e.clientY - this.state.rect.top
+      ]
     })
   }
 
@@ -172,6 +175,7 @@ class Map extends React.Component {
     let map = som.coordinates.map((coordinate, index) => {
       xPos = (coordinate[0] * (100 / som.mapSize[0]))
       yPos = (coordinate[1] * (100 / som.mapSize[1]))
+      // let node = <MapNode index={index} som={som} files={files} selectedFile={selectedFile} xPosition={xPos} yPosition={yPos}></MapNode>
       let node =
         <svg key={index} x={xPos + "%"} y={yPos + "%"}>
           <rect
