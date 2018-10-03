@@ -133,6 +133,7 @@ span {
   display: block;
   top: 0%;
   left: 0%;
+  max-width: 150px;
   padding: 5px 10px !important;
   margin: 0 5px;
   border-radius: 2px;
@@ -142,6 +143,9 @@ span {
   font-size: 0.8em;
   cursor: default;
   -webkit-user-select: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .FileListContainer{
