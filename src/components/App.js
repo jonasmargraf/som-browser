@@ -145,6 +145,10 @@ class App extends React.Component {
     }
   }
 
+  componentDidUpdate() {
+    // console.log('App component updated')
+  }
+
   handleFileListChange(files) {
     this.setState({
       files: files,

@@ -142,10 +142,10 @@ class Map extends React.Component {
   }
 
   componentDidUpdate() {
-    // console.log('update')
+    // console.log('Map updated')
   }
 
-  handleClick(mapElement, _name) {
+  handleClick(mapElement) {
     this.props.onMapClick(mapElement)
   }
 
@@ -190,18 +190,21 @@ class Map extends React.Component {
               let subNodeX = x / som.mapSize[0] + 0.5
               let subNodeY = y / som.mapSize[0] + 0.5
               let subNodeLength = 100 / (som.mapSize[0] * nodeGridRoot)
-              name = files[e].name
-              path = files[e].path
+              let name = files[e].name
+              let path = files[e].path
+              // console.log('Subnode drawn')
               return (
                   <rect
                     key={files[e].path}
-                    id={files[e].path === selectedFile ? "SubNodeSelected" : null}
+                    id={
+                      files[e].path === selectedFile ? "SubNodeSelected" : null
+                    }
                     className="SubNode"
                     onMouseOver={this.handleClick.bind(this, path, name)}
                     onMouseEnter={this.handleMouseEnter.bind(this, name)}
                     onMouseMove={this.handleMouseMove}
                     onMouseLeave={this.handleMouseLeave}
-                    onClick={this.handleClick.bind(this, files[e].path, files[e].name)}
+                    onClick={this.handleClick.bind(this, path, name)}
                     x={subNodeX + "%"}
                     y={subNodeY + "%"}
                     rx="1px"

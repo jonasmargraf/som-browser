@@ -13,6 +13,10 @@ class FileListItem extends React.Component {
     this.props.onFileClick(file)
   }
 
+  componentDidUpdate() {
+    // console.log('FileListItem updated')
+  }
+
   render() {
     const file = this.props.file
 
