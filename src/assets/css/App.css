@@ -15,11 +15,15 @@ h3 {
   font-weight: 200 !important;
   color: dodgerblue;
   font-size: 1.5em;
+  cursor: default;
+  -webkit-user-select: none;
 }
 
 ul, p, input, span {
   list-style: none;
   color: dimgrey;
+  cursor: default;
+  -webkit-user-select: none;
 }
 
 span {
