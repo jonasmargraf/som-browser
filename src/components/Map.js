@@ -2,8 +2,125 @@ import '../assets/css/App.css';
 import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom'
 
-let name
-let path
+class MapNode extends React.Component {
+  // constructor(props) {
+  //   super(props)
+  // }
+  //
+  // componentDidUpdate() {
+  //   console.log('MapNode updated')
+  // }
+  //
+  // handleClick(mapElement) {
+  //   this.props.onMapClick(mapElement)
+  // }
+  //
+  // handleMouseEnter(name) {
+  //   this.setState({
+  //       label: name,
+  //       showLabel: true
+  //   })
+  // }
+  //
+  // handleMouseLeave(e) {
+  //   this.setState({ showLabel: false })
+  // }
+  //
+  // handleMouseMove(e) {
+  //   this.setState({
+  //     labelPosition: [
+  //       e.clientX - this.state.rect.left + 10,
+  //       e.clientY - this.state.rect.top
+  //     ]
+  //   })
+  // }
+  //
+  // render() {
+  //
+  //   const index = this.props.index
+  //   const som = this.props.som
+  //   const files = this.props.files
+  //   const selectedFile = this.props.selectedFile
+  //   const xPos = this.props.xPosition
+  //   const yPos = this.props.yPosition
+  //
+  //   let node =
+  //     <svg key={index} x={xPos + "%"} y={yPos + "%"}>
+  //       <rect
+  //         className="Node"
+  //         rx="1px"
+  //         ry="1px"
+  //         width={(100 / som.mapSize[0]) + '%'}
+  //         height={(100 / som.mapSize[1]) + '%'}>
+  //       </rect>
+  //       {som.neuronAssignedFiles[index] &&
+  //         som.neuronAssignedFiles[index].map((e, i) => {
+  //           let nodeFileCount = som.neuronAssignedFiles[index].length
+  //           let nodeGridRoot = Math.ceil(Math.sqrt(nodeFileCount))
+  //           let x = (i % nodeGridRoot) * (100 / nodeGridRoot)
+  //           let y = Math.floor(i / nodeGridRoot) * (100 / nodeGridRoot)
+  //           let subNodeX = x / som.mapSize[0] + 0.5
+  //           let subNodeY = y / som.mapSize[0] + 0.5
+  //           let subNodeLength = 100 / (som.mapSize[0] * nodeGridRoot)
+  //           let name = files[e].name
+  //           let path = files[e].path
+  //           console.log('subnode drawn')
+  //           return (
+  //               <rect
+  //                 key={files[e].path}
+  //                 id={
+  //                   files[e].path === selectedFile ? "SubNodeSelected" : null
+  //                 }
+  //                 className="SubNode"
+  //                 onMouseOver={this.handleClick.bind(this, path, name)}
+  //                 onMouseEnter={this.handleMouseEnter.bind(this, name)}
+  //                 onMouseMove={this.handleMouseMove}
+  //                 onMouseLeave={this.handleMouseLeave}
+  //                 onClick={this.handleClick.bind(this, path, name)}
+  //                 x={subNodeX + "%"}
+  //                 y={subNodeY + "%"}
+  //                 rx="1px"
+  //                 ry="1px"
+  //                 width={subNodeLength - 1 + "%"}
+  //                 height={subNodeLength - 1 + "%"}>
+  //               </rect>
+  //           )
+  //         })
+  //       }
+  //     </svg>
+  //
+  //   return (
+  //     node
+  //   )
+  // }
+}
+
+class MapLabel extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
+  componentDidUpdate() {
+    // console.log('MapLabel updated')
+  }
+
+  render() {
+
+    return (
+      <span
+        className="label"
+        style={
+          {
+            left: this.props.label.labelPosition[0],
+            top: this.props.label.labelPosition[1],
+            display: this.props.label.showLabel ? 'block' : 'none'
+          }
+        }>
+        {this.props.label.showLabel && this.props.label.label}
+      </span>
+    )
+  }
+}
 
 class Map extends React.Component {
   constructor(props) {
@@ -109,21 +226,19 @@ class Map extends React.Component {
         {
           this.props.som ?
 
-          <div style={{position: 'absolute', width: 'inherit', height: 'inherit', zIndex: 1}}>
+          <div
+            style={
+              {
+                position: 'absolute',
+                width: 'inherit',
+                height: 'inherit',
+                zIndex: 1
+              }
+            }>
             <svg className="Drawing">
               {this.createMap(this.props.som, this.props.files, fileKey)}
             </svg>
-          <span
-            className="label"
-            style={
-              {
-                left: this.state.labelPosition[0],
-                top: this.state.labelPosition[1],
-                display: this.state.showLabel ? 'block' : 'none'
-              }
-            }>
-            {this.state.showLabel && this.state.label}
-          </span>
+            <MapLabel label={this.state}></MapLabel>
           </div>
 
           :
