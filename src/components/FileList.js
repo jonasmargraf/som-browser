@@ -60,14 +60,6 @@ class FileList extends React.Component {
     this.props.onAnalyzeClick()
   }
 
-  handleSave() {
-    this.props.onSaveClick()
-  }
-
-  handleLoad() {
-    this.props.onLoadClick()
-  }
-
   render() {
     const files = this.props.files;
     const fileListItems = [];
