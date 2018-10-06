@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 const {dialog} = require('electron').remote;
 const path = require('path');
 
-class FileListItem extends React.Component {
+class FileListItem extends React.PureComponent {
   constructor(props) {
     super(props)
     this.handleClick = this.handleClick.bind(this)

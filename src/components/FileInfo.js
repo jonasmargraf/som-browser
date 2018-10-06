@@ -7,6 +7,10 @@ class FileInfo extends React.Component {
     super(props)
   }
 
+  componentDidUpdate() {
+    // console.log('FileInfo updated')
+  }
+
   render() {
     const file = this.props.file
 
