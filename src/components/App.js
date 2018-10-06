@@ -126,6 +126,10 @@ const playFile = (filePath) => {
   })
 }
 
+const stopAudio = () => {
+  audioSources.forEach(e => e.stop())
+}
+
 class App extends React.Component {
   constructor(props) {
 
@@ -137,6 +141,7 @@ class App extends React.Component {
     this.handleSaveClick = this.handleSaveClick.bind(this)
     this.handleLoadClick = this.handleLoadClick.bind(this)
     this.handlePrintStateClick = this.handlePrintStateClick.bind(this)
+    this.handleMouseLeave = this.handleMouseLeave.bind(this)
     this.state = {
       files: null,
       selectedFile: null,
@@ -164,6 +169,10 @@ class App extends React.Component {
   handleMapClick(mapElement) {
     this.setState({selectedFile: mapElement}, () =>
       playFile(this.state.selectedFile))
+  }
+
+  handleMouseLeave() {
+    stopAudio()
   }
 
   handleAnalyzeClick() {
@@ -257,7 +266,8 @@ class App extends React.Component {
           som={this.state.som}
           files={this.state.files}
           selectedFile={file}
-          onMapClick={this.handleMapClick}/>
+          onMapClick={this.handleMapClick}
+          onMouseLeave={this.handleMouseLeave}/>
 
         <FileInfo file={file}/>
 
