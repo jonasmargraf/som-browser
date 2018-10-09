@@ -1,12 +1,29 @@
 import '../assets/css/App.css';
 import React, { Component } from 'react';
+import UserSelectionSlot from './UserSelectionSlot';
 
 class UserSelection extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
+  componentDidMount() {
+    console.log('UserSelection mounted')
+  }
+
+  componentDidUpdate() {
+    console.log('UserSelection updated')
+  }
+
+
   render() {
+
+    const userSelectionSlots = Array.from(new Array(8),(e,i) => <UserSelectionSlot key={i} index={i}></UserSelectionSlot>)
+    console.log(userSelectionSlots)
+
     return (
       <div className="UserSelection">
-        <h3>User Selection</h3>
-        <p>This is where the User Selection visualization will be shown.</p>
+        { userSelectionSlots }
       </div>
     );
   }

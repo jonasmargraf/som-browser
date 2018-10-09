@@ -235,7 +235,7 @@ class App extends React.Component {
     const file = getFileByPath(files, this.state.selectedFile)
 
     return (
-      <div>
+      <div className="AppContent">
 
         <div className="TitleBar">
           <p>SOM Browser</p>

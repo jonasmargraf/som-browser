@@ -305,9 +305,25 @@ span {
   position: fixed;
   left: 0;
   bottom: 0;
-  /* float: left; */
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
 }
 
 .UserSelection > * {
+
+}
+
+.UserSelectionSlot {
   padding: 10px;
+  margin: 10px;
+  border: 1px lightgray dashed;
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+  /* overflow: hidden; */
+}
+
+.UserSelectionSlot p {
 }
