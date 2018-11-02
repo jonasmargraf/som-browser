@@ -1,6 +1,32 @@
 import '../assets/css/App.css';
 import React, { Component } from 'react';
-import { findDOMNode } from 'react-dom'
+import { findDOMNode } from 'react-dom';
+import { DragSource } from 'react-dnd';
+import { Types } from './Constants';
+
+const subnodeSource = {
+  beginDrag(props) {
+    const item = { id: props.id }
+    return item
+  },
+
+  endDrag(props, monitor, component) {
+    if (!monitor.didDrop()) {
+      return
+    }
+
+    const item = monitor.getItem()
+    const dropResult = monitor.getDropResult()
+    console.log(item.id + 'dropped!')
+  }
+}
+
+function collect(connect, monitor) {
+  return {
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging()
+  }
+}
 
 class MapSubnode extends React.PureComponent {
   constructor(props) {
@@ -16,7 +42,7 @@ class MapSubnode extends React.PureComponent {
   }
 
   componentDidUpdate() {
-    // console.log('MapSubnode updated')
+    console.log('MapSubnode updated')
   }
 
   handleClick(mapElement) {
@@ -42,6 +68,9 @@ class MapSubnode extends React.PureComponent {
   }
 
   render() {
+
+    const { isDragging, connectDragSource } = this.props;
+    isDragging && console.log('subnode dragging: ' + isDragging)
 
     const index = this.props.nodeIndex
     const i = this.props.index
@@ -84,10 +113,11 @@ class MapSubnode extends React.PureComponent {
       </rect>
     </svg>
 
-    return (
+    return connectDragSource(
       subnode
     )
   }
 }
 
-export default MapSubnode;
+export default DragSource(Types.SUBNODE, subnodeSource, collect)(MapSubnode)
+// export default MapSubnode
