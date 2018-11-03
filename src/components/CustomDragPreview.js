@@ -32,12 +32,12 @@ class CustomDragPreview extends React.Component {
     switch (type) {
     case Types.SUBNODE:
       return (
-        <div>{item.id}</div>
+        <div className="DragPreview">{item.id}</div>
       )
     case Types.SELECTION_SLOT:
       // console.log(item)
       return (
-        <div>MOTHERFUCKER</div>
+        <div>SELECTION_SLOT</div>
       )
     }
   }
