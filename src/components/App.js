@@ -2,6 +2,7 @@ import '../assets/css/App.css';
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
 import TouchBackend from 'react-dnd-touch-backend';
+import { default as CustomDragPreview } from './CustomDragPreview'
 // import { DragDropContextProvider } from 'react-dnd';
 // import MouseBackEnd from 'react-dnd-mouse-backend';
 import { DragDropContext } from 'react-dnd'
@@ -241,6 +242,8 @@ class App extends React.Component {
     return (
       // <DragDropContextProvider backend={HTML5Backend}>
       <div className="AppContent">
+
+        <CustomDragPreview />
 
         <div className="TitleBar">
           <p>SOM Browser</p>
