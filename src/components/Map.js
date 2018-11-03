@@ -4,8 +4,6 @@ import MapSubnode from './MapSubnode';
 import MapLabel from './MapLabel'
 import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
-import { DragSource } from 'react-dnd';
-import { Types } from './Constants';
 
 class Map extends React.Component {
   constructor(props) {
@@ -14,11 +12,14 @@ class Map extends React.Component {
     this.handleMouseEnter = this.handleMouseEnter.bind(this)
     this.handleMouseLeave = this.handleMouseLeave.bind(this)
     this.handleMouseMove = this.handleMouseMove.bind(this)
+    this.handleBeginDrag = this.handleBeginDrag.bind(this)
+    this.handleEndDrag = this.handleEndDrag.bind(this)
     this.state = {
       label: null,
       labelPosition: [0, 0],
       showLabel: false,
-      rect: undefined
+      rect: undefined,
+      dragging: false
     }
   }
 
@@ -31,23 +32,36 @@ class Map extends React.Component {
   }
 
   handleClick(mapElement) {
-    this.props.onMapClick(mapElement)
+    !this.state.dragging && this.props.onMapClick(mapElement)
   }
 
   handleMouseEnter(name) {
-    this.setState({
+    !this.state.dragging && this.setState({
         label: name,
         showLabel: true
     })
   }
 
   handleMouseLeave() {
-    this.setState({ showLabel: false })
-    this.props.onMouseLeave()
+    !this.state.dragging && this.setState({ showLabel: false })
+    !this.state.dragging && this.props.onMouseLeave()
   }
 
   handleMouseMove(position) {
-    this.setState(position)
+    !this.state.dragging && this.setState(position)
+  }
+
+  handleBeginDrag() {
+    console.log('handleBeginDrag() in Map.js called')
+    this.setState({
+      dragging: true,
+      showLabel: false
+    })
+  }
+
+  handleEndDrag() {
+    console.log('handleEndDrag() in Map.js called')
+    this.setState({ dragging: false })
   }
 
   createMap(som, files, selectedFile) {
@@ -88,7 +102,9 @@ class Map extends React.Component {
           onMouseEnter={this.handleMouseEnter}
           onMouseMove={this.handleMouseMove}
           onMouseLeave={this.handleMouseLeave}
-          onClick={this.handleClick}>
+          onClick={this.handleClick}
+          onBeginDrag={this.handleBeginDrag}
+          onEndDrag={this.handleEndDrag}>
         </MapSubnode>
         return subnode
       })

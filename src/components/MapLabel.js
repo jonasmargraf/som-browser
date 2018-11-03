@@ -3,8 +3,6 @@ import MapNode from './MapNode';
 import MapSubnode from './MapSubnode';
 import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
-import { DragSource } from 'react-dnd';
-import { Types } from './Constants';
 
 class MapLabel extends React.Component {
   constructor(props) {

@@ -6,12 +6,16 @@ import { Types } from './Constants';
 
 const subnodeSource = {
   beginDrag(props) {
-    const item = { id: props.id }
+    const item = { id: props.files[props.e].name }
+    console.log('dragging subnode')
+    props.onBeginDrag()
     return item
   },
 
   endDrag(props, monitor, component) {
     if (!monitor.didDrop()) {
+      console.log('drag ended')
+      props.onEndDrag()
       return
     }
 
@@ -35,6 +39,7 @@ class MapSubnode extends React.PureComponent {
     this.handleMouseEnter = this.handleMouseEnter.bind(this)
     this.handleMouseLeave = this.handleMouseLeave.bind(this)
     this.handleMouseMove = this.handleMouseMove.bind(this)
+    var dragging = false;
   }
 
   componentDidMount() {
@@ -50,34 +55,47 @@ class MapSubnode extends React.PureComponent {
   }
 
   handleMouseEnter(name, path) {
-    this.props.onMouseEnter(name)
-    this.handleClick(path)
-  }
+    // console.log('mouse enter')
+    // if (dragging) {
+    // }
+    // else {
+      this.props.onMouseEnter(name)
+      this.handleClick(path)
+  // }
+}
 
   handleMouseLeave(e) {
-    this.props.onMouseLeave()
+    // console.log('mouse leave')
+    // if (dragging) {
+    // }
+    // else {
+      this.props.onMouseLeave()
+    // }
   }
 
   handleMouseMove(e) {
-    this.props.onMouseMove({
-      labelPosition: [
-        e.clientX - this.props.boundingRect.left + 10,
-        e.clientY - this.props.boundingRect.top
-      ]
-    })
+    // console.log('mouse move')
+    // if (dragging) {
+    // }
+    // else {
+      this.props.onMouseMove({
+        labelPosition: [
+          e.clientX - this.props.boundingRect.left + 10,
+          e.clientY - this.props.boundingRect.top
+        ]
+      })
+    // }
   }
 
   render() {
 
-    const { isDragging, connectDragSource } = this.props;
-    isDragging && console.log('subnode dragging: ' + isDragging)
+    const { isDragging, connectDragSource } = this.props
 
     const index = this.props.nodeIndex
     const i = this.props.index
     const e = this.props.e
     const som = this.props.som
     const files = this.props.files
-    // const selectedFile = this.props.selectedFile
     const xPos = this.props.xPosition
     const yPos = this.props.yPosition
 
@@ -100,9 +118,9 @@ class MapSubnode extends React.PureComponent {
           // files[e].path === selectedFile ? "SubNodeSelected" : null
         }
         className="SubNode"
-        onMouseEnter={this.handleMouseEnter.bind(this, name, path)}
-        onMouseMove={this.handleMouseMove}
-        onMouseLeave={this.handleMouseLeave}
+        onMouseEnter={isDragging ? null : this.handleMouseEnter.bind(this, name, path)}
+        onMouseMove={isDragging ? null : this.handleMouseMove}
+        onMouseLeave={isDragging ? null : this.handleMouseLeave}
         onClick={this.handleClick.bind(this, path)}
         x={subNodeX + "%"}
         y={subNodeY + "%"}
@@ -120,4 +138,3 @@ class MapSubnode extends React.PureComponent {
 }
 
 export default DragSource(Types.SUBNODE, subnodeSource, collect)(MapSubnode)
-// export default MapSubnode
