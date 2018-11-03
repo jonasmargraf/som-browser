@@ -3,8 +3,6 @@ import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
 import TouchBackend from 'react-dnd-touch-backend';
 import { default as CustomDragPreview } from './CustomDragPreview'
-// import { DragDropContextProvider } from 'react-dnd';
-// import MouseBackEnd from 'react-dnd-mouse-backend';
 import { DragDropContext } from 'react-dnd'
 import MenuBar from './MenuBar';
 import Map from './Map';
@@ -240,7 +238,6 @@ class App extends React.Component {
     const file = getFileByPath(files, this.state.selectedFile)
 
     return (
-      // <DragDropContextProvider backend={HTML5Backend}>
       <div className="AppContent">
 
         <CustomDragPreview />
@@ -282,13 +279,10 @@ class App extends React.Component {
         <UserSelection />
 
       </div>
-      // </DragDropContextProvider>
     )
   }
 }
 
 App = DragDropContext(TouchBackend({ enableMouseEvents: true }))(App)
 
-// export default hot(module)(App)
 export default hot(module)(App)
-// module.exports = hot(module)(DragDropContext(HTML5Backend))(App)

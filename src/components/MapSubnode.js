@@ -55,42 +55,25 @@ class MapSubnode extends React.PureComponent {
   }
 
   handleMouseEnter(name, path) {
-    // console.log('mouse enter')
-    // if (dragging) {
-    // }
-    // else {
       this.props.onMouseEnter(name)
       this.handleClick(path)
-  // }
 }
 
   handleMouseLeave(e) {
-    // console.log('mouse leave')
-    // if (dragging) {
-    // }
-    // else {
-      this.props.onMouseLeave()
-    // }
+    this.props.onMouseLeave()
   }
 
   handleMouseMove(e) {
-    // console.log('mouse move')
-    // if (dragging) {
-    // }
-    // else {
-      this.props.onMouseMove({
-        labelPosition: [
-          e.clientX - this.props.boundingRect.left + 10,
-          e.clientY - this.props.boundingRect.top
-        ]
-      })
-    // }
+    this.props.onMouseMove({
+      labelPosition: [
+        e.clientX - this.props.boundingRect.left + 10,
+        e.clientY - this.props.boundingRect.top
+      ]
+    })
   }
 
   render() {
-
     const { isDragging, connectDragSource } = this.props
-
     const index = this.props.nodeIndex
     const i = this.props.index
     const e = this.props.e
