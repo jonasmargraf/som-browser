@@ -65,39 +65,57 @@ class UserSelection extends React.Component {
   constructor(props) {
     super(props)
     this.moveSelectionSlot = this.moveSelectionSlot.bind(this)
+    this.dropSample = this.dropSample.bind(this)
+    this.handleClick = this.handleClick.bind(this)
     this.state = {
       userSelectionSlots: [
         {
           id: 1,
-          label: 'Sample #1'
+          label: 'Sample #1',
+          file: undefined,
+          path: undefined
         },
         {
           id: 2,
-          label: 'Sample #2'
+          label: 'Sample #2',
+          file: undefined,
+          path: undefined
         },
         {
           id: 3,
-          label: 'Sample #3'
+          label: 'Sample #3',
+          file: undefined,
+          path: undefined
         },
         {
           id: 4,
-          label: 'Sample #4'
+          label: 'Sample #4',
+          file: undefined,
+          path: undefined
         },
         {
           id: 5,
-          label: 'Sample #5'
+          label: 'Sample #5',
+          file: undefined,
+          path: undefined
         },
         {
           id: 6,
-          label: 'Sample #6'
+          label: 'Sample #6',
+          file: undefined,
+          path: undefined
         },
         {
           id: 7,
-          label: 'Sample #7'
+          label: 'Sample #7',
+          file: undefined,
+          path: undefined
         },
         {
           id: 8,
-          label: 'Sample #8'
+          label: 'Sample #8',
+          file: undefined,
+          path: undefined
         }
       ]
       // userSelectionSlots: Array.from(new Array(8),(e,i) => i)
@@ -114,8 +132,8 @@ class UserSelection extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log('UserSelection updated')
-    console.log(this.state)
+    // console.log('UserSelection updated')
+    // console.log(this.state)
     // this.forceUpdate()
     // console.log(userSelectionSlots)
   }
@@ -138,6 +156,20 @@ class UserSelection extends React.Component {
     })
   }
 
+  dropSample(item, position) {
+    let { userSelectionSlots } = this.state
+    userSelectionSlots[position].file = item.id
+    userSelectionSlots[position].path = item.path
+    this.setState({
+      userSelectionSlots: userSelectionSlots
+    })
+  }
+
+  handleClick(file) {
+    console.log('UserSelection click')
+    this.props.onClick(file)
+  }
+
   render() {
     // console.log('rendered')
     const userSelectionSlots = this.state.userSelectionSlots
@@ -158,8 +190,12 @@ class UserSelection extends React.Component {
             id={e.id}
             index={i}
             label={e.label}
-            moveSelectionSlot={this.moveSelectionSlot}>
-          </UserSelectionSlot>
+            file={e.file}
+            path={e.path}
+            moveSelectionSlot={this.moveSelectionSlot}
+            dropSample={this.dropSample}
+            onClick={this.handleClick}/>
+          // </UserSelectionSlot>
         )}
         {
           // <button onClick={this.moveSelectionSlot}/>

@@ -6,7 +6,10 @@ import { Types } from './Constants';
 
 const subnodeSource = {
   beginDrag(props) {
-    const item = { id: props.files[props.e].name }
+    const item = {
+      id: props.files[props.e].name,
+      path: props.files[props.e].path
+    }
     console.log('dragging subnode')
     props.onBeginDrag()
     return item
@@ -17,6 +20,10 @@ const subnodeSource = {
       console.log('drag ended')
       props.onEndDrag()
       return
+    }
+
+    if (monitor.didDrop()) {
+      props.onEndDrag()
     }
 
     const item = monitor.getItem()

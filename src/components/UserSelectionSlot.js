@@ -13,7 +13,7 @@ const selectionSlotTarget = {
     // in response to the hover. You can't handle enter and leave
     // here—if you need them, put monitor.isOver() into collect() so you
     // can just use componentDidUpdate() to handle enter/leave.
-    console.log('hovering over UserSelectionSlot')
+    // console.log('hovering over UserSelectionSlot ' + props.index)
 
     // You can access the coordinates if you need them
     // const clientOffset = monitor.getClientOffset();
@@ -34,12 +34,14 @@ const selectionSlotTarget = {
     }
 
     // Obtain the dragged item
-    const item = monitor.getItem();
+    const item = monitor.getItem()
+    const type = monitor.getItemType()
+    console.log('itemType: ' + type)
     console.log('item.index: ' + item.index + ', props.index: ' + props.index)
+    console.log('item.id: ' + item.id)
 
-    // You can do something with it
-    // ChessActions.movePiece(item.fromPosition, props.position);
-    props.moveSelectionSlot(item.index, props.index)
+    type === 'subnode' && props.dropSample(item, props.index)
+    // props.moveSelectionSlot(item.index, props.index)
 
     // You can also do nothing and return a drop result,
     // which will be available as monitor.getDropResult()
@@ -63,7 +65,11 @@ function collectTarget(connect, monitor) {
 
 const selectionSlotSource = {
   beginDrag(props) {
-    const item = { id: props.id, index: props.index }
+    const item = {
+      id: props.id,
+      // path: props.path,
+      index: props.index
+    }
     console.log('dragging item with id: ' + item.id)
     return item
   },
@@ -93,10 +99,17 @@ class UserSelectionSlot extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    const { isOver, index } = this.props
+    isOver && console.log('isOver ' + index)
     // console.log('prevProps:')
     // console.log(prevProps)
     // console.log('currentProps:')
     // console.log(this.props)
+  }
+
+  handleClick(file) {
+    console.log(' UserSelectionSlot click')
+    file && this.props.onClick(file)
   }
 
   render() {
@@ -105,8 +118,10 @@ class UserSelectionSlot extends React.PureComponent {
     // isDragging && console.log('UserSelectionSlot dragging: ' + isDragging)
     return connectDragSource(
       connectDropTarget(
-        <div className="UserSelectionSlot">
-          <p>{this.props.label}</p>
+        <div
+          className={this.props.file === undefined ? "UserSelectionSlotEmpty" : "UserSelectionSlot"}
+          onClick={this.handleClick.bind(this, this.props.path)}>
+          <p>{this.props.file || this.props.label}</p>
         </div>
       )
     )
@@ -114,7 +129,7 @@ class UserSelectionSlot extends React.PureComponent {
 }
 
 export default DropTarget(
-  Types.SELECTION_SLOT,
+  [ Types.SUBNODE, Types.SELECTION_SLOT ],
   selectionSlotTarget,
   collectTarget
 )(
