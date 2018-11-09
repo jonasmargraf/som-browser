@@ -276,7 +276,8 @@ class App extends React.Component {
 
         <FileInfo file={file}/>
 
-        <UserSelection />
+        <UserSelection
+          onClick={this.handleMapClick}/>
 
       </div>
     )
