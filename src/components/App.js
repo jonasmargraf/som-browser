@@ -138,6 +138,7 @@ class App extends React.Component {
 
     super(props)
     this.handleFileListChange = this.handleFileListChange.bind(this)
+    this.handleUserSelectionUpdate = this.handleUserSelectionUpdate.bind(this)
     this.handleFileClick = this.handleFileClick.bind(this)
     this.handleAnalyzeClick = this.handleAnalyzeClick.bind(this)
     this.handleMapClick = this.handleMapClick.bind(this)
@@ -149,7 +150,8 @@ class App extends React.Component {
       files: null,
       selectedFile: null,
       som: null,
-      loading: false
+      loading: false,
+      userSelection: []
     }
   }
 
@@ -162,6 +164,12 @@ class App extends React.Component {
       files: files,
       selectedFile: null,
       som: null
+    })
+  }
+
+  handleUserSelectionUpdate(userSelection) {
+    this.setState({
+      userSelection: userSelection
     })
   }
 
@@ -277,7 +285,9 @@ class App extends React.Component {
         <FileInfo file={file}/>
 
         <UserSelection
-          onClick={this.handleMapClick}/>
+          userSelection = {this.state.userSelection}
+          onClick={this.handleMapClick}
+          onUserSelectionUpdate={this.handleUserSelectionUpdate}/>
 
       </div>
     )
