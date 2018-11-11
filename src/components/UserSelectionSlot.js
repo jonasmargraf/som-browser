@@ -102,10 +102,6 @@ class UserSelectionSlot extends React.PureComponent {
   componentDidUpdate(prevProps, prevState) {
     const { isOver, index } = this.props
     isOver && console.log('isOver ' + index)
-    // console.log('prevProps:')
-    // console.log(prevProps)
-    // console.log('currentProps:')
-    // console.log(this.props)
   }
 
   handleClick(file) {
