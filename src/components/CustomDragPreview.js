@@ -37,7 +37,7 @@ class CustomDragPreview extends React.Component {
     case Types.SELECTION_SLOT:
       // console.log(item)
       return (
-        <div className="DragPreview">Sample #{item.id}</div>
+        <div className="DragPreview">{item.file || <i>{"Sample #" + item.id}</i>}</div>
       )
     }
   }

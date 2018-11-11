@@ -67,10 +67,11 @@ const selectionSlotSource = {
   beginDrag(props) {
     const item = {
       id: props.id,
-      // path: props.path,
+      file: props.file,
       index: props.index
     }
     console.log('dragging item with id: ' + item.id)
+    console.log(props)
     return item
   },
 
