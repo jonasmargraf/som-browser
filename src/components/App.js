@@ -144,6 +144,7 @@ class App extends React.Component {
     this.handleMapClick = this.handleMapClick.bind(this)
     this.handleSaveClick = this.handleSaveClick.bind(this)
     this.handleLoadClick = this.handleLoadClick.bind(this)
+    this.handleExportClick = this.handleExportClick.bind(this)
     this.handlePrintStateClick = this.handlePrintStateClick.bind(this)
     this.handleMouseLeave = this.handleMouseLeave.bind(this)
     this.state = {
@@ -234,6 +235,34 @@ class App extends React.Component {
     })
   }
 
+  handleExportClick() {
+    const options = {
+      defaultPath: path.join(app.getAppPath(), 'map'),
+      buttonLabel: 'Save',
+      properties: ['openDirectory', 'createDirectory']
+    }
+    console.log('exporting files...')
+    // Abusing the OpenDialog here so that we prevent user from typing a file
+    // name, which 'showSaveDialog' prompts them to do.
+    dialog.showOpenDialog(options, path => {
+      this.state.userSelection.forEach(e => {
+        if ( e.file ) {
+          // Copy the file to new location
+          // 'wx' flag so that file only gets created if it doesn't exist
+          // (for safety...)
+          let tempData = fs.readFileSync(e.path)
+          try {
+              fs.writeFileSync(path + '/' + e.file, tempData, { flag: 'wx' })
+              console.log(e.file + 'copied')
+          } catch (e) {
+            console.log(e)
+          }
+        }
+      })
+      console.log('Done exporting.')
+    })
+  }
+
   handlePrintStateClick() {
     console.log(this.state)
   }
@@ -261,6 +290,7 @@ class App extends React.Component {
           onAnalyzeClick={this.handleAnalyzeClick}
           onSaveClick={this.handleSaveClick}
           onLoadClick={this.handleLoadClick}
+          onExportClick={this.handleExportClick}
           onPrintState={this.handlePrintStateClick}
           />
 

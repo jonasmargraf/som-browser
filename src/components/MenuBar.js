@@ -11,6 +11,7 @@ class MenuBar extends React.Component {
     this.handleAnalyzeClick = this.handleAnalyzeClick.bind(this)
     this.handleSave = this.handleSave.bind(this)
     this.handleLoad = this.handleLoad.bind(this)
+    this.handleExport = this.handleExport.bind(this)
     this.printState = this.printState.bind(this)
   }
 
@@ -47,6 +48,10 @@ class MenuBar extends React.Component {
     this.props.onLoadClick()
   }
 
+  handleExport() {
+    this.props.onExportClick()
+  }
+
   printState() {
     this.props.onPrintState()
   }
@@ -66,6 +71,8 @@ class MenuBar extends React.Component {
             onClick={this.handleLoad}/>
           <input className="OpenFile" type="button" value="Import Files..."
             onClick={this.handleClick}/>
+          <input className="ExportSelection" type="button" value="Export Selection..."
+              onClick={this.handleExport}/>
           <input className="PrintState" type="button" value="Print State"
               onClick={this.printState}/>
         </div>
