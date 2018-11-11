@@ -41,7 +41,7 @@ const selectionSlotTarget = {
     console.log('item.id: ' + item.id)
 
     type === 'subnode' && props.dropSample(item, props.index)
-    // props.moveSelectionSlot(item.index, props.index)
+    type === 'selectionSlot' && props.moveSelectionSlot(item.index, props.index)
 
     // You can also do nothing and return a drop result,
     // which will be available as monitor.getDropResult()
