@@ -67,28 +67,6 @@ function processFiles(files) {
         resolve(value)
       })
 
-      // ipcRenderer.on('display-progress', (event, value) => {
-      //   // this.setState({ progress: progress })
-      //   App.updateProgress(value)
-      //   console.log(value)
-      // })
-
-      // ipcRenderer.on('normalize-progress', (event, value) => {
-      //   console.log(value)
-      // })
-      //
-      // ipcRenderer.on('initialize-progress', (event, value) => {
-      //   console.log(value)
-      // })
-      //
-      // ipcRenderer.on('train-progress', (event, value) => {
-      //   console.log('Training step ' + value[0] + ' / ' + value[1])
-      // })
-      //
-      // ipcRenderer.on('bestMatches-progress', (event, value) => {
-      //   console.log(value)
-      // })
-
       win.webContents.send('to-background', files)
     })
   })

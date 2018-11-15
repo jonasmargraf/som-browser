@@ -80,10 +80,6 @@ window.calculateSOM = (files) => {
   som = initializeMap(som)
   som = trainMap(som)
   som = findBestMatches(som)
-  // TODO:
-  // - port trainMap()
-  // - findBestMatches()
-
 
   return new Promise((resolve, reject) => {
     resolve(som)

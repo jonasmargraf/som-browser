@@ -115,24 +115,6 @@ ipcMain.on('progress', (event, arg) => {
   mainWindow.webContents.send('display-progress', arg)
   // console.log(arg)
 })
-//
-// ipcMain.on('normalize', (event, arg) => {
-//   mainWindow.webContents.send('normalize-progress', arg)
-// })
-//
-// ipcMain.on('initialize', (event, arg) => {
-//   mainWindow.webContents.send('initialize-progress', arg)
-// })
-//
-//
-// ipcMain.on('train', (event, arg) => {
-//   mainWindow.webContents.send('train-progress', arg)
-// })
-//
-//
-// ipcMain.on('bestMatches', (event, arg) => {
-//   mainWindow.webContents.send('bestMatches-progress', arg)
-// })
 
 ipcMain.on('from-som', (event, arg) => {
   mainWindow.webContents.send('som-done', arg)
