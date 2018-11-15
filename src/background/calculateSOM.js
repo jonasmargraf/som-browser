@@ -1,3 +1,4 @@
+const { ipcRenderer } = require('electron');
 const math = require('mathjs');
 math.config({randomSeed: 7});
 
@@ -90,6 +91,7 @@ window.calculateSOM = (files) => {
 }
 
 function normalize(files, som) {
+  ipcRenderer.send('normalize', 'Normalizing data...')
   // Initialize data matrix for SOM as an array of empty arrays,
   // where each element represents one file's feature values
   let normalizedDataMatrix = new Array(files.length).fill(new Array())
@@ -118,6 +120,8 @@ function normalize(files, som) {
 
 
 function initializeMap(som) {
+
+  ipcRenderer.send('progress', 'Initializing nodes...')
 
   let data = som.normalizedData
   som.coordinates = []
@@ -182,6 +186,9 @@ function getDimension(data, dimensionIndex) {
 }
 
 function trainMap(som) {
+
+  ipcRenderer.send('progress', 'Training map...')
+
   som.trainingLength = som.trainingEpochs * som.normalizedData.length
   som.rStep = (som.radiusEnd - som.radiusStart) / (som.trainingLength - 1)
 
@@ -195,6 +202,8 @@ function trainMap(som) {
 
   // Begin training
   for (var t = 0; t < som.trainingLength; t++) {
+    ipcRenderer.send('progress',
+      'Training step ' + t + ' / ' + (som.trainingLength - 1))
     som = trainingStep(t, som)
     // som = trainingStep(t, som, neurons)
   }
@@ -290,6 +299,9 @@ function trainingStep(t, som) {
 }
 
 function findBestMatches(som) {
+
+  ipcRenderer.send('progress', 'Populating map...')
+
   som.bestMatches = som.normalizedData.map(function (vector) {
     var differences = [];
     // var differenceMagnitudes = [];

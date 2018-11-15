@@ -63,8 +63,31 @@ function processFiles(files) {
 
       ipcRenderer.once('features-done', (event, value) => {
         win.destroy()
+        ipcRenderer.removeAllListeners('features-progress')
         resolve(value)
       })
+
+      // ipcRenderer.on('display-progress', (event, value) => {
+      //   // this.setState({ progress: progress })
+      //   App.updateProgress(value)
+      //   console.log(value)
+      // })
+
+      // ipcRenderer.on('normalize-progress', (event, value) => {
+      //   console.log(value)
+      // })
+      //
+      // ipcRenderer.on('initialize-progress', (event, value) => {
+      //   console.log(value)
+      // })
+      //
+      // ipcRenderer.on('train-progress', (event, value) => {
+      //   console.log('Training step ' + value[0] + ' / ' + value[1])
+      // })
+      //
+      // ipcRenderer.on('bestMatches-progress', (event, value) => {
+      //   console.log(value)
+      // })
 
       win.webContents.send('to-background', files)
     })
@@ -104,6 +127,10 @@ function createSOM(files) {
       ipcRenderer.once('som-done', (event, value) => {
         win.destroy()
         resolve(value)
+      })
+
+      ipcRenderer.on('som-progress', (event, value) => {
+        console.log(value)
       })
 
       win.webContents.send('to-som', files)
@@ -152,8 +179,16 @@ class App extends React.Component {
       selectedFile: null,
       som: null,
       loading: false,
-      userSelection: []
+      userSelection: [],
+      progress: 'Import some files, then click the Analyze button!'
     }
+  }
+
+  componentWillMount() {
+    ipcRenderer.on('display-progress', (event, value) => {
+      this.setState({ progress: value })
+      // console.log(value)
+    })
   }
 
   componentDidUpdate() {
@@ -189,17 +224,22 @@ class App extends React.Component {
 
   handleAnalyzeClick() {
     this.setState({loading: true})
+    // alert('Loading!')
     console.log("Processing files...")
     processFiles(this.state.files)
-    .then(files => this.setState({files: files, loading: false}))
+    .then(files => this.setState({ files: files, loading: false }))
     .then(() => {
       console.log("Building map...")
       createSOM(this.state.files)
       .then(som => {
-        this.setState({som: som})
+        this.setState({ som: som })
         console.log(this.state)
       })
     })
+  }
+
+  static updateProgress(value) {
+    this.setState({ progress: value })
   }
 
   // Save state to disk as JSON file
@@ -308,6 +348,7 @@ class App extends React.Component {
         <Map
           som={this.state.som}
           files={this.state.files}
+          progress={this.state.progress}
           selectedFile={file}
           onMapClick={this.handleMapClick}
           onMouseLeave={this.handleMouseLeave}/>

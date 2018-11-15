@@ -141,7 +141,10 @@ class Map extends React.Component {
 
           <div>
             <h3>Map</h3>
-            <p>This is where the Map visualization will be shown.</p>
+            <p>{this.props.progress}</p>
+            {
+              // <p>This is where the Map visualization will be shown.</p>
+            }
           </div>
         }
 
