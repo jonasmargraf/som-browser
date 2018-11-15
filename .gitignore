@@ -4,6 +4,7 @@ node_modules/
 dist/
 builds/
 audio/
+audio_small/
 audio_big/
 saved/
 export/

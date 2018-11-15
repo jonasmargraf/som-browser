@@ -101,11 +101,11 @@ class UserSelectionSlot extends React.PureComponent {
 
   componentDidUpdate(prevProps, prevState) {
     const { isOver, index } = this.props
-    isOver && console.log('isOver ' + index)
+    // isOver && console.log('isOver ' + index)
   }
 
   handleClick(file) {
-    console.log(' UserSelectionSlot click')
+    // console.log(' UserSelectionSlot click')
     file && this.props.onClick(file)
   }
 

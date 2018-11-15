@@ -26,6 +26,31 @@ window.calculateSOM = (files) => {
   let rStep = null;
   let alpha = null;
   let t = 0;
+  // TODO: weighting function
+  // My guess is that h should be multiplied with a mask consisting of the
+  // desired weights for the individual dimensions / features
+  // const featureList = [ 'rms',
+  //                     'zcr',
+  //                     'spectralCentroid',
+  //                     'spectralFlatness',
+  //                     'spectralSlope',
+  //                     'spectralRolloff',
+  //                     'spectralSpread',
+  //                     'spectralSkewness',
+  //                     'spectralKurtosis',
+  //                     'loudness']
+  let dimensionWeights = [
+    1, // RMS
+    1, // ZCR
+    1, // Spectral Centroid
+    1, // Spectral Flatness
+    1, // Spectral Slope
+    1, // Spectral Rolloff
+    1, // Spectral Spread
+    1, // Spectral Skewness
+    1, // Spectral Kurtosis
+    1 // Loudness
+  ]
 
   let som = {
     normalizedData,
@@ -33,6 +58,7 @@ window.calculateSOM = (files) => {
     mapSize,
     neuronCount,
     neurons,
+    dimensionWeights,
     coordinates,
     distances,
     bestMatches,
@@ -136,9 +162,12 @@ function initializeMap(som) {
     som.neurons[i] = []
     for (var j = 0; j < som.dimensionCount; j++) {
       // for (feature in normalizedData[0].features) {
+      // som.neurons[i].push(math.dotMultiply(
+      //   som.dimensionWeights, math.random(dimMin[j], dimMax[j])));
       som.neurons[i].push(math.random(dimMin[j], dimMax[j]));
       // neurons[i].push(math.random(featuresMin[feature], featuresMax[feature]))
     }
+    som.neurons[i] = math.dotMultiply(som.dimensionWeights, som.neurons[i])
   }
 
   return som
@@ -244,10 +273,17 @@ function trainingStep(t, som) {
     var r = som.radiusStart + t * som.rStep;
 
     som.neurons = som.neurons.map((neuron, index) => {
-    // Gaussian neighborhood function
+      // Gaussian neighborhood function
       var h = som.alpha * math.exp(-(math.square(som.distances[index][bmu])
                                       / (2 * math.square(r))));
-      return math.subtract(neuron, math.multiply(h, differences[index]));
+
+      // h = math.multiply(h, weights)
+      // console.log(h)
+      // console.log(differences[index])
+      // console.log(math.dotMultiply(weights, differences[index]))
+      return math.subtract(neuron, math.multiply(
+        h, math.dotMultiply(som.dimensionWeights, differences[index])));
+      // return math.subtract(neuron, math.multiply(h, differences[index]));
     })
 
     return som
