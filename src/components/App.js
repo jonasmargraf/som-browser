@@ -209,7 +209,7 @@ class App extends React.Component {
        loading: true,
        progress: 'Analyzing files...',
        som: null,
-       // userSelection: []
+       userSelection: []
      })
      // alert('Loading!')
      console.log("Processing files...")

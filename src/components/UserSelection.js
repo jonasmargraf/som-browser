@@ -6,11 +6,16 @@ class UserSelection extends React.Component {
   constructor(props) {
     super(props)
     this.moveSelectionSlot = this.moveSelectionSlot.bind(this)
+    this.resetUserSelection = this.resetUserSelection.bind(this)
     this.dropSample = this.dropSample.bind(this)
     this.handleClick = this.handleClick.bind(this)
 }
 
-  componentWillMount() {
+  componentWillMount(){
+    this.resetUserSelection()
+  }
+
+  resetUserSelection() {
     const userSelection = [
       {
         id: 1,
@@ -70,6 +75,11 @@ class UserSelection extends React.Component {
 
   componentDidUpdate() {
     // console.log('UserSelection updated')
+  }
+
+  componentWillUpdate() {
+    (Array.isArray(this.props.userSelection) && !this.props.userSelection.length)
+    && this.resetUserSelection()
   }
 
   moveSelectionSlot(fromPosition, toPosition) {
