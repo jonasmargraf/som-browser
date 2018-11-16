@@ -201,20 +201,30 @@ class App extends React.Component {
   }
 
   handleAnalyzeClick() {
-    this.setState({loading: true})
-    // alert('Loading!')
-    console.log("Processing files...")
-    processFiles(this.state.files)
-    .then(files => this.setState({ files: files, loading: false }))
-    .then(() => {
-      console.log("Building map...")
-      createSOM(this.state.files)
-      .then(som => {
-        this.setState({ som: som })
-        console.log(this.state)
-      })
-    })
-  }
+   if (!this.state.files) {
+     return
+   }
+   else {
+     this.setState({
+       loading: true,
+       progress: 'Analyzing files...',
+       som: null,
+       // userSelection: []
+     })
+     // alert('Loading!')
+     console.log("Processing files...")
+     processFiles(this.state.files)
+     .then(files => this.setState({ files: files, loading: false }))
+     .then(() => {
+       console.log("Building map...")
+       createSOM(this.state.files)
+       .then(som => {
+         this.setState({ som: som })
+         console.log(this.state)
+       })
+     })
+   }
+ }
 
   static updateProgress(value) {
     this.setState({ progress: value })

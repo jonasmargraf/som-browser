@@ -199,7 +199,7 @@ function trainMap(som) {
   // Begin training
   for (var t = 0; t < som.trainingLength; t++) {
     ipcRenderer.send('progress',
-      'Training step ' + t + ' / ' + (som.trainingLength - 1))
+      'Training ' + math.round(100 * (t / (som.trainingLength - 1)), 0) + '% done.')
     som = trainingStep(t, som)
     // som = trainingStep(t, som, neurons)
   }
