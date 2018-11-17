@@ -2,26 +2,33 @@ const { ipcRenderer } = require('electron');
 const math = require('mathjs');
 math.config({randomSeed: 7});
 
-window.calculateSOM = (files) => {
+window.calculateSOM = ({ files : files, settings: settings }) => {
 
   let mapSideLength = Math.floor(Math.sqrt(files.length))
 
   // let descriptorData = [];
   let normalizedData = [];
   let dimensionCount = null;
-  let mapSize = [mapSideLength, mapSideLength];
+  // let mapSize = [mapSideLength, mapSideLength];
+  let mapSize = settings.mapSize
   let neuronCount = mapSize[0] * mapSize[1];
   let neurons = [];
   let coordinates = [];
   let distances = [];
   let bestMatches = [];
-  let trainingEpochs = 30;
-  let radiusStart = math.max(mapSize) / 5;
-  let radiusEnd = math.max(mapSize) / 30;
-  let initialAlpha = 0.5;
+  // let trainingEpochs = 30;
+  let trainingEpochs = settings.trainingEpochs
+  // let radiusStart = math.max(mapSize) / 5;
+  let radiusStart = math.max(mapSize) / settings.radiusStart
+  // let radiusEnd = math.max(mapSize) / 30;
+  let radiusEnd = math.max(mapSize) / settings.radiusStart
+  // let initialAlpha = 0.5;
+  let initialAlpha = settings.initialAlpha
   // let magnificationM = -0.02;
-  let magnificationM = 1;
-  let learningRateType = 'linear'; // 'BDH', 'linear' or 'inverse'
+  // let magnificationM = 1;
+  let magnificationM = settings.magnificationM
+  // let learningRateType = 'linear'; // 'BDH', 'linear' or 'inverse'
+  let learningRateType = settings.learningRateType
   let trainingLength = null;
   let winTimeStamp = null;
   let rStep = null;
@@ -40,18 +47,19 @@ window.calculateSOM = (files) => {
   //                     'spectralSkewness',
   //                     'spectralKurtosis',
   //                     'loudness']
-  let dimensionWeights = [
-    1, // RMS
-    1, // ZCR
-    1, // Spectral Centroid
-    1, // Spectral Flatness
-    1, // Spectral Slope
-    1, // Spectral Rolloff
-    1, // Spectral Spread
-    1, // Spectral Skewness
-    1, // Spectral Kurtosis
-    1 // Loudness
-  ]
+  let dimensionWeights = settings.dimensionWeights
+  // let dimensionWeights = [
+  //   1, // RMS
+  //   1, // ZCR
+  //   1, // Spectral Centroid
+  //   1, // Spectral Flatness
+  //   1, // Spectral Slope
+  //   1, // Spectral Rolloff
+  //   1, // Spectral Spread
+  //   1, // Spectral Skewness
+  //   1, // Spectral Kurtosis
+  //   1 // Loudness
+  // ]
 
   let som = {
     normalizedData,

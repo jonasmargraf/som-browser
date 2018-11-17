@@ -28,7 +28,7 @@ class Map extends React.Component {
   }
 
   componentDidUpdate() {
-    // console.log('Map updated')
+    console.log('Map updated')
   }
 
   handleClick(mapElement) {

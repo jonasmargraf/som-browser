@@ -2,13 +2,14 @@ import '../assets/css/App.css';
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
 import TouchBackend from 'react-dnd-touch-backend';
-import { default as CustomDragPreview } from './CustomDragPreview'
-import { DragDropContext } from 'react-dnd'
+import { default as CustomDragPreview } from './CustomDragPreview';
+import { DragDropContext } from 'react-dnd';
 import MenuBar from './MenuBar';
 import Map from './Map';
 import FileList from './FileList';
 import FileInfo from './FileInfo';
 import UserSelection from './UserSelection';
+import Settings from './Settings';
 const { ipcRenderer, remote } = require('electron');
 const { app, BrowserWindow, dialog } = remote;
 const fs = require('fs');
@@ -72,7 +73,7 @@ function processFiles(files) {
   })
 }
 
-function createSOM(files) {
+function createSOM(files, settings) {
   return new Promise(function(resolve, reject) {
     let win = new BrowserWindow({
       show: false
@@ -111,7 +112,7 @@ function createSOM(files) {
         console.log(value)
       })
 
-      win.webContents.send('to-som', files)
+      win.webContents.send('to-som', { files: files, settings: settings })
     })
   })
 }
@@ -152,13 +153,36 @@ class App extends React.Component {
     this.handleExportClick = this.handleExportClick.bind(this)
     this.handlePrintStateClick = this.handlePrintStateClick.bind(this)
     this.handleMouseLeave = this.handleMouseLeave.bind(this)
+    this.handleChangeSettings = this.handleChangeSettings.bind(this)
     this.state = {
       files: null,
       selectedFile: null,
       som: null,
       loading: false,
       userSelection: [],
-      progress: 'Import some files, then click the Analyze button!'
+      progress: 'Import some files, then click the Analyze button!',
+      showSettings: false,
+      settings: {
+        mapSize: [4, 4],
+        trainingEpochs: 30,
+        dimensionWeights: [
+          1, // RMS
+          1, // ZCR
+          1, // Spectral Centroid
+          1, // Spectral Flatness
+          1, // Spectral Slope
+          1, // Spectral Rolloff
+          1, // Spectral Spread
+          1, // Spectral Skewness
+          1, // Spectral Kurtosis
+          1 // Loudness
+        ],
+        learningRateType: 'inverse',
+        initialAlpha: 0.5,
+        radiusStart: 5,
+        radiusEnd: 30,
+        magnificationM: 1
+      }
     }
   }
 
@@ -217,7 +241,7 @@ class App extends React.Component {
      .then(files => this.setState({ files: files, loading: false }))
      .then(() => {
        console.log("Building map...")
-       createSOM(this.state.files)
+       createSOM(this.state.files, this.state.settings)
        .then(som => {
          this.setState({ som: som })
          console.log(this.state)
@@ -295,11 +319,18 @@ class App extends React.Component {
     console.log(this.state)
   }
 
+  handleChangeSettings(settings) {
+    this.setState({ settings: settings })
+    console.log('inside App.handleChangeSettings()')
+    console.log(settings)
+  }
+
   componentDidMount() {
   }
 
   render() {
     const files = this.state.files
+    const showSettings = this.state.showSettings
     const file = getFileByPath(files, this.state.selectedFile)
 
     return (
@@ -322,16 +353,27 @@ class App extends React.Component {
           onPrintState={this.handlePrintStateClick}
           />
 
-        <FileList
-          loading={this.state.loading}
-          files={files}
-          selectedFile={file}
-          onChange={this.handleFileListChange}
-          onFileClick={this.handleFileClick}
-          onAnalyzeClick={this.handleAnalyzeClick}
-          onSaveClick={this.handleSaveClick}
-          onLoadClick={this.handleLoadClick}
-          />
+        {
+          showSettings ?
+
+          <Settings
+            settings={this.state.settings}
+            onChangeSettings={this.handleChangeSettings}
+            />
+
+          :
+
+          <FileList
+            loading={this.state.loading}
+            files={files}
+            selectedFile={file}
+            onChange={this.handleFileListChange}
+            onFileClick={this.handleFileClick}
+            onAnalyzeClick={this.handleAnalyzeClick}
+            onSaveClick={this.handleSaveClick}
+            onLoadClick={this.handleLoadClick}
+            />
+        }
 
         <Map
           som={this.state.som}
