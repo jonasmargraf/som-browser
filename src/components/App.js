@@ -161,9 +161,9 @@ class App extends React.Component {
       loading: false,
       userSelection: [],
       progress: 'Import some files, then click the Analyze button!',
-      showSettings: false,
+      showSettings: true,
       settings: {
-        mapSize: [4, 4],
+        mapSize: 4,
         trainingEpochs: 30,
         dimensionWeights: [
           1, // RMS
@@ -319,10 +319,16 @@ class App extends React.Component {
     console.log(this.state)
   }
 
-  handleChangeSettings(settings) {
-    this.setState({ settings: settings })
+  handleChangeSettings(event) {
+    let settings = this.state.settings
+    if (!Number.isNaN(event.target.valueAsNumber))
+      settings[event.target.name] = event.target.valueAsNumber
+    this.setState({ settings
+        // [event.target.name]: event.target.value
+      // }
+    }, () => console.log(this.state.settings))
     console.log('inside App.handleChangeSettings()')
-    console.log(settings)
+    // console.log(event)
   }
 
   componentDidMount() {

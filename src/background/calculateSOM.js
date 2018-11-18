@@ -10,7 +10,7 @@ window.calculateSOM = ({ files : files, settings: settings }) => {
   let normalizedData = [];
   let dimensionCount = null;
   // let mapSize = [mapSideLength, mapSideLength];
-  let mapSize = settings.mapSize
+  let mapSize = [settings.mapSize, settings.mapSize]
   let neuronCount = mapSize[0] * mapSize[1];
   let neurons = [];
   let coordinates = [];
