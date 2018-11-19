@@ -360,26 +360,57 @@ class App extends React.Component {
           />
 
         {
-          showSettings ?
-
-          <Settings
-            settings={this.state.settings}
-            onChangeSettings={this.handleChangeSettings}
-            />
-
-          :
-
-          <FileList
-            loading={this.state.loading}
-            files={files}
-            selectedFile={file}
-            onChange={this.handleFileListChange}
-            onFileClick={this.handleFileClick}
-            onAnalyzeClick={this.handleAnalyzeClick}
-            onSaveClick={this.handleSaveClick}
-            onLoadClick={this.handleLoadClick}
-            />
+          // showSettings ?
+          //
+          // <Settings
+          //   settings={this.state.settings}
+          //   onChangeSettings={this.handleChangeSettings}
+          //   />
+          //
+          // :
+          //
+          // <FileList
+          //   loading={this.state.loading}
+          //   files={files}
+          //   selectedFile={file}
+          //   onChange={this.handleFileListChange}
+          //   onFileClick={this.handleFileClick}
+          //   onAnalyzeClick={this.handleAnalyzeClick}
+          //   onSaveClick={this.handleSaveClick}
+          //   onLoadClick={this.handleLoadClick}
+          //   />
         }
+
+        <div className="leftPanel">
+
+            <input id="tab1" type="radio" name="tabs" defaultChecked/>
+            <label htmlFor="tab1">Sounds</label>
+
+            <input id="tab2" type="radio" name="tabs"/>
+            <label htmlFor="tab2">Settings</label>
+
+          <div className="content">
+            <div id="tabFileList">
+              <FileList
+                loading={this.state.loading}
+                files={files}
+                selectedFile={file}
+                onChange={this.handleFileListChange}
+                onFileClick={this.handleFileClick}
+                onAnalyzeClick={this.handleAnalyzeClick}
+                onSaveClick={this.handleSaveClick}
+                onLoadClick={this.handleLoadClick}
+                />
+            </div>
+            <div id="tabSettings">
+              <Settings
+                settings={this.state.settings}
+                onChangeSettings={this.handleChangeSettings}
+                />
+            </div>
+          </div>
+
+        </div>
 
         <Map
           som={this.state.som}

@@ -16,7 +16,7 @@ html {
   cursor: default;
 }
 
-h3 {
+h3, .leftPanel > label {
   font-weight: 300 !important;
   color: dodgerblue;
   font-size: 14pt;
@@ -172,8 +172,7 @@ span {
   text-overflow: ellipsis;
 }
 
-.FileListContainer, .Settings {
-  /* border: 1px solid grey; */
+.leftPanel {
   background-color: white;
   box-shadow: 0px 1px 5px rgb(220, 220, 220);
   border-radius: 2px;
@@ -183,6 +182,88 @@ span {
   height: calc(77vh - 60px);
   float: left;
   white-space: nowrap;
+  /* display: grid; */
+  /* grid-template-columns: 50% | 50%; */
+  /* grid-template-rows: 10%; */
+  /* display: table; */
+  flex: 1;
+  flex-direction: column;
+  /* flex-wrap: wrap; */
+}
+
+.leftTabs {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  flex-grow: 1;
+  flex-direction: row;
+}
+
+.leftPanel > input {
+  display: none;
+  margin: 0;
+}
+
+.leftPanel > label {
+  display: inline-block;
+  width: calc(50% - 20px);
+  margin: 10px;
+  /* padding: 10px; */
+  margin-bottom: 0;
+  /* margin-right: 0; */
+  padding-bottom: 10px;
+  flex-grow: 1;
+  color: grey;
+  border-bottom: 1px solid rgb(220, 220, 220);
+  /* box-shadow: 0px 1px 5px rgb(220, 220, 220); */
+  /* box-sizing: border-box; */
+  /* display: flex;
+  flex-grow: 1;
+  width: 50%;
+  justify-content: center;
+  align-items: center; */
+}
+
+input:checked + label {
+  border-bottom: 1px solid dodgerblue;
+  color: dodgerblue;
+  /* background-color: white; */
+  /* box-shadow: 0px 1px 5px rgb(220, 220, 220); */
+}
+
+.content {
+  /* display: block; */
+  /* flex-grow: 10; */
+  /* display: table-row; */
+  box-sizing: border-box;
+  /* height: 100%; */
+  /* border: 1px solid grey; */
+  /* height: inherit; */
+}
+
+.content > div {
+  display: none;
+  /* flex-grow: 1; */
+}
+
+#tab1:checked ~ .content #tabFileList,
+#tab2:checked ~ .content #tabSettings {
+  display: block;
+  /* flex-grow: 1; */
+}
+
+.FileListContainer, .Settings {
+  /* border: 1px solid grey; */
+  /* background-color: white; */
+  /* box-shadow: 0px 1px 5px rgb(220, 220, 220); */
+  border-radius: 2px;
+  /* margin: 10px; */
+  /* margin-left: 20px; */
+  width: calc(25vw - 20px);
+  height: calc(77vh - 100px);
+  float: left;
+  white-space: nowrap;
+  /* flex-grow: 1; */
 }
 
 .FileList {
@@ -198,7 +279,7 @@ span {
 }
 
 .Settings {
-  margin: 10px;
+  /* margin: 10px; */
 }
 
 .Settings h3 {
@@ -207,20 +288,32 @@ span {
 
 .slider {
   padding: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
-.slider label {
+.slider > div {
+  display: block;
+  flex-grow: 1;
+}
+
+.slider > div > label {
   /* display: block */
   float: left;
 }
 
-.slider output {
+.slider > div > input[type=number] {
+  /* display: inline-block; */
   float: right;
+  border: none;
+  text-align: right;
+  color: dodgerblue;
 }
 
-.slider input {
-  display: inline-block;
+.slider input[type=range] {
+  /* display: hidden; */
   float: left;
+  flex-grow: 1;
 }
 
 .ActionButtons {
@@ -254,7 +347,7 @@ span {
 
 .FileList {
   overflow: scroll;
-  height: 85%;
+  height: 95%;
   /* border: 1px solid black; */
 }
 

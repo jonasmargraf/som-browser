@@ -81,9 +81,11 @@ class FileList extends React.Component {
 
     return (
       <div className="FileListContainer">
-        <h3>
-          Sounds
-        </h3>
+        {
+        // <h3>
+        //   Sounds
+        // </h3>
+        }
         <ul className="FileList">
           { files ? fileListItems : <p>No audio files loaded.</p> }
         </ul>

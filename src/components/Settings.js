@@ -47,7 +47,9 @@ class Settings extends React.Component {
     return (
       <div className="Settings">
 
-        <h3>Settings</h3>
+        {
+        // <h3>Settings</h3>
+        }
 
         <div className="slider">
           <select id="dimensionWeights">
@@ -58,16 +60,18 @@ class Settings extends React.Component {
         </div>
 
         <div className="slider">
-          <label htmlFor="mapSize">Map Size:</label>
-          <input
-            type="number"
-            id="mapSize"
-            name="mapSize"
-            min="2"
-            max="32"
-            value={this.props.settings.mapSize}
-            onChange={this.props.onChangeSettings}
-            />
+          <div>
+            <label htmlFor="mapSize">Map Size:</label>
+            <input
+              type="number"
+              id="mapSize"
+              name="mapSize"
+              min="2"
+              max="32"
+              value={this.props.settings.mapSize}
+              onChange={this.props.onChangeSettings}
+              />
+          </div>
           <input
             type="range"
             id="mapSize"
@@ -80,16 +84,18 @@ class Settings extends React.Component {
         </div>
 
         <div className="slider">
-          <label htmlFor="trainingEpochs">Training Epochs:</label>
-          <input
-            type="number"
-            id="trainingEpochs"
-            name="trainingEpochs"
-            min="1"
-            max="100"
-            value={this.props.settings.trainingEpochs}
-            onChange={this.props.onChangeSettings}
-            />
+          <div>
+            <label htmlFor="trainingEpochs">Training Epochs:</label>
+            <input
+              type="number"
+              id="trainingEpochs"
+              name="trainingEpochs"
+              min="1"
+              max="100"
+              value={this.props.settings.trainingEpochs}
+              onChange={this.props.onChangeSettings}
+              />
+          </div>
           <input
             type="range"
             id="trainingEpochs"
@@ -110,9 +116,21 @@ class Settings extends React.Component {
         </div>
 
         <div className="slider">
-          <label htmlFor="initialAlpha">Initial Alpha:</label>
+          <div>
+            <label htmlFor="initialAlpha">Initial Alpha:</label>
+            <input
+              type="number"
+              id="initialAlpha"
+              name="initialAlpha"
+              min="0"
+              max="0.99"
+              step="0.01"
+              value={this.props.settings.initialAlpha}
+              onChange={this.props.onChangeSettings}
+              />
+          </div>
           <input
-            type="number"
+            type="range"
             id="initialAlpha"
             name="initialAlpha"
             min="0"
@@ -121,29 +139,21 @@ class Settings extends React.Component {
             value={this.props.settings.initialAlpha}
             onChange={this.props.onChangeSettings}
             />
-          <input
-            type="range"
-            id="initialAlpha"
-            name="initialAlpha"
-            min="0"
-            max="0.99"
-            step="0.01"
-            value={this.props.settings.initialAlpha}
-            onChange={this.props.onChangeSettings}
-            />
         </div>
 
         <div className="slider">
-          <label htmlFor="radiusStart">Start Radius:</label>
-          <input
-            type="number"
-            id="radiusStart"
-            name="radiusStart"
-            min="2"
-            max="32"
-            value={this.props.settings.radiusStart}
-            onChange={this.props.onChangeSettings}
-            />
+          <div>
+            <label htmlFor="radiusStart">Start Radius:</label>
+            <input
+              type="number"
+              id="radiusStart"
+              name="radiusStart"
+              min="2"
+              max="32"
+              value={this.props.settings.radiusStart}
+              onChange={this.props.onChangeSettings}
+              />
+          </div>
           <input
             type="range"
             id="radiusStart"
@@ -156,16 +166,18 @@ class Settings extends React.Component {
         </div>
 
         <div className="slider">
-          <label htmlFor="radiusEnd">End Radius:</label>
-          <input
-            type="number"
-            id="radiusEnd"
-            name="radiusEnd"
-            min="2"
-            max="32"
-            value={this.props.settings.radiusEnd}
-            onChange={this.props.onChangeSettings}
-            />
+          <div>
+            <label htmlFor="radiusEnd">End Radius:</label>
+            <input
+              type="number"
+              id="radiusEnd"
+              name="radiusEnd"
+              min="2"
+              max="32"
+              value={this.props.settings.radiusEnd}
+              onChange={this.props.onChangeSettings}
+              />
+          </div>
           <input
             type="range"
             id="radiusEnd"
@@ -178,20 +190,19 @@ class Settings extends React.Component {
         </div>
 
         <div className="slider">
-          <label htmlFor="magnificationM">Magnification Factor:</label>
-          {
-            // <output id="magnificationMDisplay" name="magnificationMDisplay" htmlFor={this.state.magnificationM}>1</output>
-          }
-          <input
-            type="number"
-            id="magnificationMDisplay"
-            name="magnificationM"
-            min="0.01"
-            max="5"
-            value={this.props.settings.magnificationM}
-            step="0.01"
-            onChange={this.props.onChangeSettings}
-            />
+          <div>
+            <label htmlFor="magnificationM">Magnification Factor:</label>
+            <input
+              type="number"
+              id="magnificationMDisplay"
+              name="magnificationM"
+              min="0.01"
+              max="5"
+              value={this.props.settings.magnificationM}
+              step="0.01"
+              onChange={this.props.onChangeSettings}
+              />
+          </div>
           <input
             type="range"
             id="magnificationM"
