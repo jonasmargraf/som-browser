@@ -24,7 +24,7 @@ h3, .leftPanel > label {
   -webkit-user-select: none;
 }
 
-ul, p, input, span {
+ul, p, input, span, label, select {
   list-style: none;
   color: dimgrey;
   cursor: default;
@@ -266,6 +266,13 @@ input:checked + label {
   /* flex-grow: 1; */
 }
 
+.Settings {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  /* height: calc(77vh - 120px); */
+}
+
 .FileList {
   margin: 10px;
 }
@@ -286,35 +293,103 @@ input:checked + label {
   padding: 10px;
 }
 
+.slider, .dropdown {
+  margin: 10px;
+  margin-bottom: 0;
+  /* padding: 5px 0; */
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgb(220, 220, 220);
+  /* flex-grow: 1; */
+  /* padding: 10px 0; */
+}
+
+.slider:last-of-type {
+  border-bottom: none;
+}
+
 .slider {
-  padding: 10px;
+  /* padding: 5px 0; */
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
+  cursor: pointer;
 }
 
 .slider > div {
   display: block;
+  padding: 0 0 5px 0;
   flex-grow: 1;
 }
 
 .slider > div > label {
   /* display: block */
   float: left;
+  /* font-weight: 400; */
+}
+
+.dropdown {
+  /* margin: 10px; */
+  /* padding: 5px 0; */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.dropdown > select {
+  overflow: hidden;
+  width: 45%;
+  cursor: pointer;
+}
+
+.dropdown > label {
+  /* font-weight: 400; */
 }
 
 .slider > div > input[type=number] {
   /* display: inline-block; */
   float: right;
+  width: 25%;
   border: none;
   text-align: right;
+  cursor: pointer;
   color: dodgerblue;
+}
+
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+  -webkit-appearance: none;
 }
 
 .slider input[type=range] {
   /* display: hidden; */
   float: left;
   flex-grow: 1;
+  cursor: pointer;
+  -webkit-appearance: none;
+  overflow: hidden;
+  height: 20px;
+  width: 100%;
+  /* background: lightgrey; */
 }
+
+.slider input:focus, .dropdown select:focus {
+  outline: none;
+}
+
+::-webkit-slider-runnable-track {
+    background: lightgrey;
+}
+
+::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 0;
+  height: 30px;
+  background: white;
+  border: 0;
+  box-shadow: -100vw 0 0 100vw dodgerblue;
+}
+
+
 
 .ActionButtons {
   padding: 10px;
@@ -422,6 +497,10 @@ input:checked + label {
   border-bottom: 1px solid rgb(220, 220, 220);
   padding-top: 5px;
   padding-bottom: 5px;
+}
+
+.FileInfoList li:last-of-type {
+  border-bottom: none;
 }
 
 #featuresHeader {
