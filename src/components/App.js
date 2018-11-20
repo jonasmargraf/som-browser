@@ -321,13 +321,15 @@ class App extends React.Component {
 
   handleChangeSettings(event) {
     let settings = this.state.settings
-    if (!Number.isNaN(event.target.valueAsNumber))
-      settings[event.target.name] = event.target.valueAsNumber
-    this.setState({ settings
-        // [event.target.name]: event.target.value
-      // }
-    }, () => console.log(this.state.settings))
-    console.log('inside App.handleChangeSettings()')
+    // console.log(event.target.min)
+    // make sure input isn't NaN
+    if (!Number.isNaN(event.target.valueAsNumber)) {
+      // clamp value to range
+      settings[event.target.name] = Math.min(Math.max(
+        event.target.min, event.target.valueAsNumber), event.target.max)
+        this.setState({ settings })
+      }
+      // console.log('inside App.handleChangeSettings()')
     // console.log(event)
   }
 
