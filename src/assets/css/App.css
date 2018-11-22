@@ -277,7 +277,7 @@ input:checked + label {
   margin: 10px;
 }
 
-.FileListContainer> * {
+.FileListContainer > * {
 }
 
 .FileListContainer > h3 {
@@ -291,6 +291,10 @@ input:checked + label {
 
 .Settings h3 {
   padding: 10px;
+}
+
+.Settings > p {
+  margin: 10px;
 }
 
 .slider, .dropdown {
@@ -316,15 +320,25 @@ input:checked + label {
 }
 
 .slider > div {
-  display: block;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   padding: 0 0 5px 0;
   flex-grow: 1;
 }
 
 .slider > div > label {
   /* display: block */
-  float: left;
+  /* float: left; */
   /* font-weight: 400; */
+}
+
+.settingsTitle {
+  /* font-weight: 400; */
+}
+
+.slider > div > input[type=radio] {
+  display: none;
 }
 
 .dropdown {
@@ -347,12 +361,21 @@ input:checked + label {
 
 .slider > div > input[type=number] {
   /* display: inline-block; */
-  float: right;
-  width: 25%;
+  /* float: right; */
+  width: 15%;
   border: none;
   text-align: right;
   cursor: pointer;
+  /* color: dodgerblue; */
+}
+
+input[type=number]:read-write {
   color: dodgerblue;
+}
+
+input[type=number]:read-only {
+  color: dimgrey;
+  /* font-style: italic; */
 }
 
 ::-webkit-inner-spin-button,
@@ -370,6 +393,10 @@ input:checked + label {
   height: 20px;
   width: 100%;
   /* background: lightgrey; */
+}
+
+:disabled::-webkit-slider-thumb {
+  box-shadow: -100vw 0 0 100vw dimgrey;
 }
 
 .slider input:focus, .dropdown select:focus {

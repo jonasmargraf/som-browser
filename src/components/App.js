@@ -406,6 +406,7 @@ class App extends React.Component {
             </div>
             <div id="tabSettings">
               <Settings
+                filesLength={files && files.length}
                 settings={this.state.settings}
                 onChangeSettings={this.handleChangeSettings}
                 />
