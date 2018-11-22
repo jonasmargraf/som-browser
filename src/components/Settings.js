@@ -13,6 +13,8 @@ class Settings extends React.Component {
     this.handleFocus = this.handleFocus.bind(this)
     this.handleBlur = this.handleBlur.bind(this)
     this.handleMapSizeModeChange = this.handleMapSizeModeChange.bind(this)
+    this.handleWeightingChange = this.handleWeightingChange.bind(this)
+    this.handleLearningRateChange = this.handleLearningRateChange.bind(this)
     this.state = ({
       value: undefined,
       mapSizeMode: 'auto'
@@ -20,7 +22,7 @@ class Settings extends React.Component {
   }
 
   componentDidMount() {
-    
+
   }
 
   componentWillMount() {
@@ -45,7 +47,7 @@ class Settings extends React.Component {
       // }
       const mapSize = Math.floor(Math.sqrt(this.props.filesLength))
       // this.refs['mapSize'].value = mapSize
-      console.log(this.refs['mapSize'])
+      // console.log(this.refs['mapSize'])
     }
     console.log('did update')
     // console.log(this.props.filesLength)
@@ -68,6 +70,14 @@ class Settings extends React.Component {
       event.target.value = mapSize
       this.props.onChangeSettings(event)
     }
+  }
+
+  handleWeightingChange(event) {
+    console.log(event.target.value)
+  }
+
+  handleLearningRateChange(event) {
+    console.log(event.target.value)
   }
 
   handleChangeSettings() {
@@ -110,13 +120,35 @@ class Settings extends React.Component {
 
           <div>
 
-            <div className="dropdown">
+            <div className="radioGroup">
               <label className="settingsTitle" htmlFor="dimensionWeights">Audio Feature Weighting:</label>
-              <select id="dimensionWeights">
-                <option value="weighting_1">Weighting 1</option>
-                <option value="weighting_2">Weighting 2</option>
-                <option value="weighting_3">Weighting 3</option>
-              </select>
+              <div className="radioButtons">
+                <input
+                  type="radio"
+                  id="weighting_1"
+                  name="weighting"
+                  value="1"
+                  onChange={this.handleWeightingChange}
+                  defaultChecked
+                  />
+                <label htmlFor="weighting_1">Weighting 1</label>
+                <input
+                  type="radio"
+                  id="weighting_2"
+                  name="weighting"
+                  value="2"
+                  onChange={this.handleWeightingChange}
+                  />
+                <label htmlFor="weighting_2">Weighting 2</label>
+                <input
+                  type="radio"
+                  id="weighting_3"
+                  name="weighting"
+                  value="3"
+                  onChange={this.handleWeightingChange}
+                  />
+                <label htmlFor="weighting_3">Weighting 3</label>
+              </div>
             </div>
 
             <div className="slider">
@@ -132,7 +164,14 @@ class Settings extends React.Component {
                   defaultChecked
                   />
                 <label htmlFor="autoMapSize">Automatic</label>
-                <input id="manualMapSize" ref="manualMapSize" name="mapSizeSwitch" type="radio" value="manual" onChange={this.handleMapSizeModeChange}/>
+                <input
+                  id="manualMapSize"
+                  ref="manualMapSize"
+                  name="mapSizeSwitch"
+                  type="radio"
+                  value="manual"
+                  onChange={this.handleMapSizeModeChange}
+                  />
                 <label htmlFor="manualMapSize">Manual</label>
                 <input
                   type="number"
@@ -188,13 +227,35 @@ class Settings extends React.Component {
                 />
             </div>
 
-            <div className="dropdown">
+            <div className="radioGroup">
               <label className="settingsTitle" htmlFor="learningRateType">Learning Rate Type:</label>
-              <select id="learningRateType">
-                <option value="linear">Linear</option>
-                <option value="inverse">Inverse</option>
-                <option value="BDH">BDH</option>
-              </select>
+              <div className="radioButtons">
+                <input
+                  type="radio"
+                  id="linear"
+                  name="learningRate"
+                  value="linear"
+                  onChange={this.handleLearningRateChange}
+                  defaultChecked
+                  />
+                <label htmlFor="linear">Linear</label>
+                <input
+                  type="radio"
+                  id="inverse"
+                  name="learningRate"
+                  value="inverse"
+                  onChange={this.handleLearningRateChange}
+                  />
+                <label htmlFor="inverse">Inverse</label>
+                <input
+                  type="radio"
+                  id="BDH"
+                  name="learningRate"
+                  value="BDH"
+                  onChange={this.handleLearningRateChange}
+                  />
+                <label htmlFor="BDH">BDH</label>
+              </div>
             </div>
 
             <div className="slider">

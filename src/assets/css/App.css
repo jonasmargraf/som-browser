@@ -297,7 +297,7 @@ input:checked + label {
   margin: 10px;
 }
 
-.slider, .dropdown {
+.slider, .radioGroup {
   margin: 10px;
   margin-bottom: 0;
   /* padding: 5px 0; */
@@ -334,29 +334,40 @@ input:checked + label {
 }
 
 .settingsTitle {
-  /* font-weight: 400; */
+  font-weight: 400;
 }
 
-.slider > div > input[type=radio] {
+input[type=radio] {
   display: none;
 }
 
-.dropdown {
+.radioGroup {
   /* margin: 10px; */
   /* padding: 5px 0; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.radioButtons {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.dropdown > select {
+.radioButtons > label {
+
+}
+
+.radioGroup > select {
   overflow: hidden;
   width: 45%;
   cursor: pointer;
 }
 
-.dropdown > label {
+.radioGroup > label {
   /* font-weight: 400; */
+  padding-bottom: 5px;
 }
 
 .slider > div > input[type=number] {
@@ -399,7 +410,7 @@ input[type=number]:read-only {
   box-shadow: -100vw 0 0 100vw dimgrey;
 }
 
-.slider input:focus, .dropdown select:focus {
+.slider input:focus, .radioGroup select:focus {
   outline: none;
 }
 
