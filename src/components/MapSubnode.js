@@ -57,14 +57,15 @@ class MapSubnode extends React.PureComponent {
     console.log('MapSubnode updated')
   }
 
-  handleClick(mapElement) {
-    this.props.onClick(mapElement)
+  handleClick() {
+    this.props.onClick(this.props.files[this.props.e].path)
   }
 
-  handleMouseEnter(name, path) {
-      this.props.onMouseEnter(name)
-      this.handleClick(path)
-}
+  // handleMouseEnter(event, name, path) {
+  handleMouseEnter(event) {
+    this.props.onMouseEnter(this.props.files[this.props.e].name)
+    event.shiftKey && this.handleClick(this.props.files[this.props.e].path)
+  }
 
   handleMouseLeave(e) {
     this.props.onMouseLeave()
@@ -99,6 +100,9 @@ class MapSubnode extends React.PureComponent {
     let name = files[e].name
     let path = files[e].path
 
+    // onMouseEnter={isDragging ? null : this.handleMouseEnter.bind(this, event, name, path)}
+
+
     let subnode =
     <svg key={index} x={xPos + "%"} y={yPos + "%"}>
       <rect
@@ -108,10 +112,10 @@ class MapSubnode extends React.PureComponent {
           // files[e].path === selectedFile ? "SubNodeSelected" : null
         }
         className="SubNode"
-        onMouseEnter={isDragging ? null : this.handleMouseEnter.bind(this, name, path)}
+        onMouseEnter={isDragging ? null : this.handleMouseEnter}
         onMouseMove={isDragging ? null : this.handleMouseMove}
         onMouseLeave={isDragging ? null : this.handleMouseLeave}
-        onClick={this.handleClick.bind(this, path)}
+        onClick={this.handleClick}
         x={subNodeX + "%"}
         y={subNodeY + "%"}
         rx="1px"
