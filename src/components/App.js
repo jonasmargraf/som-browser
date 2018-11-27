@@ -236,17 +236,30 @@ class App extends React.Component {
        userSelection: []
      })
      // alert('Loading!')
-     console.log("Processing files...")
-     processFiles(this.state.files)
-     .then(files => this.setState({ files: files, loading: false }))
-     .then(() => {
+     // Check if all files have features
+     // i.e. if feature analysis has already been done
+     if (this.state.files.find(e => !e.features)) {
+       console.log("Processing files...")
+       processFiles(this.state.files)
+       .then(files => this.setState({ files: files, loading: false }))
+       .then(() => {
+         console.log("Building map...")
+         createSOM(this.state.files, this.state.settings)
+         .then(som => {
+           this.setState({ som: som })
+           console.log(this.state)
+         })
+       })
+     }
+     // If feature analysis already done, skip directly to build map
+     else {
        console.log("Building map...")
        createSOM(this.state.files, this.state.settings)
        .then(som => {
          this.setState({ som: som })
          console.log(this.state)
        })
-     })
+     }
    }
  }
 
