@@ -13,6 +13,8 @@ class FileInfo extends React.Component {
 
   render() {
     const file = this.props.file
+    // let dur = file && Math.round(file.features.duration, 3)
+    let dur = file && file.features.duration
 
     let fileInfo = file ?
 
@@ -25,6 +27,17 @@ class FileInfo extends React.Component {
               <div className="cell feature">File Path:</div>
               <div className="cell">{file.path}</div>
             </div>
+          </div>
+          <div className="row">
+            <div className="cell feature">Duration:</div>
+            <div className="cell value">{
+                // format to minutes:seconds:milliseconds
+                // - what a clusterfuck...
+                (dur - (dur %= 60)) / 60 + (9 < dur ? ':' : ':0') +
+                math.floor(dur) + ':' +
+                dur.toFixed(3).slice(1 + dur.toFixed(3).indexOf('.'))
+              }
+          </div>
           </div>
           <div className="row">
             <div className="cell feature">Loudness:</div>

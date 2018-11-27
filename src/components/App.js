@@ -175,7 +175,8 @@ class App extends React.Component {
           1, // Spectral Spread
           1, // Spectral Skewness
           1, // Spectral Kurtosis
-          1 // Loudness
+          1, // Loudness
+          1  // Duration 
         ],
         learningRateType: 'inverse',
         initialAlpha: 0.5,

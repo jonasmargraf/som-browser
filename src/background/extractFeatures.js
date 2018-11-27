@@ -46,7 +46,7 @@ window.extractFeatures = (file) => {
       context.decodeAudioData(data.buffer, decodedAudio => {
 
         // In case of multichannel audio: sum to mono
-        let channelCount = decodedAudio.numberOfChannels
+        const channelCount = decodedAudio.numberOfChannels
         let summedToMono = decodedAudio.getChannelData(0)
         for (let channel = 1; channel < channelCount; channel++) {
           let channelData = decodedAudio.getChannelData(channel)
@@ -86,6 +86,9 @@ window.extractFeatures = (file) => {
         for (let feature in features) {
           features[feature] = math.mean(features[feature])
         }
+
+        // Add file duration to features
+        features.duration = decodedAudio.duration
 
         // Pass averaged features to parent file
         file.features = features
