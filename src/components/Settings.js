@@ -49,7 +49,7 @@ class Settings extends React.Component {
       // this.refs['mapSize'].value = mapSize
       // console.log(this.refs['mapSize'])
     }
-    console.log('did update')
+    // console.log('did update')
     // console.log(this.props.filesLength)
   }
 
