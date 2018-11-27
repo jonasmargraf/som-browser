@@ -94,8 +94,8 @@ class MapSubnode extends React.PureComponent {
     let nodeGridRoot = Math.ceil(Math.sqrt(nodeFileCount))
     let x = (i % nodeGridRoot) * (100 / nodeGridRoot)
     let y = Math.floor(i / nodeGridRoot) * (100 / nodeGridRoot)
-    let subNodeX = x / som.mapSize[0] + 0.5
-    let subNodeY = y / som.mapSize[0] + 0.5
+    let subNodeX = x / som.mapSize[0] + 0.
+    let subNodeY = y / som.mapSize[0] + 0.
     let subNodeLength = 100 / (som.mapSize[0] * nodeGridRoot)
     let name = files[e].name
     let path = files[e].path
@@ -116,12 +116,12 @@ class MapSubnode extends React.PureComponent {
         onMouseMove={isDragging ? null : this.handleMouseMove}
         onMouseLeave={isDragging ? null : this.handleMouseLeave}
         onClick={this.handleClick}
-        x={subNodeX + "%"}
-        y={subNodeY + "%"}
+        x={"calc(1px + " + subNodeX + "%)"}
+        y={"calc(1px + " + subNodeY + "%)"}
         rx="1px"
         ry="1px"
-        width={subNodeLength - 1 + "%"}
-        height={subNodeLength - 1 + "%"}>
+        width={"calc(-2px + " + subNodeLength + "%)"}
+        height={"calc(-2px + " + subNodeLength + "%)"}>
       </rect>
     </svg>
 
