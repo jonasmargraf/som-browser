@@ -4,7 +4,7 @@ const {dialog} = require('electron').remote;
 const path = require('path');
 const ENTER_KEY = 13;
 
-class Settings extends React.Component {
+class Settings extends React.PureComponent {
   constructor(props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
@@ -17,6 +17,7 @@ class Settings extends React.Component {
     this.handleLearningRateChange = this.handleLearningRateChange.bind(this)
     this.state = ({
       value: undefined,
+      mapSize: undefined,
       mapSizeMode: 'auto'
     })
   }
@@ -29,14 +30,22 @@ class Settings extends React.Component {
   }
 
   componentDidUpdate(event) {
-    if (this.state.mapSizeMode === 'auto') {
+    // console.log('settings updated')
+    if ((this.props.filesLength) && (this.state.mapSizeMode === 'auto')) {
       const mapSize = Math.floor(Math.sqrt(this.props.filesLength))
+      // console.log((mapSize !== this.state.mapSize) && (this.state.mapSize >= 0))
+      // console.log(this.state.mapSize)
+      if (mapSize !== this.state.mapSize) {
+        this.handleMapSizeModeChange({ target: { value: 'auto' } })
+        // console.log('called handleMapSizeModeChange()')
+      }
     }
+    // console.log(event)
   }
 
   handleChange(event) {
     this.props.onChangeSettings(event)
-    console.log(event.target)
+    // console.log(event.target)
     // console.log(this.refs[event.target.name])
     this.refs[event.target.name].value = event.target.value
   }
@@ -44,24 +53,26 @@ class Settings extends React.Component {
   handleMapSizeModeChange(event) {
     const mapSize = Math.floor(Math.sqrt(this.props.filesLength))
     this.setState({
+      mapSize: mapSize,
       mapSizeMode: event.target.value
     }
-    , () => console.log(this.state)
+    // , () => console.log(this.state)
     )
     if (event.target.value === 'auto') {
       event.target = this.refs['mapSize']
       event.target.value = mapSize
       this.props.onChangeSettings(event)
     }
-    console.log(mapSize)
+    // console.log(mapSize)
+    // console.log(event.target)
   }
 
   handleWeightingChange(event) {
-    console.log(event.target.value)
+    // console.log(event.target.value)
   }
 
   handleLearningRateChange(event) {
-    console.log(event.target.value)
+    // console.log(event.target.value)
   }
 
   handleChangeSettings() {
@@ -105,7 +116,9 @@ class Settings extends React.Component {
           <div>
 
             <div className="radioGroup">
-              <label className="settingsTitle" htmlFor="dimensionWeights">Audio Feature Weighting:</label>
+              <label className="settingsTitle" htmlFor="dimensionWeights">
+                Audio Feature Weighting:
+              </label>
               <div className="radioButtons">
                 <input
                   type="radio"
@@ -137,7 +150,9 @@ class Settings extends React.Component {
 
             <div className="slider">
               <div>
-                <label className="settingsTitle" htmlFor="mapSize">Map Size:</label>
+                <label className="settingsTitle" htmlFor="mapSize">
+                  Map Size:
+                </label>
                 <input
                   id="autoMapSize"
                   ref="autoMapSize"

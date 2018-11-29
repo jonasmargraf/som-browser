@@ -375,28 +375,6 @@ class App extends React.Component {
           onPrintState={this.handlePrintStateClick}
           />
 
-        {
-          // showSettings ?
-          //
-          // <Settings
-          //   settings={this.state.settings}
-          //   onChangeSettings={this.handleChangeSettings}
-          //   />
-          //
-          // :
-          //
-          // <FileList
-          //   loading={this.state.loading}
-          //   files={files}
-          //   selectedFile={file}
-          //   onChange={this.handleFileListChange}
-          //   onFileClick={this.handleFileClick}
-          //   onAnalyzeClick={this.handleAnalyzeClick}
-          //   onSaveClick={this.handleSaveClick}
-          //   onLoadClick={this.handleLoadClick}
-          //   />
-        }
-
         <div className="leftPanel">
 
             <input id="tab1" type="radio" name="tabs" defaultChecked/>
