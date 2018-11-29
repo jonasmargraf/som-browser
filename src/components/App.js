@@ -118,7 +118,7 @@ function createSOM(files, settings) {
 }
 
 const getFileByPath = (files, path) =>
-  (path == null) ? null : files.filter((file) => file.path == path)[0]
+  (path == null) ? undefined : files.filter((file) => file.path == path)[0]
 
 const playFile = (filePath) => {
   audioSources.forEach(e => e.stop())
@@ -156,7 +156,7 @@ class App extends React.Component {
     this.handleChangeSettings = this.handleChangeSettings.bind(this)
     this.state = {
       files: null,
-      selectedFile: null,
+      selectedFile: undefined,
       som: null,
       loading: false,
       userSelection: [],
@@ -176,7 +176,7 @@ class App extends React.Component {
           1, // Spectral Skewness
           1, // Spectral Kurtosis
           1, // Loudness
-          1  // Duration 
+          1  // Duration
         ],
         learningRateType: 'inverse',
         initialAlpha: 0.5,
@@ -201,7 +201,7 @@ class App extends React.Component {
   handleFileListChange(files) {
     this.setState({
       files: files,
-      selectedFile: null,
+      selectedFile: undefined,
       som: null
     })
   }

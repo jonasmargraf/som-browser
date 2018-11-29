@@ -30,27 +30,8 @@ class Settings extends React.Component {
 
   componentDidUpdate(event) {
     if (this.state.mapSizeMode === 'auto') {
-      // let event = {
-        // target: this.refs['mapSize'],
-        // valueAsNumber: mapSize
-      // }
-      // event.target = this.refs['mapSize']
-      // event.target.value = mapSize
-      // handleMapSizeModeChange(event)
-      // console.log(this.state.mapSizeMode)
-      // console.log(event)
-      // if (this.props.filesLength) {
-      //   this.props.onChangeSettings({
-      //     target: this.refs['mapSize'],
-      //     valueAsNumber: Math.floor(Math.sqrt(this.props.filesLength))
-      //   })
-      // }
       const mapSize = Math.floor(Math.sqrt(this.props.filesLength))
-      // this.refs['mapSize'].value = mapSize
-      // console.log(this.refs['mapSize'])
     }
-    // console.log('did update')
-    // console.log(this.props.filesLength)
   }
 
   handleChange(event) {
@@ -64,12 +45,15 @@ class Settings extends React.Component {
     const mapSize = Math.floor(Math.sqrt(this.props.filesLength))
     this.setState({
       mapSizeMode: event.target.value
-    })
+    }
+    , () => console.log(this.state)
+    )
     if (event.target.value === 'auto') {
       event.target = this.refs['mapSize']
       event.target.value = mapSize
       this.props.onChangeSettings(event)
     }
+    console.log(mapSize)
   }
 
   handleWeightingChange(event) {

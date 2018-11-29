@@ -13,8 +13,13 @@ class FileInfo extends React.Component {
 
   render() {
     const file = this.props.file
+    // console.log(file)
     // let dur = file && Math.round(file.features.duration, 3)
-    let dur = file && file.features.duration
+    // let dur = undefined
+    // if (file && file.hasOwnProperty('duration')) {
+    //   dur = file.features.duration
+    // }
+    // let dur = file && file.features.duration
 
     let fileInfo = file ?
 
@@ -32,10 +37,12 @@ class FileInfo extends React.Component {
             <div className="cell feature">Duration:</div>
             <div className="cell value">{
                 // format to minutes:seconds:milliseconds
-                // - what a clusterfuck...
-                (dur - (dur %= 60)) / 60 + (9 < dur ? ':' : ':0') +
-                math.floor(dur) + ':' +
-                dur.toFixed(3).slice(1 + dur.toFixed(3).indexOf('.'))
+                //   - what a clusterfuck...
+                (file.features.duration - (file.features.duration %= 60))
+                / 60 + (9 < file.features.duration ? ':' : ':0') +
+                math.floor(file.features.duration) + ':' +
+                file.features.duration.toFixed(3).slice(
+                  1 + file.features.duration.toFixed(3).indexOf('.'))
               }
           </div>
           </div>
@@ -85,8 +92,16 @@ class FileInfo extends React.Component {
 
       <div className="FileInfoTable">
         <div className="row">
-          <div className="cell">File Path:</div>
-          <div className="cell">{file.path}</div>
+          <div className="column">
+            <div className="cell feature">File Path:</div>
+            <div className="cell">{file.path}</div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="column">
+            <div className="cell feature">Audio Features:</div>
+            <div className="cell value">No features calculated yet. Click Analyze!</div>
+          </div>
         </div>
       </div>
     }
