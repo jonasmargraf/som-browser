@@ -201,7 +201,9 @@ class Settings extends React.PureComponent {
 
             <div className="slider">
               <div>
-                <label className="settingsTitle" htmlFor="trainingEpochs">Training Epochs:</label>
+                <label className="settingsTitle" htmlFor="trainingEpochs">
+                  Training Epochs:
+                </label>
                 <input
                   type="number"
                   id="trainingEpochs"
@@ -227,7 +229,9 @@ class Settings extends React.PureComponent {
             </div>
 
             <div className="radioGroup">
-              <label className="settingsTitle" htmlFor="learningRateType">Learning Rate Type:</label>
+              <label className="settingsTitle" htmlFor="learningRateType">
+                Learning Rate Type:
+              </label>
               <div className="radioButtons">
                 <input
                   type="radio"
@@ -259,7 +263,9 @@ class Settings extends React.PureComponent {
 
             <div className="slider">
               <div>
-                <label className="settingsTitle" htmlFor="initialAlpha">Initial Alpha:</label>
+                <label className="settingsTitle" htmlFor="initialAlpha">
+                  Initial Alpha:
+                </label>
                 <input
                   type="number"
                   id="initialAlpha"
@@ -288,7 +294,9 @@ class Settings extends React.PureComponent {
 
             <div className="slider">
               <div>
-                <label className="settingsTitle" htmlFor="radiusStart">Start Radius:</label>
+                <label className="settingsTitle" htmlFor="radiusStart">
+                  Start Radius:
+                </label>
                 <input
                   type="number"
                   id="radiusStart"
@@ -315,7 +323,9 @@ class Settings extends React.PureComponent {
 
             <div className="slider">
               <div>
-                <label className="settingsTitle" htmlFor="radiusEnd">End Radius:</label>
+                <label className="settingsTitle" htmlFor="radiusEnd">
+                  End Radius:
+                </label>
                 <input
                   type="number"
                   id="radiusEnd"
@@ -342,7 +352,9 @@ class Settings extends React.PureComponent {
 
             <div className="slider">
               <div>
-                <label className="settingsTitle" htmlFor="magnificationM">Magnification Factor:</label>
+                <label className="settingsTitle" htmlFor="magnificationM">
+                  Magnification Factor:
+                </label>
                 <input
                   type="number"
                   id="magnificationMDisplay"
