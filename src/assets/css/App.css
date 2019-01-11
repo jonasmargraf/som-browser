@@ -51,7 +51,7 @@ span {
   vertical-align: middle;
   text-align: center;
   color: dodgerblue;
-  font-weight: 200;
+  font-weight: 300;
   font-size: 10pt;
   /* height: inherit; */
 }
@@ -497,7 +497,7 @@ input[type=number]:read-only {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 200;
+  font-weight: 300;
 }
 
 #FileListSelectedFile {
@@ -687,7 +687,7 @@ input[type=number]:read-only {
 .UserSelectionSlotEmpty {
   padding: 10px;
   margin: 10px;
-  border: 1px lightgrey dashed;
+  border: 1px grey dashed;
   border-radius: 2px;
   display: flex;
   flex-grow: 1;

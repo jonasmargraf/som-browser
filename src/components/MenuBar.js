@@ -27,7 +27,7 @@ class MenuBar extends React.Component {
   handleClick() {
     const options = {
       properties: ['openFile', 'multiSelections'],
-      filters: [{name: 'Audio Files', extensions: ['wav', 'mp3', 'flac', 'ogg']}]
+      filters: [{name: 'Audio Files', extensions: ['wav', 'aif', 'mp3', 'flac', 'ogg']}]
     }
     dialog.showOpenDialog(options, files => files && this.addToFileList(files))
   }
