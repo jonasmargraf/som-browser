@@ -88,6 +88,7 @@ window.calculateSOM = ({ files : files, settings: settings }) => {
   som = initializeMap(som)
   som = trainMap(som)
   som = findBestMatches(som)
+  som = populateEmptyNeurons(som)
 
   return new Promise((resolve, reject) => {
     resolve(som)
@@ -346,6 +347,58 @@ function findBestMatches(som) {
     som.neuronAssignedFiles[i] = null
     :
     som.neuronAssignedFiles[i]
+  }
+
+  return som
+}
+
+function populateEmptyNeurons(som) {
+
+  let emptyNeuronIndeces = som.neuronAssignedFiles.map((e,i) => {
+    return (e === null ? i : false)
+  })
+  .filter(e => e !== false)
+
+  let tempVectors = som.normalizedData
+
+  let tempVectorIndeces = tempVectors.map((e,i) => i)
+
+  // let skip = []
+
+  // console.log(emptyNeuronIndeces)
+
+  while (emptyNeuronIndeces.length >= 1) {
+    // Get random empty neuron, then remove from possible choices
+    let emptyNeuronIndex = math.pickRandom(emptyNeuronIndeces)
+    console.log("empty neuron: " + emptyNeuronIndex)
+    emptyNeuronIndeces.splice(emptyNeuronIndeces.indexOf(emptyNeuronIndex), 1)
+    let emptyNeuron = som.neurons[emptyNeuronIndex]
+
+    let distancesFromNeuron = tempVectorIndeces.map((e,i) => {
+      // if (!skip.includes(i)) {
+        return math.norm(math.subtract(emptyNeuron, tempVectors[e]))
+      // }
+      // else {
+      //   return math.norm(math.subtract(emptyNeuron, e))
+      // }
+    })
+
+    // let nearestVector =
+
+    let nearestVectorIndex = tempVectorIndeces[distancesFromNeuron.indexOf(math.min(distancesFromNeuron))]
+    console.log("nearest vector: " + nearestVectorIndex)
+    // Remove the found closest vector from its previously assigned neuron
+    // and instead assign it to the empty neuron.
+    let oldAssignedNeuronIndex = som.neuronAssignedFiles.findIndex(e =>
+      Array.isArray(e) && e.some(el => el === nearestVectorIndex))
+    som.neuronAssignedFiles[oldAssignedNeuronIndex].splice(som.neuronAssignedFiles[oldAssignedNeuronIndex].findIndex(e => e === nearestVectorIndex), 1)
+    // temp1.som.neuronAssignedFiles[temp1.som.neuronAssignedFiles.findIndex(e => Array.isArray(e) && e.some(el => el === 5))].findIndex(e => e === 5)
+    som.neuronAssignedFiles[emptyNeuronIndex] = [nearestVectorIndex]
+
+    // skip.push(nearestVectorIndex)
+    tempVectorIndeces.splice(distancesFromNeuron.indexOf(math.min(distancesFromNeuron)), 1)
+
+    console.log(distancesFromNeuron)
   }
 
   return som

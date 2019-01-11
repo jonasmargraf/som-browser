@@ -178,7 +178,7 @@ class Settings extends React.PureComponent {
                   name="mapSize"
                   ref="mapSize"
                   min="2"
-                  max="32"
+                  max="64"
                   defaultValue={this.props.settings.mapSize}
                   onKeyDown={this.handleKeyDown}
                   onFocus={this.handleFocus}
@@ -192,7 +192,7 @@ class Settings extends React.PureComponent {
                 name="mapSize"
                 ref="mapSizeSlider"
                 min="2"
-                max="32"
+                max="64"
                 value={this.props.settings.mapSize}
                 onChange={this.handleChange}
                 disabled={this.state.mapSizeMode === 'auto'}
