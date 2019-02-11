@@ -39,6 +39,7 @@ const selectionSlotTarget = {
     console.log('itemType: ' + type)
     console.log('item.index: ' + item.index + ', props.index: ' + props.index)
     console.log('item.id: ' + item.id)
+    console.log(item)
 
     type === 'subnode' && props.dropSample(item, props.index)
     type === 'selectionSlot' && props.moveSelectionSlot(item.index, props.index)
@@ -117,7 +118,7 @@ class UserSelectionSlot extends React.PureComponent {
       connectDropTarget(
         <div
           className={this.props.file === undefined ? "UserSelectionSlotEmpty" : "UserSelectionSlot"}
-          onClick={this.handleClick.bind(this, this.props.path)}>
+          onClick={this.handleClick.bind(this, this.props.filesIndex)}>
           <p>{this.props.file || this.props.label}</p>
         </div>
       )

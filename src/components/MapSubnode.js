@@ -8,7 +8,8 @@ const subnodeSource = {
   beginDrag(props) {
     const item = {
       id: props.files[props.e].name,
-      path: props.files[props.e].path
+      path: props.files[props.e].path,
+      filesIndex: props.e
     }
     console.log('dragging subnode')
     props.onBeginDrag()
@@ -58,13 +59,19 @@ class MapSubnode extends React.PureComponent {
   }
 
   handleClick() {
-    this.props.onClick(this.props.files[this.props.e].path)
+    // If playFile():
+    // this.props.onClick(this.props.files[this.props.e].path)
+    // If playFileFromMemory():
+    this.props.onClick(this.props.e)
   }
 
   // handleMouseEnter(event, name, path) {
   handleMouseEnter(event) {
     this.props.onMouseEnter(this.props.files[this.props.e].name)
-    event.shiftKey && this.handleClick(this.props.files[this.props.e].path)
+    // If playFile():
+    // event.shiftKey && this.handleClick(this.props.files[this.props.e].path)
+    // If playFileFromMemory():
+    event.shiftKey && this.handleClick(this.props.e)
   }
 
   handleMouseLeave(e) {

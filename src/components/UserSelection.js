@@ -99,6 +99,7 @@ class UserSelection extends React.Component {
 
     userSelectionSlots[position].file = item.id
     userSelectionSlots[position].path = item.path
+    userSelectionSlots[position].filesIndex = item.filesIndex
 
     this.props.onUserSelectionUpdate(userSelectionSlots)
   }
@@ -123,6 +124,7 @@ class UserSelection extends React.Component {
             label={e.label}
             file={e.file}
             path={e.path}
+            filesIndex={e.filesIndex}
             moveSelectionSlot={this.moveSelectionSlot}
             dropSample={this.dropSample}
             onClick={this.handleClick}/>

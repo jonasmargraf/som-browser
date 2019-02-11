@@ -20,6 +20,7 @@ let dev = false
 
 const context = new AudioContext()
 let audioSources = []
+let audioData = []
 
 // Are we in dev or production mode?
 window.onload = () => {
@@ -135,6 +136,43 @@ const playFile = (filePath) => {
   })
 }
 
+const playFileFromMemory = (decodedAudio) => {
+  audioSources.forEach(e => e.stop())
+  audioSources = []
+  // context.decodeAudioData(data.buffer, decodedAudio => {
+    const source = context.createBufferSource()
+    audioSources.push(source)
+    source.buffer = decodedAudio
+    source.connect(context.destination)
+    source.start()
+    // return source
+  // })
+}
+
+const loadAudioFiles = (files) => {
+  console.log(files)
+  audioData = new Array(files.length)
+  files.forEach((e,i) => {
+    // return (e = i)
+    fs.readFile(e.path, (error, data) => {
+      if (error) throw error
+      // audioData[i] = data
+      context.decodeAudioData(data.buffer, decodedAudio => {
+        audioData[i] = decodedAudio
+        // const source = context.createBufferSource()
+      //   audioSources[i] = source
+      //   source.buffer = decodedAudio
+      //   source.connect(context.destination)
+      //   // return source
+      })
+    })
+    console.log(e.name)
+    // audioSources[i] = source
+    // e = source
+  })
+  console.log(audioData)
+}
+
 const stopAudio = () => {
   audioSources.forEach(e => e.stop())
 }
@@ -203,7 +241,7 @@ class App extends React.Component {
       files: files,
       selectedFile: undefined,
       som: null
-    })
+    }, () => loadAudioFiles(files))
   }
 
   handleUserSelectionUpdate(userSelection) {
@@ -217,8 +255,11 @@ class App extends React.Component {
   }
 
   handleMapClick(mapElement) {
-    this.setState({selectedFile: mapElement}, () =>
-      playFile(this.state.selectedFile))
+    this.setState({selectedFile: this.state.files[mapElement].path}, () =>
+    // playFile(this.state.selectedFile))
+      playFileFromMemory(audioData[mapElement]))
+      // console.log(mapElement))
+    // )}
   }
 
   handleMouseLeave() {
