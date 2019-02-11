@@ -336,7 +336,7 @@ class App extends React.Component {
       loadedData = JSON.parse(fs.readFileSync(path[0]))
       // Check validity of file by looking for som property
       loadedData.som ?
-      this.setState(loadedData)
+      this.setState(loadedData, () => loadAudioFiles(this.state.files))
       :
       alert("The loaded file doesn't appear to be valid. Please try again.")
     })

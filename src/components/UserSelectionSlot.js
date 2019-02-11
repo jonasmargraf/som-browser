@@ -107,7 +107,8 @@ class UserSelectionSlot extends React.PureComponent {
 
   handleClick(file) {
     // console.log(' UserSelectionSlot click')
-    file && this.props.onClick(file)
+    console.log(typeof(file))
+    typeof(file) === 'number' && this.props.onClick(file)
   }
 
   render() {
