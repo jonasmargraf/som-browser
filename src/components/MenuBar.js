@@ -73,8 +73,10 @@ class MenuBar extends React.Component {
             onClick={this.handleClick}/>
           <input className="ExportSelection" type="button" value="Export Selection..."
               onClick={this.handleExport}/>
-          <input className="PrintState" type="button" value="Print State"
-              onClick={this.printState}/>
+            {
+          // <input className="PrintState" type="button" value="Print State"
+              // onClick={this.printState}/>
+          }
         </div>
       </div>
     );
