@@ -8,7 +8,7 @@
   margin: 0;
   padding: 0;
   font-family: "Roboto";
-  font-size: 9pt;
+  font-size: 11pt;
   font-weight: 300;
   /* font-size: 1em; */
 }
@@ -21,7 +21,7 @@ html {
 h3, .leftPanel > label {
   font-weight: 300 !important;
   color: dodgerblue;
-  font-size: 14pt;
+  font-size: 16pt;
   cursor: default;
   -webkit-user-select: none;
 }
@@ -52,7 +52,7 @@ span {
   text-align: center;
   color: dodgerblue;
   font-weight: 300;
-  font-size: 10pt;
+  font-size: 12pt;
   /* height: inherit; */
 }
 
@@ -169,6 +169,7 @@ span {
   overflow: hidden;
   text-align: center;
   white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .label {
@@ -183,7 +184,7 @@ span {
   z-index: 2;
   color: dodgerblue;
   background: rgba(255, 255, 255, 0.8);
-  font-size: 8pt;
+  font-size: 10pt;
   cursor: default;
   -webkit-user-select: none;
   white-space: nowrap;
@@ -457,7 +458,7 @@ input[type=number]:read-only {
 }
 
 .ActionButtons * {
-  width: 120px;
+  width: 130px;
   margin-right: 20px;
   padding: 10px 0 10px 0;
   cursor: pointer;
@@ -465,7 +466,7 @@ input[type=number]:read-only {
   /* border: 1px solid dimgrey; */
   border: none;
   color: dodgerblue;
-  font-size: 9pt;
+  font-size: 11pt;
   font-weight: 300;
   /* background-color: rgb(250, 250, 250); */
   background-color: white;
@@ -654,8 +655,8 @@ input[type=number]:read-only {
   justify-content: space-between;
 }
 
-.UserSelection > * {
-
+.UserSelection * {
+  cursor: pointer;
 }
 
 .UserSelectionSlot {
@@ -678,6 +679,9 @@ input[type=number]:read-only {
 
 .UserSelectionSlot > p {
   color: dimgrey;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .UserSelectionSlot:hover > p {

@@ -57,7 +57,6 @@ window.extractFeatures = (file) => {
         let signal = summedToMono.map(sample => sample / channelCount)
 
         // Zero-pad up to nearest multiple of bufferSize
-        // var zeroPaddedSignal = new Float32Array(nearestPowerOf2(signal.length))
         let zeroPaddedSignal = new Float32Array(signal.length
                                   + bufferSize - (signal.length % bufferSize))
         zeroPaddedSignal.set(signal)
@@ -75,7 +74,6 @@ window.extractFeatures = (file) => {
           // console.log(frameFeatures)
 
           // Append this frame's features to array of feature frames
-          // features.push(frameFeatures)
           for (let feature in frameFeatures) {
             // Only use frames that have RMS > -60dBFS
             (frameFeatures.rms >= 0.001) && features[feature].push(frameFeatures[feature])

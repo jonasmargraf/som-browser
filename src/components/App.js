@@ -401,9 +401,7 @@ class App extends React.Component {
 
         <CustomDragPreview />
 
-        <div className="TitleBar">
-          <p>SOM Browser</p>
-        </div>
+        <div className="TitleBar"> <p>SOM Browser</p> </div>
 
         <MenuBar
           files={files}
@@ -417,13 +415,10 @@ class App extends React.Component {
           />
 
         <div className="leftPanel">
-
             <input id="tab1" type="radio" name="tabs" defaultChecked/>
             <label htmlFor="tab1">Sounds</label>
-
             <input id="tab2" type="radio" name="tabs"/>
             <label htmlFor="tab2">Settings</label>
-
           <div className="content">
             <div id="tabFileList">
               <FileList
@@ -445,7 +440,6 @@ class App extends React.Component {
                 />
             </div>
           </div>
-
         </div>
 
         <Map
