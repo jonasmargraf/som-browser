@@ -65,13 +65,11 @@ window.extractFeatures = (file) => {
 
         // Framewise loop over audio and extract features
         for (let start = 0; start < zeroPaddedSignal.length; start += bufferSize) {
-        // let start = 0
 
           let signalFrame = zeroPaddedSignal.slice(start, start + bufferSize)
           let frameFeatures = Meyda.extract(featureList, signalFrame)
           // we only use total loudness, not per band
           frameFeatures.loudness = frameFeatures.loudness.total
-          // console.log(frameFeatures)
 
           // Append this frame's features to array of feature frames
           for (let feature in frameFeatures) {

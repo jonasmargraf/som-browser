@@ -277,7 +277,6 @@ class App extends React.Component {
        som: null,
        userSelection: []
      })
-     // alert('Loading!')
      // Check if all files have features
      // i.e. if feature analysis has already been done
      if (this.state.files.find(e => !e.features)) {
@@ -312,7 +311,7 @@ class App extends React.Component {
   // Save state to disk as JSON file
   handleSaveClick() {
     const options = {
-      defaultPath: path.join(app.getAppPath(), 'map'),
+      defaultPath: path.join(app.getAppPath(), 'maps'),
       filters: [{name: 'JSON', extensions: ['json']}]
     }
     // Check that we aren't currently analyzing and that the map exists
@@ -448,14 +447,16 @@ class App extends React.Component {
           progress={this.state.progress}
           selectedFile={file}
           onMapClick={this.handleMapClick}
-          onMouseLeave={this.handleMouseLeave}/>
+          onMouseLeave={this.handleMouseLeave}
+          />
 
-        <FileInfo file={file}/>
+        <FileInfo file={file} />
 
         <UserSelection
           userSelection = {this.state.userSelection}
           onClick={this.handleMapClick}
-          onUserSelectionUpdate={this.handleUserSelectionUpdate}/>
+          onUserSelectionUpdate={this.handleUserSelectionUpdate}
+          />
 
       </div>
     )
