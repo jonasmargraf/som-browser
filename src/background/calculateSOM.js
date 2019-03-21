@@ -21,7 +21,7 @@ window.calculateSOM = ({ files : files, settings: settings }) => {
   // let radiusStart = math.max(mapSize) / 5;
   let radiusStart = math.max(mapSize) / settings.radiusStart
   // let radiusEnd = math.max(mapSize) / 30;
-  let radiusEnd = math.max(mapSize) / settings.radiusStart
+  let radiusEnd = math.max(mapSize) / settings.radiusEnd
   // let initialAlpha = 0.5;
   let initialAlpha = settings.initialAlpha
   // let magnificationM = -0.02;
