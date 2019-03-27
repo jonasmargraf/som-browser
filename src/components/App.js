@@ -216,11 +216,13 @@ class App extends React.Component {
           1, // Loudness
           1  // Duration
         ],
-        learningRateType: 'inverse',
-        initialAlpha: 0.5,
-        radiusStart: 5,
-        radiusEnd: 30,
-        magnificationM: 1
+        // 'linear', 'inverse' or 'BDH'
+        learningRateType: 'BDH',
+        initialAlpha: 0.9,
+        // Remember: the actual radiusStart/End value is (mapSize/radiusStart)
+        radiusStart: 16,
+        radiusEnd: 320,
+        magnificationM: -0.2
       }
     }
   }
