@@ -54,14 +54,12 @@ class Settings extends React.PureComponent {
     // console.log('settings updated')
     if ((this.props.filesLength) && (this.state.mapSizeMode === 'auto')) {
       const mapSize = Math.floor(Math.sqrt(this.props.filesLength))
-      // console.log((mapSize !== this.state.mapSize) && (this.state.mapSize >= 0))
       // console.log(this.state.mapSize)
       if (mapSize !== this.state.mapSize) {
         this.handleMapSizeModeChange({ target: { value: 'auto' } })
         // console.log('called handleMapSizeModeChange()')
       }
     }
-    // console.log(event)
   }
 
   handleChange(event) {
@@ -109,6 +107,9 @@ class Settings extends React.PureComponent {
       this.props.onChangeSettings(event)
       event.target.value = Math.min(Math.max(
         event.target.min, event.target.valueAsNumber), event.target.max)
+      this.setState({
+        [event.target.name]: event.target.value
+      })
     }
   }
 
@@ -123,6 +124,9 @@ class Settings extends React.PureComponent {
     if (!Number.isNaN(event.target.valueAsNumber)) {
       event.target.value = Math.min(Math.max(
         event.target.min, event.target.valueAsNumber), event.target.max)
+      this.setState({
+        [event.target.name]: event.target.value
+      })
     }
   }
 
