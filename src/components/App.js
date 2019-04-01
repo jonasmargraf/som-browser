@@ -220,8 +220,8 @@ class App extends React.Component {
         learningRateType: 'BDH',
         initialAlpha: 0.9,
         // Remember: the actual radiusStart/End value is (mapSize/radiusStart)
-        radiusStart: 16,
-        radiusEnd: 320,
+        radiusStart: 2,
+        radiusEnd: 0.1,
         magnificationM: -0.2
       }
     }

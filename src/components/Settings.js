@@ -316,7 +316,7 @@ class Settings extends React.PureComponent {
                 id="radiusStart"
                 name="radiusStart"
                 min="2"
-                max="32"
+                max="16"
                 value={this.props.settings.radiusStart}
                 onChange={this.handleChange}
                 />
@@ -332,8 +332,8 @@ class Settings extends React.PureComponent {
                   id="radiusEnd"
                   name="radiusEnd"
                   ref="radiusEnd"
-                  min="2"
-                  max="32"
+                  min="0.01"
+                  max="16"
                   defaultValue={this.props.settings.radiusEnd}
                   onKeyDown={this.handleKeyDown}
                   onFocus={this.handleFocus}
@@ -344,8 +344,8 @@ class Settings extends React.PureComponent {
                 type="range"
                 id="radiusEnd"
                 name="radiusEnd"
-                min="2"
-                max="32"
+                min="0.01"
+                max="16"
                 value={this.props.settings.radiusEnd}
                 onChange={this.handleChange}
                 />
