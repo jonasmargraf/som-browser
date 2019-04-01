@@ -365,7 +365,12 @@ function populateEmptyNeurons(som) {
   let tempVectors = som.normalizedData
   let tempVectorIndeces = tempVectors.map((e,i) => i)
 
-  while (emptyNeuronIndeces.length >= 1) {
+  // Check if there are still empty neurons and vectors that haven't been moved
+  // In the worst case, when there are more empty neurons than total vectors,
+  // All vectors will be moved at least once and none will be assigned to their
+  // actual BMU anymore.
+  while (emptyNeuronIndeces.length >= 1 && tempVectorIndeces.length >= 1) {
+    console.log()
     // Get random empty neuron, then remove from possible choices
     let emptyNeuronIndex = math.pickRandom(emptyNeuronIndeces)
     emptyNeuronIndeces.splice(emptyNeuronIndeces.indexOf(emptyNeuronIndex), 1)
