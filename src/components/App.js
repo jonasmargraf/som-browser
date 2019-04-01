@@ -201,7 +201,7 @@ class App extends React.Component {
       progress: 'Import some files, then click the Analyze button!',
       showSettings: true,
       settings: {
-        mapSize: 4,
+        mapSize: [4, 4],
         trainingEpochs: 10,
         // dimensionWeights: [
         //   1, // RMS
