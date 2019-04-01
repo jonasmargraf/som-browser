@@ -202,20 +202,20 @@ class App extends React.Component {
       showSettings: true,
       settings: {
         mapSize: 4,
-        trainingEpochs: 30,
-        dimensionWeights: [
-          1, // RMS
-          1, // ZCR
-          1, // Spectral Centroid
-          1, // Spectral Flatness
-          1, // Spectral Slope
-          1, // Spectral Rolloff
-          1, // Spectral Spread
-          1, // Spectral Skewness
-          1, // Spectral Kurtosis
-          1, // Loudness
-          1  // Duration
-        ],
+        trainingEpochs: 100,
+        // dimensionWeights: [
+        //   1, // RMS
+        //   1, // ZCR
+        //   1, // Spectral Centroid
+        //   1, // Spectral Flatness
+        //   1, // Spectral Slope
+        //   1, // Spectral Rolloff
+        //   1, // Spectral Spread
+        //   1, // Spectral Skewness
+        //   1, // Spectral Kurtosis
+        //   1, // Loudness
+        //   1  // Duration
+        // ],
         // 'linear', 'inverse' or 'BDH'
         learningRateType: 'BDH',
         initialAlpha: 0.9,

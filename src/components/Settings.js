@@ -115,39 +115,40 @@ class Settings extends React.PureComponent {
 
           <div>
 
-            <div className="radioGroup">
-              <label className="settingsTitle" htmlFor="dimensionWeights">
-                Audio Feature Weighting:
-              </label>
-              <div className="radioButtons">
-                <input
-                  type="radio"
-                  id="weighting_1"
-                  name="weighting"
-                  value="1"
-                  onChange={this.handleWeightingChange}
-                  defaultChecked
-                  />
-                <label htmlFor="weighting_1">Weighting 1</label>
-                <input
-                  type="radio"
-                  id="weighting_2"
-                  name="weighting"
-                  value="2"
-                  onChange={this.handleWeightingChange}
-                  />
-                <label htmlFor="weighting_2">Weighting 2</label>
-                <input
-                  type="radio"
-                  id="weighting_3"
-                  name="weighting"
-                  value="3"
-                  onChange={this.handleWeightingChange}
-                  />
-                <label htmlFor="weighting_3">Weighting 3</label>
-              </div>
-            </div>
-
+            {
+            // <div className="radioGroup">
+            //   <label className="settingsTitle" htmlFor="dimensionWeights">
+            //     Audio Feature Weighting:
+            //   </label>
+            //   <div className="radioButtons">
+            //     <input
+            //       type="radio"
+            //       id="weighting_1"
+            //       name="weighting"
+            //       value="1"
+            //       onChange={this.handleWeightingChange}
+            //       defaultChecked
+            //       />
+            //     <label htmlFor="weighting_1">Weighting 1</label>
+            //     <input
+            //       type="radio"
+            //       id="weighting_2"
+            //       name="weighting"
+            //       value="2"
+            //       onChange={this.handleWeightingChange}
+            //       />
+            //     <label htmlFor="weighting_2">Weighting 2</label>
+            //     <input
+            //       type="radio"
+            //       id="weighting_3"
+            //       name="weighting"
+            //       value="3"
+            //       onChange={this.handleWeightingChange}
+            //       />
+            //     <label htmlFor="weighting_3">Weighting 3</label>
+            //   </div>
+            // </div>
+            }
             <div className="slider">
               <div>
                 <label className="settingsTitle" htmlFor="mapSize">

@@ -47,7 +47,9 @@ window.calculateSOM = ({ files : files, settings: settings }) => {
   //                     'spectralSkewness',
   //                     'spectralKurtosis',
   //                     'loudness']
-  let dimensionWeights = settings.dimensionWeights
+
+  // let dimensionWeights = settings.dimensionWeights
+
   // let dimensionWeights = [
   //   1, // RMS
   //   1, // ZCR
@@ -67,7 +69,7 @@ window.calculateSOM = ({ files : files, settings: settings }) => {
     mapSize,
     neuronCount,
     neurons,
-    dimensionWeights,
+    // dimensionWeights,
     coordinates,
     distances,
     bestMatches,
@@ -176,7 +178,7 @@ function initializeMap(som) {
       som.neurons[i].push(math.random(dimMin[j], dimMax[j]));
       // neurons[i].push(math.random(featuresMin[feature], featuresMax[feature]))
     }
-    som.neurons[i] = math.dotMultiply(som.dimensionWeights, som.neurons[i])
+    // som.neurons[i] = math.dotMultiply(som.dimensionWeights, som.neurons[i])
   }
 
   return som
@@ -295,9 +297,12 @@ function trainingStep(t, som) {
       // console.log(h)
       // console.log(differences[index])
       // console.log(math.dotMultiply(weights, differences[index]))
-      return math.subtract(neuron, math.multiply(
-        h, math.dotMultiply(som.dimensionWeights, differences[index])));
-      // return math.subtract(neuron, math.multiply(h, differences[index]));
+
+      // For dimension weights:
+      // return math.subtract(neuron, math.multiply(
+      //   h, math.dotMultiply(som.dimensionWeights, differences[index])));
+
+      return math.subtract(neuron, math.multiply(h, differences[index]));
     })
 
     return som
