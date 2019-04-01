@@ -66,18 +66,7 @@ class Settings extends React.PureComponent {
 
   handleChange(event) {
     this.props.onChangeSettings(event)
-    // console.log(event.target.name)
-    // console.log(this.refs[event.target.name].value)
-    // console.log(event.target.value)
-    // console.log(this.refs)
     this.refs[event.target.name].value = event.target.value
-    // if (event.target.name === 'mapSize') {
-    //   console.log(this.refs.mapSizeSlider)
-    //   console.log(event.target.value)
-      // this.refs.mapSizeSlider = event.target.value
-      // console.log(this.refs.mapSizeSlider)
-    // }
-    // console.log('inside Settings.handleChange()')
     this.setState({
       [event.target.name]: event.target.value
     })
