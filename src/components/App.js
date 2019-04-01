@@ -200,7 +200,7 @@ class App extends React.Component {
       showSettings: true,
       settings: {
         mapSize: [4, 4],
-        trainingEpochs: 10,
+        trainingEpochs: 4,
         // dimensionWeights: [
         //   1, // RMS
         //   1, // ZCR

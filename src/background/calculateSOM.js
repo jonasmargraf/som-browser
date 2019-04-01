@@ -194,7 +194,9 @@ function trainMap(som) {
 
   ipcRenderer.send('progress', 'Training map...')
 
-  som.trainingLength = som.trainingEpochs * som.normalizedData.length
+  // som.trainingLength = 1000
+  // som.trainingLength = som.trainingEpochs * som.normalizedData.length
+  som.trainingLength = math.pow(10, som.trainingEpochs)
   som.rStep = (som.radiusEnd - som.radiusStart) / (som.trainingLength - 1)
 
   // Initialize winTimeStamp as array filled with zeros
@@ -206,6 +208,7 @@ function trainMap(som) {
   // let neurons = som.neurons
 
   // Begin training
+  // for (var t = 0; t < 0; t++) {
   for (var t = 0; t < som.trainingLength; t++) {
     ipcRenderer.send('progress',
       'Training ' + math.round(100 * (t / (som.trainingLength - 1)), 0) + '% done.')

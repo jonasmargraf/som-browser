@@ -359,7 +359,7 @@ input:checked + label {
   /* font-weight: 400; */
 }
 
-.settingsTitle {
+.settingsTitle, .settingsTitle sup {
   font-weight: 400;
 }
 

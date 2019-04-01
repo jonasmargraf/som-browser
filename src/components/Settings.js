@@ -19,7 +19,7 @@ class Settings extends React.PureComponent {
       value: undefined,
       mapSize: undefined,
       mapSizeMode: 'auto',
-      trainingEpochs: 10,
+      trainingEpochs: 4,
       // dimensionWeights: [
       //   1, // RMS
       //   1, // ZCR
@@ -228,15 +228,15 @@ class Settings extends React.PureComponent {
             <div className="slider">
               <div>
                 <label className="settingsTitle" htmlFor="trainingEpochs">
-                  Training Epochs:
+                  Training Length (10<sup>n</sup>):
                 </label>
                 <input
                   type="number"
                   id="trainingEpochs"
                   name="trainingEpochs"
                   ref="trainingEpochs"
-                  min="1"
-                  max="100"
+                  min="0"
+                  max="6"
                   defaultValue={this.props.settings.trainingEpochs}
                   onKeyDown={this.handleKeyDown}
                   onFocus={this.handleFocus}
@@ -247,8 +247,8 @@ class Settings extends React.PureComponent {
                 type="range"
                 id="trainingEpochs"
                 name="trainingEpochs"
-                min="1"
-                max="100"
+                min="0"
+                max="6"
                 value={this.props.settings.trainingEpochs}
                 onChange={this.handleChange}
                 />
