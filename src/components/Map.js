@@ -4,6 +4,7 @@ import MapSubnode from './MapSubnode';
 import MapLabel from './MapLabel'
 import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
+const { ipcRenderer, remote } = require('electron');
 
 class Map extends React.Component {
   constructor(props) {
@@ -19,13 +20,31 @@ class Map extends React.Component {
       labelPosition: [0, 0],
       showLabel: false,
       rect: undefined,
+      width: undefined,
+      height: undefined,
       dragging: false
     }
     this.mapRef = React.createRef()
+    ipcRenderer.on('resize', (event, value) => {
+      console.log('resize')
+      // console.log(this.mapRef.current.clientWidth)
+      this.setState({
+        width: this.mapRef.current.clientWidth,
+        height: this.mapRef.current.clientHeight
+      })
+    })
+  }
+
+  componentWillMount() {
+    // this.setState({ width: this.mapRef.current.clientWidth })
   }
 
   componentDidMount() {
-    this.setState({ rect: findDOMNode(this).getBoundingClientRect() })
+    this.setState({
+      width: this.mapRef.current.clientWidth,
+      height: this.mapRef.current.clientHeight,
+      rect: findDOMNode(this).getBoundingClientRect()
+    })
   }
 
   componentWillUpdate() {
@@ -104,8 +123,8 @@ class Map extends React.Component {
           selected={selectedFile === files[e].path}
           xPosition={xPos}
           yPosition={yPos}
-          parentWidth={this.mapRef.current.clientWidth}
-          parentHeight={this.mapRef.current.clientHeight}
+          parentWidth={this.state.width}
+          parentHeight={this.state.height}
           boundingRect={this.state.rect}
           onMouseEnter={this.handleMouseEnter}
           onMouseMove={this.handleMouseMove}
