@@ -18,7 +18,28 @@ class Settings extends React.PureComponent {
     this.state = ({
       value: undefined,
       mapSize: undefined,
-      mapSizeMode: 'auto'
+      mapSizeMode: 'auto',
+      trainingEpochs: 10,
+      // dimensionWeights: [
+      //   1, // RMS
+      //   1, // ZCR
+      //   1, // Spectral Centroid
+      //   1, // Spectral Flatness
+      //   1, // Spectral Slope
+      //   1, // Spectral Rolloff
+      //   1, // Spectral Spread
+      //   1, // Spectral Skewness
+      //   1, // Spectral Kurtosis
+      //   1, // Loudness
+      //   1  // Duration
+      // ],
+      // 'linear', 'inverse' or 'BDH'
+      learningRateType: 'linear',
+      initialAlpha: 0.9,
+      // Remember: the actual radiusStart/End value is (mapSize/radiusStart)
+      radiusStart: 2,
+      radiusEnd: 0.1,
+      magnificationM: -0.2
     })
   }
 
@@ -45,9 +66,21 @@ class Settings extends React.PureComponent {
 
   handleChange(event) {
     this.props.onChangeSettings(event)
-    // console.log(event.target)
-    // console.log(this.refs[event.target.name])
+    // console.log(event.target.name)
+    // console.log(this.refs[event.target.name].value)
+    // console.log(event.target.value)
+    // console.log(this.refs)
     this.refs[event.target.name].value = event.target.value
+    // if (event.target.name === 'mapSize') {
+    //   console.log(this.refs.mapSizeSlider)
+    //   console.log(event.target.value)
+      // this.refs.mapSizeSlider = event.target.value
+      // console.log(this.refs.mapSizeSlider)
+    // }
+    // console.log('inside Settings.handleChange()')
+    this.setState({
+      [event.target.name]: event.target.value
+    })
   }
 
   handleMapSizeModeChange(event) {
@@ -100,6 +133,7 @@ class Settings extends React.PureComponent {
   }
 
   handleBlur(event) {
+    this.props.onChangeSettings(event)
     if (!Number.isNaN(event.target.valueAsNumber)) {
       event.target.value = Math.min(Math.max(
         event.target.min, event.target.valueAsNumber), event.target.max)
@@ -180,7 +214,7 @@ class Settings extends React.PureComponent {
                   name="mapSize"
                   ref="mapSize"
                   min="2"
-                  max="64"
+                  max="32"
                   defaultValue={this.props.settings.mapSize}
                   onKeyDown={this.handleKeyDown}
                   onFocus={this.handleFocus}
@@ -194,7 +228,7 @@ class Settings extends React.PureComponent {
                 name="mapSize"
                 ref="mapSizeSlider"
                 min="2"
-                max="64"
+                max="32"
                 value={this.props.settings.mapSize}
                 onChange={this.handleChange}
                 disabled={this.state.mapSizeMode === 'auto'}
@@ -318,6 +352,7 @@ class Settings extends React.PureComponent {
                 name="radiusStart"
                 min="2"
                 max="16"
+                step="0.1"
                 value={this.props.settings.radiusStart}
                 onChange={this.handleChange}
                 />
@@ -333,7 +368,7 @@ class Settings extends React.PureComponent {
                   id="radiusEnd"
                   name="radiusEnd"
                   ref="radiusEnd"
-                  min="0.01"
+                  min="0.1"
                   max="16"
                   defaultValue={this.props.settings.radiusEnd}
                   onKeyDown={this.handleKeyDown}
@@ -345,8 +380,9 @@ class Settings extends React.PureComponent {
                 type="range"
                 id="radiusEnd"
                 name="radiusEnd"
-                min="0.01"
+                min="0.1"
                 max="16"
+                step="0.1"
                 value={this.props.settings.radiusEnd}
                 onChange={this.handleChange}
                 />

@@ -217,7 +217,7 @@ class App extends React.Component {
         //   1  // Duration
         // ],
         // 'linear', 'inverse' or 'BDH'
-        learningRateType: 'BDH',
+        learningRateType: 'linear',
         initialAlpha: 0.9,
         // Remember: the actual radiusStart/End value is (mapSize/radiusStart)
         radiusStart: 2,
@@ -289,18 +289,23 @@ class App extends React.Component {
          console.log("Building map...")
          createSOM(this.state.files, this.state.settings)
          .then(som => {
-           this.setState({ som: som })
-           console.log(this.state)
+           this.setState({ som: som }
+              , () => console.log(this.state)
+            )
+           // console.log(this.state)
          })
        })
      }
      // If feature analysis already done, skip directly to build map
      else {
        console.log("Building map...")
+       // console.log(this.state.settings)
        createSOM(this.state.files, this.state.settings)
        .then(som => {
-         this.setState({ som: som })
-         console.log(this.state)
+         this.setState({ som: som }
+           , () => console.log(this.state)
+         )
+         // console.log(this.state)
        })
      }
    }
@@ -390,7 +395,9 @@ class App extends React.Component {
         settings[event.target.name] = [settings[event.target.name], settings[event.target.name]]
       // console.log(event.target.value)
       }
-      this.setState({ settings }, () => console.log(this.state.settings))
+      this.setState({ settings }
+        , () => console.log(this.state.settings)
+      )
       // console.log('inside App.handleChangeSettings()')
     // console.log(event)
   }
