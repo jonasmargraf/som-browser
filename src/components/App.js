@@ -378,13 +378,19 @@ class App extends React.Component {
   handleChangeSettings(event) {
     let settings = this.state.settings
     // console.log(event.target.min)
+    if (event.target.name === 'learningRateType')
+      settings[event.target.name] = event.target.value
+      // console.log(event.target.value)
     // make sure input isn't NaN
-    if (!Number.isNaN(event.target.valueAsNumber)) {
+    else if (!Number.isNaN(event.target.valueAsNumber)) {
       // clamp value to range
       settings[event.target.name] = Math.min(Math.max(
         event.target.min, event.target.valueAsNumber), event.target.max)
-        this.setState({ settings })
+      if (event.target.name === 'mapSize')
+        settings[event.target.name] = [settings[event.target.name], settings[event.target.name]]
+      // console.log(event.target.value)
       }
+      this.setState({ settings }, () => console.log(this.state.settings))
       // console.log('inside App.handleChangeSettings()')
     // console.log(event)
   }

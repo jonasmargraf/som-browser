@@ -72,7 +72,8 @@ class Settings extends React.PureComponent {
   }
 
   handleLearningRateChange(event) {
-    // console.log(event.target.value)
+    console.log(event.target)
+    this.props.onChangeSettings(event)
   }
 
   handleChangeSettings() {
@@ -237,7 +238,7 @@ class Settings extends React.PureComponent {
                 <input
                   type="radio"
                   id="linear"
-                  name="learningRate"
+                  name="learningRateType"
                   value="linear"
                   onChange={this.handleLearningRateChange}
                   defaultChecked
@@ -246,7 +247,7 @@ class Settings extends React.PureComponent {
                 <input
                   type="radio"
                   id="inverse"
-                  name="learningRate"
+                  name="learningRateType"
                   value="inverse"
                   onChange={this.handleLearningRateChange}
                   />
@@ -254,7 +255,7 @@ class Settings extends React.PureComponent {
                 <input
                   type="radio"
                   id="BDH"
-                  name="learningRate"
+                  name="learningRateType"
                   value="BDH"
                   onChange={this.handleLearningRateChange}
                   />
@@ -361,8 +362,8 @@ class Settings extends React.PureComponent {
                   id="magnificationMDisplay"
                   name="magnificationM"
                   ref="magnificationM"
-                  min="0.01"
-                  max="5"
+                  min="-1.0"
+                  max="1.0"
                   step="0.01"
                   defaultValue={this.props.settings.magnificationM}
                   onKeyDown={this.handleKeyDown}
@@ -374,8 +375,8 @@ class Settings extends React.PureComponent {
                 type="range"
                 id="magnificationM"
                 name="magnificationM"
-                min="0.01"
-                max="5"
+                min="-1.0"
+                max="1.0"
                 step="0.01"
                 value={this.props.settings.magnificationM}
                 onChange={this.handleChange}
