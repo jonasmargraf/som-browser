@@ -85,8 +85,6 @@ class Settings extends React.PureComponent {
       event.target.value = mapSize
       this.props.onChangeSettings(event)
     }
-    // console.log(mapSize)
-    // console.log(event.target)
   }
 
   handleWeightingChange(event) {
@@ -111,8 +109,6 @@ class Settings extends React.PureComponent {
       this.props.onChangeSettings(event)
       event.target.value = Math.min(Math.max(
         event.target.min, event.target.valueAsNumber), event.target.max)
-      // console.log(event.target)
-      // console.log(event.target.value)
     }
   }
 
@@ -204,7 +200,7 @@ class Settings extends React.PureComponent {
                   ref="mapSize"
                   min="2"
                   max="32"
-                  defaultValue={this.props.settings.mapSize}
+                  defaultValue={this.props.settings.mapSize[0]}
                   onKeyDown={this.handleKeyDown}
                   onFocus={this.handleFocus}
                   onBlur={this.handleBlur}
@@ -218,7 +214,7 @@ class Settings extends React.PureComponent {
                 ref="mapSizeSlider"
                 min="2"
                 max="32"
-                value={this.props.settings.mapSize}
+                value={this.props.settings.mapSize[0]}
                 onChange={this.handleChange}
                 disabled={this.state.mapSizeMode === 'auto'}
                 />
