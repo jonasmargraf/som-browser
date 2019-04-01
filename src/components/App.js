@@ -26,6 +26,7 @@ let audioData = []
 window.onload = () => {
   ipcRenderer.send('dev-request', true)
 }
+
 ipcRenderer.once('dev-mode', (event, value) => {
   dev = value
   // console.log('dev-mode in App.js: ' + dev + ' ' + value)
@@ -230,6 +231,12 @@ class App extends React.Component {
       this.setState({ progress: value })
       // console.log(value)
     })
+  }
+
+  componentWillUpdate() {
+    // ipcRenderer.on('resize', (event, value) => {
+    //   console.log('resize')
+    // })
   }
 
   componentDidUpdate() {

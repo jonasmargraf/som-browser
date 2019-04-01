@@ -21,14 +21,20 @@ class Map extends React.Component {
       rect: undefined,
       dragging: false
     }
+    this.mapRef = React.createRef()
   }
 
   componentDidMount() {
     this.setState({ rect: findDOMNode(this).getBoundingClientRect() })
   }
 
+  componentWillUpdate() {
+    // console.log('map will update')
+  }
+
   componentDidUpdate() {
     // console.log('Map updated')
+    // console.log(this.mapRef.current.clientWidth)
   }
 
   handleClick(mapElement) {
@@ -98,6 +104,8 @@ class Map extends React.Component {
           selected={selectedFile === files[e].path}
           xPosition={xPos}
           yPosition={yPos}
+          parentWidth={this.mapRef.current.clientWidth}
+          parentHeight={this.mapRef.current.clientHeight}
           boundingRect={this.state.rect}
           onMouseEnter={this.handleMouseEnter}
           onMouseMove={this.handleMouseMove}
@@ -118,7 +126,7 @@ class Map extends React.Component {
     const fileKey = this.props.selectedFile ? this.props.selectedFile.path : null
 
     return (
-      <div className="Map">
+      <div className="Map" ref={this.mapRef}>
         {
           this.props.som ?
 

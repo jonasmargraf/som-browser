@@ -123,8 +123,9 @@ span {
   /* fill: rgb(240, 240, 240); */
   fill: lightgrey;
   /* fill: dimgrey; */
+  /* stroke: grey; */
   stroke: rgb(230, 230, 230);
-  stroke-width: 1px;
+  /* stroke-width: 1px; */
   /* transition: fill 0.2s ease-out; */
 }
 
@@ -138,6 +139,7 @@ span {
   /* fill: rgb(230, 230, 230); */
   fill: white;
   stroke: lightgrey;
+  /* stroke: grey; */
   stroke-width: 1px;
   transition: stroke 0.1s ease-out, fill 0.05s ease-out;
 }

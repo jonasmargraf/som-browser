@@ -40,22 +40,27 @@ function collect(connect, monitor) {
   }
 }
 
-class MapSubnode extends React.PureComponent {
+class MapSubnode extends React.Component {
   constructor(props) {
     super(props)
     this.handleClick = this.handleClick.bind(this)
     this.handleMouseEnter = this.handleMouseEnter.bind(this)
     this.handleMouseLeave = this.handleMouseLeave.bind(this)
     this.handleMouseMove = this.handleMouseMove.bind(this)
-    var dragging = false;
+    var dragging = false
+    this.refTest = React.createRef()
   }
 
   componentDidMount() {
     // console.log('MapSubnode mounted')
+    console.log(this.refTest.current.offsetWidth)
   }
 
   componentDidUpdate() {
     console.log('MapSubnode updated')
+    // console.log(this.refTest.current.width.baseVal.value)
+    // console.log(this.refTest.current.parentElement.width.baseVal.value)
+    // console.log(this.props.parentWidth)
   }
 
   handleClick() {
@@ -99,11 +104,17 @@ class MapSubnode extends React.PureComponent {
 
     let nodeFileCount = som.neuronAssignedFiles[index].length
     let nodeGridRoot = Math.ceil(Math.sqrt(nodeFileCount))
-    let x = (i % nodeGridRoot) * (100 / nodeGridRoot)
-    let y = Math.floor(i / nodeGridRoot) * (100 / nodeGridRoot)
+    // let x = (i % nodeGridRoot) * (100 / nodeGridRoot)
+    // let y = Math.floor(i / nodeGridRoot) * (100 / nodeGridRoot)
+    let x = (i % nodeGridRoot) * (this.props.parentWidth / nodeGridRoot)
+    let y = Math.floor(i / nodeGridRoot) * (this.props.parentHeight / nodeGridRoot)
     let subNodeX = x / som.mapSize[0] + 0.
     let subNodeY = y / som.mapSize[0] + 0.
-    let subNodeLength = 100 / (som.mapSize[0] * nodeGridRoot)
+    // let subNodeLength = 100 / (som.mapSize[0] * nodeGridRoot)
+    let subNodeWidth = (this.props.parentWidth /
+      (som.mapSize[0] * nodeGridRoot)) - 2
+    let subNodeHeight = (this.props.parentHeight /
+      (som.mapSize[0] * nodeGridRoot)) - 2
     let name = files[e].name
     let path = files[e].path
 
@@ -118,17 +129,18 @@ class MapSubnode extends React.PureComponent {
           this.props.selected ? "SubNodeSelected" : null
           // files[e].path === selectedFile ? "SubNodeSelected" : null
         }
+        ref={this.refTest}
         className="SubNode"
         onMouseEnter={isDragging ? null : this.handleMouseEnter}
         onMouseMove={isDragging ? null : this.handleMouseMove}
         onMouseLeave={isDragging ? null : this.handleMouseLeave}
         onClick={this.handleClick}
-        x={"calc(1px + " + subNodeX + "%)"}
-        y={"calc(1px + " + subNodeY + "%)"}
+        x={subNodeX + 1}
+        y={subNodeY + 1}
         rx="1px"
         ry="1px"
-        width={"calc(-2px + " + subNodeLength + "%)"}
-        height={"calc(-2px + " + subNodeLength + "%)"}>
+        width={subNodeWidth}
+        height={subNodeHeight}>
       </rect>
     </svg>
 

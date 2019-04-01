@@ -63,6 +63,11 @@ function createMainWindow() {
     }
   });
 
+  // win.on('resize', () => {
+  //   // console.log('window resized')
+  //   mainWindow.webContents.send('resize', 'now')
+  // })
+
   // Emitted when the window is closed.
   win.on('closed', function() {
     // Dereference the window object, usually you would store windows
