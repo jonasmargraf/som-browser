@@ -40,8 +40,10 @@ span {
 .TitleBar {
   width: 100vw;
   height: 30px;
+  /* height: 22px; */
   display: block;
   background-color: white;
+  /* background-color: rgb(245,245,245); */
   display: table;
   -webkit-app-region: drag;
 }
@@ -53,6 +55,7 @@ span {
   color: dodgerblue;
   font-weight: 300;
   font-size: 12pt;
+  /* font-size: 10pt; */
   /* height: inherit; */
 }
 
