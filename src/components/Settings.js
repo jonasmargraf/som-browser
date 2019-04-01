@@ -113,7 +113,8 @@ class Settings extends React.PureComponent {
   }
 
   handleFocus(event) {
-    // this.setState({ value: event.target.value }, () => event.target.value = 0)
+    // this.setState({ value: event.target.value },
+    // () => event.target.value = 0)
     // event.target.value = ''
   }
 

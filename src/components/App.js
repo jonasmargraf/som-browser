@@ -57,7 +57,6 @@ function processFiles(files) {
 
     // alert(backgroundPath)
     win.loadURL(backgroundPath)
-    // win.loadURL('file:///Users/jm/Dropbox/AKT/Masterarbeit/dev/som-browser/src/background/background.html')
 
     win.once('ready-to-show', () => {
       // win.show()
@@ -98,7 +97,6 @@ function createSOM(files, settings) {
     }
     // alert(backgroundPath)
     win.loadURL( backgroundPath )
-    // win.loadURL("file:///Users/jm/Dropbox/AKT/Masterarbeit/dev/som-browser/src/background/som.html")
 
     win.once('ready-to-show', () => {
       // win.show()
@@ -392,7 +390,10 @@ class App extends React.Component {
       settings[event.target.name] = Math.min(Math.max(
         event.target.min, event.target.valueAsNumber), event.target.max)
       if (event.target.name === 'mapSize')
-        settings[event.target.name] = [settings[event.target.name], settings[event.target.name]]
+        settings[event.target.name] = [
+          settings[event.target.name],
+          settings[event.target.name]
+        ]
       // console.log(event.target.value)
       }
       this.setState({ settings }

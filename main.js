@@ -16,7 +16,9 @@ let dev = false;
 // inside the if condition in createMainWindow (line 42).
 // This should probably be done in a cleaner fashion.
 let actuallyDev = false;
-if ( process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath) ) {
+if ( process.defaultApp ||
+  /[\\/]electron-prebuilt[\\/]/.test(process.execPath) ||
+  /[\\/]electron[\\/]/.test(process.execPath) ) {
   dev = true;
   // console.log('dev-mode in main.js: ' + actuallyDev)
 }
