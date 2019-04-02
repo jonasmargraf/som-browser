@@ -14,13 +14,19 @@
 }
 
 html {
-  background-color: rgb(250, 250, 250);
+  /* background-color: rgb(250, 250, 250); */
+  background-color: #efefef;
   cursor: default;
+}
+
+.TitleBar, .MenuBar, .leftPanel, .Map, .FileInfo, .UserSelection, input {
+background-color: #f4f4f4;
 }
 
 h3, .leftPanel > label {
   font-weight: 300 !important;
-  color: dodgerblue;
+  /* color: #3979b2; */
+  color: #3979b2;
   font-size: 16pt;
   cursor: default;
   -webkit-user-select: none;
@@ -28,7 +34,7 @@ h3, .leftPanel > label {
 
 ul, p, input, span, label, select {
   list-style: none;
-  color: dimgrey;
+  color: #454d54;
   cursor: default;
   -webkit-user-select: none;
 }
@@ -42,7 +48,7 @@ span {
   height: 30px;
   /* height: 22px; */
   display: block;
-  background-color: white;
+  /* background-color: white; */
   /* background-color: rgb(245,245,245); */
   display: table;
   -webkit-app-region: drag;
@@ -52,7 +58,7 @@ span {
   display: table-cell;
   vertical-align: middle;
   text-align: center;
-  color: dodgerblue;
+  color: #3979b2;
   font-weight: 300;
   font-size: 12pt;
   /* font-size: 10pt; */
@@ -63,7 +69,7 @@ span {
   width: 100vw;
   height: 8vh;
   display: block;
-  background-color: white;
+  /* background-color: white; */
   /* background-color: rgb(250, 250, 250); */
   box-shadow: 0px 4px 4px rgb(230, 230, 230);
   /* border-radius: 2px; */
@@ -76,7 +82,7 @@ span {
   border-width: 3px;
   border-color: lightgrey; */
   /* border: 1px solid grey; */
-  background-color: white;
+  /* background-color: white; */
   box-shadow: 0px 1px 5px rgb(200, 200, 200);
   border-radius: 2px;
   margin: 10px;
@@ -90,7 +96,7 @@ span {
 }
 
 .Map > div > h3 {
-  border-bottom: 1px solid dodgerblue;
+  border-bottom: 1px solid #3979b2;
   /* width: calc(12.5vw - 20px); */
   margin: 10px;
   margin-bottom: 0;
@@ -121,10 +127,11 @@ span {
   padding: 0;
   /* margin: 10px; */
   /* fill: rgb(240, 240, 240); */
-  fill: lightgrey;
-  /* fill: dimgrey; */
-  /* stroke: grey; */
-  stroke: rgb(230, 230, 230);
+  /* fill: lightgrey; */
+  fill: #cccfd1;
+  /* fill: #454d54; */
+  stroke: #f4f4f4;
+  /* stroke: rgb(230, 230, 230); */
   /* stroke-width: 1px; */
   /* transition: fill 0.2s ease-out; */
 }
@@ -137,24 +144,26 @@ span {
 .SubNode {
   margin, padding: 0;
   /* fill: rgb(230, 230, 230); */
-  fill: white;
-  stroke: lightgrey;
+  /* fill: white; */
+  fill: #f4f4f4;
+  /* stroke: lightgrey; */
+  stroke: #cccfd1;
   /* stroke: grey; */
   stroke-width: 1px;
   transition: stroke 0.1s ease-out, fill 0.05s ease-out;
 }
 
 .SubNode:hover {
-  /* fill: dodgerblue; */
-  stroke: dodgerblue;
+  /* fill: #3979b2; */
+  stroke: #3979b2;
   stroke-width: 1px;
   transition: stroke 0.1s ease-in;
 }
 
 #SubNodeSelected {
   /* fill: rgb(230, 230, 230); */
-  fill: dodgerblue;
-  stroke: dodgerblue;
+  fill: #3979b2;
+  stroke: #3979b2;
   transition: fill 0.05s ease-in;
 }
 
@@ -164,7 +173,7 @@ span {
   padding: 10px;
   margin: 10px;
   border: 1px lightgray dashed;
-  color: dimgrey;
+  color: #454d54;
   background: rgba(255, 255, 255, 0.8);
   box-shadow: 0px 1px 5px rgb(200, 200, 200);
   display: flex;
@@ -187,7 +196,7 @@ span {
   margin: 0 5px;
   border-radius: 2px;
   z-index: 2;
-  color: dodgerblue;
+  color: #3979b2;
   background: rgba(255, 255, 255, 0.8);
   font-size: 10pt;
   cursor: default;
@@ -198,7 +207,7 @@ span {
 }
 
 .leftPanel {
-  background-color: white;
+  /* background-color: white; */
   box-shadow: 0px 1px 5px rgb(200, 200, 200);
   border-radius: 2px;
   margin: 10px;
@@ -250,8 +259,8 @@ span {
 }
 
 input:checked + label {
-  border-bottom: 1px solid dodgerblue;
-  color: dodgerblue;
+  border-bottom: 1px solid #3979b2;
+  color: #3979b2;
   /* background-color: white; */
   /* box-shadow: 0px 1px 5px rgb(200, 200, 200); */
 }
@@ -405,15 +414,15 @@ input[type=radio] {
   border: none;
   text-align: right;
   cursor: pointer;
-  /* color: dodgerblue; */
+  /* color: #3979b2; */
 }
 
 input[type=number]:read-write {
-  color: dodgerblue;
+  color: #3979b2;
 }
 
 input[type=number]:read-only {
-  color: dimgrey;
+  color: #454d54;
   /* font-style: italic; */
 }
 
@@ -435,7 +444,7 @@ input[type=number]:read-only {
 }
 
 :disabled::-webkit-slider-thumb {
-  box-shadow: -100vw 0 0 100vw dimgrey;
+  box-shadow: -100vw 0 0 100vw #454d54;
 }
 
 .slider input:focus, .radioGroup select:focus {
@@ -452,7 +461,7 @@ input[type=number]:read-only {
   height: 30px;
   background: white;
   border: 0;
-  box-shadow: -100vw 0 0 100vw dodgerblue;
+  box-shadow: -100vw 0 0 100vw #3979b2;
 }
 
 
@@ -469,20 +478,20 @@ input[type=number]:read-only {
   padding: 10px 0 10px 0;
   cursor: pointer;
   border-radius: 50vh;
-  /* border: 1px solid dimgrey; */
+  /* border: 1px solid #454d54; */
   border: none;
-  color: dodgerblue;
+  color: #3979b2;
   font-size: 11pt;
   font-weight: 300;
   /* background-color: rgb(250, 250, 250); */
-  background-color: white;
+  background-color: #f4f4f4;
   box-shadow: 0px 1px 5px rgb(200, 200, 200);
   outline: none;
   transition: box-shadow 0.2s ease-out;
 }
 
 .ActionButtons *:hover {
-  box-shadow: 0px 1px 5px dodgerblue;
+  box-shadow: 0px 1px 5px #3979b2;
   transition: box-shadow 0.2s ease-in;
 }
 
@@ -508,7 +517,7 @@ input[type=number]:read-only {
 }
 
 #FileListSelectedFile {
-  color: dodgerblue;
+  color: #3979b2;
 }
 
 .FileListItem:hover {
@@ -525,7 +534,7 @@ input[type=number]:read-only {
 
 .FileInfo {
   /* border: 1px solid grey; */
-  background-color: white;
+  /* background-color: white; */
   box-shadow: 0px 1px 5px rgb(200, 200, 200);
   border-radius: 2px;
   margin: 10px;
@@ -549,7 +558,7 @@ input[type=number]:read-only {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  border-bottom: 1px solid dodgerblue;
+  border-bottom: 1px solid #3979b2;
   padding-bottom: 10px;
   margin: 10px;
   margin-bottom: 0px;
@@ -608,12 +617,12 @@ input[type=number]:read-only {
   /* overflow: wrap; */
   padding-top: 5px;
   padding-bottom: 5px;
-  color: dimgrey;
+  color: #454d54;
   -webkit-user-select: none;
 }
 
 .cell.value {
-  color: dodgerblue;
+  color: #3979b2;
   text-align: right;
 }
 
@@ -624,7 +633,7 @@ input[type=number]:read-only {
 .column > .cell:last {
   padding-top: 0;
   text-align: right;
-  /* color: dodgerblue; */
+  /* color: #3979b2; */
 }
 
 .cell.feature {
@@ -637,7 +646,7 @@ input[type=number]:read-only {
 
 .cell.value {
   text-align: right;
-  color: dodgerblue;
+  color: #3979b2;
 }
 
 .row:last {
@@ -646,7 +655,7 @@ input[type=number]:read-only {
 
 .UserSelection {
   /* border: 1px solid grey; */
-  background-color: white;
+  /* background-color: white; */
   box-shadow: 0px 1px 5px rgb(200, 200, 200);
   border-radius: 2px;
   margin: 20px;
@@ -681,18 +690,18 @@ input[type=number]:read-only {
 }
 
 .UserSelectionSlot:hover {
-  box-shadow: 0px 1px 5px dodgerblue;
+  box-shadow: 0px 1px 5px #3979b2;
 }
 
 .UserSelectionSlot > p {
-  color: dimgrey;
+  color: #454d54;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .UserSelectionSlot:hover > p {
-  color: dodgerblue;
+  color: #3979b2;
 }
 
 .UserSelectionSlotEmpty {
